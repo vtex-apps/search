@@ -1,0 +1,44 @@
+query suggestionProducts(
+  $store: String!
+  $term: String!
+  $attributeKey: String
+  $attributeValue: String
+) {
+  suggestionProducts(
+    store: $store
+    term: $term
+    attributeKey: $attributeKey
+    attributeValue: $attributeValue
+  ) {
+    count
+    products {
+      id
+      name
+      url
+      oldPrice
+      price
+      oldPriceText
+      priceText
+      images {
+        name
+        value
+      }
+      installment {
+        count
+        value
+        interest
+        valueText
+      }
+      attributes {
+        key
+        value
+        labelKey
+        labelValue
+      }
+      extraInfo {
+        key
+        value
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "dependencies": {
+    "@vtex/api": "^3.55.0"
+  },
+  "devDependencies": {
+    "typescript": "3.5.2",
+    "prettier": "^1.18.2",
+    "tslint": "^5.18.0"
+  },
+  "scripts": {},
+  "author": "",
+  "license": "MIT"
+}

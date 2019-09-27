@@ -1,0 +1,125 @@
+query searchResult(
+  $store: String!
+  $attributePath: String
+  $query: String
+  $page: Int
+  $count: Int
+  $sort: String
+  $operator: String
+  $fuzzy: Int
+) {
+  searchResult(
+    store: $store
+    attributePath: $attributePath
+    query: $query
+    page: $page
+    count: $count
+    sort: $sort
+    operator: $operator
+    fuzzy: $fuzzy
+  ) {
+    query
+    operator
+    total
+    products {
+      id
+      name
+      url
+      oldPrice
+      price
+      oldPriceText
+      priceText
+      images {
+        name
+        value
+      }
+      installment {
+        count
+        value
+        interest
+        valueText
+      }
+      extraInfo {
+        key
+        value
+      }
+    }
+    pagination {
+      count
+      current {
+        index
+        proxyUrl
+      }
+      before {
+        index
+        proxyUrl
+      }
+      after {
+        index
+        proxyUrl
+      }
+      next {
+        index
+        proxyUrl
+      }
+      previous {
+        index
+        proxyUrl
+      }
+      first {
+        index
+        proxyUrl
+      }
+      last {
+        index
+        proxyUrl
+      }
+    }
+    options {
+      sorts {
+        field
+        order
+        active
+        proxyUrl
+      }
+      counts {
+        count
+        active
+        proxyUrl
+      }
+    }
+    attributes {
+      key
+      label
+      type
+      visible
+      values {
+        count
+        active
+        proxyUrl
+        key
+        label
+        from
+        to
+      }
+      minValue
+      maxValue
+      active
+      activeFrom
+      activeTo
+      templateUrl
+      proxyUrl
+    }
+    suggestion {
+      searches {
+        term
+      }
+    }
+    correction {
+      text
+      highlighted
+      misspelled
+      correction
+    }
+  }
+}

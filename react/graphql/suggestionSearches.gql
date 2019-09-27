@@ -1,0 +1,13 @@
+query suggestionSearches($store: String!, $term: String!) {
+  suggestionSearches(store: $store, term: $term) {
+    searches {
+      term
+      attributes {
+        key
+        value
+        labelKey
+        labelValue
+      }
+    }
+  }
+}

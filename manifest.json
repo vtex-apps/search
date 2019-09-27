@@ -1,0 +1,46 @@
+{
+  "name": "search",
+  "vendor": "vtex",
+  "version": "0.0.1",
+  "title": "Search",
+  "description": "Search components and functionality for VTEX IO.",
+  "scripts": {
+    "prereleasy": "bash pre.sh"
+  },
+  "builders": {
+    "store": "0.x",
+    "react": "3.x",
+    "styles": "1.x",
+    "graphql": "1.x",
+    "node": "4.x"
+  },
+  "dependencies": {
+    "vtex.native-types": "0.x",
+    "vtex.shipping-estimate-translator": "2.x",
+    "vtex.store-graphql": "2.x",
+    "vtex.store-resources": "0.x",
+    "vtex.styleguide": "9.x",
+    "vtex.store-icons": "0.x",
+    "vtex.modal": "0.x",
+    "vtex.react-portal": "0.x",
+    "vtex.address-form": "4.x",
+    "vtex.product-context": "0.x",
+    "vtex.store-components": "3.x",
+    "vtex.search-result": "3.x",
+    "vtex.store": "2.x",
+    "vtex.product-summary": "2.x"
+  },
+  "policies": [
+    {
+      "name": "vbase-read-write"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "search.biggylabs.com.br",
+        "path": "/*"
+      }
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}

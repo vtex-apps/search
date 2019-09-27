@@ -1,0 +1,14 @@
+{
+  "searchWrapper.new": {
+    "component": "SearchWrapper"
+  },
+  "store.search.new": {
+    "around": ["searchWrapper.new"],
+    "allowed": ["search-result", "search-result-layout"],
+    "context": "SearchContext",
+    "preview": {
+      "type": "grid",
+      "height": 1400
+    }
+  }
+}

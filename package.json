@@ -1,0 +1,24 @@
+{
+  "name": "search",
+  "version": "0.0.1",
+  "description": "Search components and functionality for VTEX IO.",
+  "main": "node/index.ts",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "husky": "^3.0.5",
+    "lint-staged": "^9.4.0",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{jsx?,tsx?,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
