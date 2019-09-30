@@ -1,3 +1,6 @@
+import { Product } from "./product";
+import { fromAttributeResponseKeyToVtexFilter } from "../utils/vtex-utils";
+
 export class VtexSearchResult {
   constructor(
     query,

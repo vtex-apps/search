@@ -1,7 +1,7 @@
 /* Typings for `render-runtime` */
-declare module 'vtex.render-runtime' {
-  import { Component, ComponentType, ReactElement, ReactType } from 'react';
-  export { Helmet } from 'react-helmet';
+declare module "vtex.render-runtime" {
+  import { Component, ComponentType, ReactElement, ReactType } from "react";
+  export { Helmet } from "react-helmet";
 
   export interface NavigationOptions {
     to: string;
@@ -39,6 +39,7 @@ declare module 'vtex.render-runtime' {
   ) => ComponentType<TOriginalProps>;
 
   export const useRuntime: () => {
+    account: string;
     navigate: (options: NavigationOptions) => void;
   };
 }

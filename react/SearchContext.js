@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { BiggyClient } from "./clients/biggy-client";
 import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import { VtexSearchResult } from "./models/vtex-search-result";
+import withAccount from "./withAccount";
 
 export class SearchContext extends Component {
   maxItemsPerPage = 10;
@@ -11,7 +12,7 @@ export class SearchContext extends Component {
   constructor(props) {
     super(props);
     this.state = { page: 1 };
-    this.client = new BiggyClient(this.props.client);
+    this.client = new BiggyClient(this.props.account, this.props.client);
     this.maxItemsPerPage = this.props.maxItemsPerPage || this.maxItemsPerPage;
   }
 
@@ -120,6 +121,7 @@ export class SearchContext extends Component {
         ...vtexSearchResult,
       });
     } catch (e) {
+      console.error(e);
       const vtexSearchResult = new VtexSearchResult.emptySearch();
 
       return React.cloneElement(this.props.children, {
@@ -133,4 +135,4 @@ export class SearchContext extends Component {
   }
 }
 
-export default withApollo(SearchContext);
+export default withAccount(withApollo(SearchContext));

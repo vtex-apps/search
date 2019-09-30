@@ -2,7 +2,6 @@ import ApolloClient, { ApolloQueryResult } from "apollo-client";
 import { IElasticProductText, ISearchProduct } from "../models/search-product";
 import { getCookie, setCookie } from "../utils/dom-utils";
 
-import getConfig from "../graphql/getConfig.gql";
 import searchResult from "../graphql/searchResult.gql";
 import suggestionProducts from "../graphql/suggestionProducts.gql";
 import suggestionSearches from "../graphql/suggestionSearches.gql";
@@ -11,23 +10,15 @@ import topSearches from "../graphql/topSearches.gql";
 export class BiggyClient {
   private historyKey = "biggy-search-history";
 
-  constructor(private client: ApolloClient<any>) {}
-
-  public async config(): Promise<ApolloQueryResult<{ getConfig: IConfig }>> {
-    return this.client.query({
-      query: getConfig,
-    });
-  }
+  constructor(private account: string, private client: ApolloClient<any>) {}
 
   public async topSearches(
     paidNavigation?: boolean,
   ): Promise<ApolloQueryResult<{ topSearches: ISearchesOutput }>> {
-    const { store } = (await this.config()).data.getConfig;
-
     return this.client.query({
       query: topSearches,
       variables: {
-        store,
+        store: this.account,
         paidNavigation,
       },
     });
@@ -36,12 +27,10 @@ export class BiggyClient {
   public async suggestionSearches(
     term: string,
   ): Promise<ApolloQueryResult<{ suggestionSearches: ISearchesOutput }>> {
-    const { store } = (await this.config()).data.getConfig;
-
     return this.client.query({
       query: suggestionSearches,
       variables: {
-        store,
+        store: this.account,
         term,
       },
     });
@@ -52,12 +41,10 @@ export class BiggyClient {
     attributeKey?: string,
     attributeValue?: string,
   ): Promise<ApolloQueryResult<{ suggestionProducts: IProductsOutput }>> {
-    const { store } = (await this.config()).data.getConfig;
-
     return this.client.query({
       query: suggestionProducts,
       variables: {
-        store,
+        store: this.account,
         term,
         attributeKey,
         attributeValue,
@@ -95,12 +82,10 @@ export class BiggyClient {
     operator?: string,
     fuzzy?: string,
   ) {
-    const { store } = (await this.config()).data.getConfig;
-
     return this.client.query({
       query: searchResult,
       variables: {
-        store,
+        store: this.account,
         attributePath,
         query,
         page,
@@ -120,11 +105,6 @@ interface ISearchesOutput {
 interface IProductsOutput {
   products: ISearchProduct[];
   count: number;
-}
-
-interface IConfig {
-  apiKey: string;
-  store: string;
 }
 
 interface ISuggestionQueryResponseSearch {
