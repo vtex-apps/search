@@ -1,6 +1,0 @@
-query getConfig {
-  getConfig {
-    store
-    apiKey
-  }
-}

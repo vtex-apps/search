@@ -28,7 +28,8 @@
     "vtex.store-components": "3.x",
     "vtex.search-result": "3.x",
     "vtex.store": "2.x",
-    "vtex.product-summary": "2.x"
+    "vtex.product-summary": "2.x",
+    "vtex.search-graphql": "0.x"
   },
   "policies": [
     {
