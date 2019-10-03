@@ -50,7 +50,7 @@ by creating a XML document that contains the entire catalog.
 
 This can be accomplished by using the `Catalog > XML Integration` page in the admin.
 
-Create a new XML following closel to the image below:
+Create a new XML following closely to the image below:
 
 ![XML Integration](./docs/images/XML.jpg)
 
