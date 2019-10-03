@@ -87,7 +87,7 @@ export interface ISearchResult {
   query: string;
   operator: string;
   total: number;
-  products: ISearchProduct[];
+  products: ISearchProduct[] | any[];
   pagination: IResultResponsePagination;
   options: ISearchOptions;
   attributes: IAttributeResponseKey[];

@@ -1,4 +1,3 @@
-import { Product } from "./product";
 import { fromAttributeResponseKeyToVtexFilter } from "../utils/vtex-utils";
 
 export class VtexSearchResult {
@@ -13,26 +12,14 @@ export class VtexSearchResult {
     searchResult,
     hasNoResult,
   ) {
-    const products = !!searchResult
-      ? searchResult.products.map(product =>
-          new Product(
-            product.id,
-            product.name,
-            product.url,
-            product.price,
-            product.installment,
-            product.images[0].value,
-            product.extraInfo,
-          ).toSummary(),
-        )
-      : [];
+    const products = searchResult ? searchResult.products : [];
 
-    const biggyFacets =
-      !searchResult || !searchResult.attributes
-        ? []
-        : searchResult.attributes
+    const facets =
+      searchResult && searchResult.attributes
+        ? searchResult.attributes
             .filter(attr => attr.key !== "preco")
-            .map(attr => fromAttributeResponseKeyToVtexFilter(attr));
+            .map(attr => fromAttributeResponseKeyToVtexFilter(attr))
+        : [];
 
     map = map || "s";
 
@@ -51,7 +38,7 @@ export class VtexSearchResult {
         facets: {
           departments: [],
           brands: [],
-          specificationFilters: biggyFacets,
+          specificationFilters: facets,
           categoriesTrees: [],
           priceRanges: [],
         },
