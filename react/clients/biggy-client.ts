@@ -104,13 +104,15 @@ export class BiggyClient {
       result.data.searchResult &&
       result.data.searchResult.products
     ) {
-      const ids = (result.data.searchResult.products as any[]).map(
-        (p: any) => p.id,
-      );
+      const ids = (result.data.searchResult.products as any[])
+        .map((p: any) => p.id)
+        .filter(id => id != null);
 
-      result.data.searchResult.products = (await this.productsById(
-        ids,
-      )).data.productsByIdentifier;
+      if (ids && ids.length > 0) {
+        result.data.searchResult.products = (await this.productsById(
+          ids,
+        )).data.productsByIdentifier;
+      }
     }
 
     return result;
