@@ -73,7 +73,7 @@ export class BiggyClient {
     setCookie(this.historyKey, history.join(","));
   }
 
-  public async searchResult(
+  public searchResult(
     attributePath: string,
     query: string,
     page: number,
