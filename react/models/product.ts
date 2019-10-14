@@ -51,7 +51,7 @@ interface ISkuImage {
             NumberOfInstallments: number;
             Name: string;
           },
-        ];
+        ] | null;
         Price: number;
         ListPrice: number;
         PriceWithoutDiscount: number;
@@ -112,15 +112,15 @@ interface ISkuImage {
           commertialOffer: {
             AvailableQuantity: 1000000,
             discountHighlights: [],
-            Installments: [
+            Installments: this.installment ? [
               {
                 Value: this.installment.value,
                 InterestRate: 0,
                 TotalValuePlusInterestRate: this.price,
                 NumberOfInstallments: this.installment.count,
-                Name: "",
+                Name: '',
               },
-            ],
+            ] : null,
             Price: this.price,
             ListPrice: this.price,
             PriceWithoutDiscount: this.price,
