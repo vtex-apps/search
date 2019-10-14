@@ -11,7 +11,7 @@ export class VtexSearchResult {
     map,
     fetchMore,
     searchResult,
-    hasNoResult,
+    isLoading,
   ) {
         
     const products = !!searchResult
@@ -70,7 +70,7 @@ export class VtexSearchResult {
         facetQuery: "search",
         facetMap: "b",
       },
-      loading: !hasNoResult && !searchResult,
+      loading: isLoading,
       networkStatus: 7,
       recordsFiltered: !searchResult ? 0 : searchResult.total,
     };
@@ -87,8 +87,6 @@ export class VtexSearchResult {
     this.query = query;
     this.showMore = false;
     this.breadcrumbsProps = {};
-    this.fetchMoreLoading = !hasNoResult && !searchResult;
-    this.loading = !hasNoResult && !searchResult;
   }
 
   static emptySearch() {
@@ -101,7 +99,7 @@ export class VtexSearchResult {
       "",
       () => {},
       null,
-      true,
+      false,
     );
   }
 }

@@ -48,21 +48,27 @@ export class SearchContext extends Component {
       prevProps.params.path !== this.props.params.path ||
       prevProps.query.order !== this.props.query.order
     ) {
+      this.setState({ isLoading: true });
+
       this.fetchSearchResult(1).then(result => {
         this.setState({
           page: 1,
           searchResult: result.data.searchResult,
           count: result.data.searchResult.total,
+          isLoading: false,
         });
       });
     }
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true });
+
     this.fetchSearchResult(1).then(result => {
       this.setState({
         searchResult: result.data.searchResult,
         count: result.data.searchResult.total,
+        isLoading: false,
       });
     });
   }
@@ -111,6 +117,7 @@ export class SearchContext extends Component {
         map,
         this.fetchMore.bind(this),
         this.state.searchResult,
+        this.state.isLoading,
       );
 
       return React.cloneElement(children, {

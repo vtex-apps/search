@@ -4,6 +4,7 @@ query ProductsByReference($ids: [ID!]) {
     cacheId
     productId
     productName
+    productReference
     description
     categories
     categoryTree {

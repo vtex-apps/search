@@ -1,5 +1,5 @@
 import ApolloClient, { ApolloQueryResult } from "apollo-client";
-import { ISearchProductText, ISearchProduct } from "../models/search-product";
+import { ISearchProduct, ISearchProductText } from "../models/search-product";
 import { getCookie, setCookie } from "../utils/dom-utils";
 
 import searchResult from "../graphql/searchResult.gql";
@@ -95,7 +95,6 @@ export class BiggyClient {
         fuzzy,
       },
     });
-
   }
 }
 
