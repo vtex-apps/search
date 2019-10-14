@@ -1,4 +1,4 @@
-interface ISkuImage {
+  interface ISkuImage {
     cacheId: string;
     imageId: string;
     imageLabel: string;
@@ -6,12 +6,12 @@ interface ISkuImage {
     imageText: string;
   }
   
-  export interface IExtraInfo {
+  export interface IProductExtraInfo {
     key: string;
     value: string;
   }
   
-  export interface IElasticProductInstallment {
+  export interface IProductInstallment {
     count: number;
     value: number;
     interest: boolean;
@@ -64,11 +64,12 @@ interface ISkuImage {
     constructor(
       public productId: string,
       public name: string,
+      public brand: string,
       public productUrl: string,
       public price: number,
-      public installment: IElasticProductInstallment,
+      public installment: IProductInstallment,
       public primaryImageUrl: string,
-      public extraInfo?: IExtraInfo[],
+      public extraInfo?: IProductExtraInfo[],
       public oldPrice?: number,
       public secondaryImageUrl?: string,
     ) {}
@@ -107,8 +108,8 @@ interface ISkuImage {
         complementName: this.name,
         images: [mainImage],
         seller: {
-          sellerId: "1",
-          sellerName: "Seller Name",
+          sellerId: this.findExtraInfoByKey("sellerId") ||  "1",
+          sellerName: this.findExtraInfoByKey("sellerName") ||  "Seller Name",
           commertialOffer: {
             AvailableQuantity: 1000000,
             discountHighlights: [],
@@ -136,7 +137,7 @@ interface ISkuImage {
         productName: this.name,
         productReference: this.productId,
         linkText: this.productUrl.replace(/\/p$/, ""),
-        brand: this.findExtraInfoByKey("marca") || "",
+        brand: this.brand || this.findExtraInfoByKey("marca") || this.findExtraInfoByKey("brand") || "",
         link: this.productUrl,
         description: this.name,
         items: [],

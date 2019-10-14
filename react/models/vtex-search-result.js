@@ -13,15 +13,17 @@ export class VtexSearchResult {
     searchResult,
     hasNoResult,
   ) {
+        
     const products = !!searchResult
       ? searchResult.products.map(product =>
           new Product(
-            product.id,
+            product.product,
             product.name,
+            product.brand,
             product.url,
             product.price,
             product.installment,
-            product.images[0].value,
+            (product.images && product.images.length > 0) ? product.images[0].value : "",
             product.extraInfo,
           ).toSummary(),
         )

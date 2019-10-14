@@ -1,5 +1,5 @@
 import ApolloClient, { ApolloQueryResult } from "apollo-client";
-import { IElasticProductText, ISearchProduct } from "../models/search-product";
+import { ISearchProductText, ISearchProduct } from "../models/search-product";
 import { getCookie, setCookie } from "../utils/dom-utils";
 
 import searchResult from "../graphql/searchResult.gql";
@@ -111,5 +111,5 @@ interface IProductsOutput {
 interface ISuggestionQueryResponseSearch {
   term: string;
   count: number;
-  attributes: IElasticProductText[];
+  attributes: ISearchProductText[];
 }
