@@ -23,7 +23,9 @@ query searchResult(
     total
     products {
       id
+      product
       name
+      brand
       url
       oldPrice
       price

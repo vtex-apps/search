@@ -1,4 +1,5 @@
 import { fromAttributeResponseKeyToVtexFilter } from "../utils/vtex-utils";
+import { Product } from "./product";
 
 export class VtexSearchResult {
   constructor(
@@ -12,7 +13,21 @@ export class VtexSearchResult {
     searchResult,
     isLoading,
   ) {
-    const products = searchResult ? searchResult.products : [];
+        
+    const products = !!searchResult
+      ? searchResult.products.map(product =>
+          new Product(
+            product.product,
+            product.name,
+            product.brand,
+            product.url,
+            product.price,
+            product.installment,
+            (product.images && product.images.length > 0) ? product.images[0].value : "",
+            product.extraInfo,
+          ).toSummary(),
+        )
+      : [];
 
     const facets =
       searchResult && searchResult.attributes

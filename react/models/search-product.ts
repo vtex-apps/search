@@ -1,4 +1,4 @@
-export interface IElasticProductText {
+export interface ISearchProductText {
   key: string;
   value: string;
   labelKey: string;
@@ -7,38 +7,33 @@ export interface IElasticProductText {
 
 export interface ISearchProduct {
   id: string;
+  product: string;
   name: string;
+  brand: string;
   url: string;
-  images: IElasticProductImage[];
+  images: ISearchProductImage[];
   oldPrice: number;
   price: number;
   oldPriceText: string;
   priceText: string;
-  installment: IElasticProductInstallment;
-  attributes: IElasticProductText[];
-  extraInfo: IExtraInfo[];
+  installment: ISearchProductInstallment;
+  attributes: ISearchProductText[];
+  extraInfo: ISearchProductExtraInfo[];
 }
 
-export interface IElasticProductImage {
+export interface ISearchProductImage {
   name: string;
   value: string;
 }
 
-export interface IElasticProductInstallment {
+export interface ISearchProductInstallment {
   count: number;
   value: number;
   interest: boolean;
   valueText: string;
 }
 
-export interface IElasticProductText {
-  key: string;
-  value: string;
-  labelKey: string;
-  labelValue: string;
-}
-
-export interface IExtraInfo {
+export interface ISearchProductExtraInfo {
   key: string;
   value: string;
 }

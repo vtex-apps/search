@@ -1,13 +1,11 @@
 import ApolloClient, { ApolloQueryResult } from "apollo-client";
-import { IElasticProductText, ISearchProduct } from "../models/search-product";
+import { ISearchProduct, ISearchProductText } from "../models/search-product";
 import { getCookie, setCookie } from "../utils/dom-utils";
 
-import productsById from "../graphql/productsById.gql";
 import searchResult from "../graphql/searchResult.gql";
 import suggestionProducts from "../graphql/suggestionProducts.gql";
 import suggestionSearches from "../graphql/suggestionSearches.gql";
 import topSearches from "../graphql/topSearches.gql";
-import { ISearchResult } from "../models/search-result";
 
 export class BiggyClient {
   private historyKey = "biggy-search-history";
@@ -75,7 +73,7 @@ export class BiggyClient {
     setCookie(this.historyKey, history.join(","));
   }
 
-  public async searchResult(
+  public searchResult(
     attributePath: string,
     query: string,
     page: number,
@@ -84,7 +82,7 @@ export class BiggyClient {
     operator?: string,
     fuzzy?: string,
   ) {
-    const result = await this.client.query<{ searchResult: ISearchResult }>({
+    return this.client.query({
       query: searchResult,
       variables: {
         store: this.account,
@@ -96,32 +94,6 @@ export class BiggyClient {
         operator,
         fuzzy,
       },
-    });
-
-    if (
-      result &&
-      result.data &&
-      result.data.searchResult &&
-      result.data.searchResult.products
-    ) {
-      const ids = (result.data.searchResult.products as any[])
-        .map((p: any) => p.id)
-        .filter(id => id != null);
-
-      if (ids && ids.length > 0) {
-        result.data.searchResult.products = (await this.productsById(
-          ids,
-        )).data.productsByIdentifier;
-      }
-    }
-
-    return result;
-  }
-
-  private async productsById(ids: string[]) {
-    return this.client.query<{ productsByIdentifier: any[] }>({
-      query: productsById,
-      variables: { ids },
     });
   }
 }
@@ -138,5 +110,5 @@ interface IProductsOutput {
 interface ISuggestionQueryResponseSearch {
   term: string;
   count: number;
-  attributes: IElasticProductText[];
+  attributes: ISearchProductText[];
 }
