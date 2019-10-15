@@ -13,7 +13,6 @@ export class VtexSearchResult {
     searchResult,
     isLoading,
   ) {
-        
     const products = !!searchResult
       ? searchResult.products.map(product =>
           new Product(
@@ -23,7 +22,9 @@ export class VtexSearchResult {
             product.url,
             product.price,
             product.installment,
-            (product.images && product.images.length > 0) ? product.images[0].value : "",
+            product.images && product.images.length > 0
+              ? product.images[0].value
+              : "",
             product.extraInfo,
           ).toSummary(),
         )
@@ -47,7 +48,7 @@ export class VtexSearchResult {
           titleTag: null,
           metaTagDescription: null,
           products: products,
-          breadcrumb: [],
+          breadcrumb: [{ name: query, href: `/search?query=${query}` }],
           recordsFiltered: !searchResult ? 0 : searchResult.total,
         },
         facets: {
@@ -65,7 +66,7 @@ export class VtexSearchResult {
         }`,
         map: map,
         orderBy: "",
-        from: (page - 1) * itemsPerPage,
+        from: 0,
         to: itemsPerPage * page - 1,
         facetQuery: "search",
         facetMap: "b",
@@ -77,7 +78,7 @@ export class VtexSearchResult {
 
     this.map = map;
     this.orderBy = orderBy || "";
-    this.from = (page - 1) * itemsPerPage;
+    this.from = 0;
     this.to = itemsPerPage * page - 1;
     this.treePath = "";
     this.preview = true;
