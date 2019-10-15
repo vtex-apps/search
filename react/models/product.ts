@@ -71,8 +71,8 @@ export class Product {
     public price: number,
     public installment: IProductInstallment,
     public primaryImageUrl: string,
+    public oldPrice: number,
     public extraInfo?: IProductExtraInfo[],
-    public oldPrice?: number,
     public secondaryImageUrl?: string,
   ) {}
 
@@ -127,7 +127,7 @@ export class Product {
               ]
             : null,
           Price: this.price,
-          ListPrice: this.price,
+          ListPrice: this.oldPrice || this.price,
           PriceWithoutDiscount: this.price,
         },
       },

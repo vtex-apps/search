@@ -25,6 +25,7 @@ export class VtexSearchResult {
             product.images && product.images.length > 0
               ? product.images[0].value
               : "",
+            product.oldPrice,
             product.extraInfo,
           ).toSummary(),
         )
