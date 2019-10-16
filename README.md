@@ -16,7 +16,7 @@ Add the `store.search.new` block to your `blocks.json`, like:
 ```
 
 This will provide your store with a new route `/search` that will handle all search navigation
-from now on, but first you need to redirect the `search-bar` requests to this new route, using
+from now on, but first, you need to redirect the `search-bar` requests to this new route, using
 the `customPageUrl` prop on the `search-bar` component.
 
 ```json
