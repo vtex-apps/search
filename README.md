@@ -56,3 +56,9 @@ Create a new XML following closely to the image below:
 
 We're working on closely integrating into the VTEX Catalog, so that this step may be bypassed in
 the future!
+
+### API Integration
+
+To ensure that your catalog is up to date, you must generate an 
+[appKey and appToken](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes) 
+and send to biggy@vtex.com.br. 
