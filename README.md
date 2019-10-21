@@ -7,6 +7,8 @@ a more complete search experience.
 
 ### store.search.new
 
+Add the dependencie `vtex.search` to your `manifest.json` file.
+
 Add the `store.search.new` block to your `blocks.json`, like:
 
 ```json
