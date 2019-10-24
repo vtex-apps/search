@@ -5,12 +5,12 @@ a more complete search experience.
 
 :loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
 
-### store.search.new
+### store.search.v2
 
-Add the `store.search.new` block to your `blocks.json`, like:
+Add the `store.search.v2` block to your `blocks.json`, like:
 
 ```json
-"store.search.new": {
+"store.search.v2": {
   "blocks": ["search-result"]
 }
 ```

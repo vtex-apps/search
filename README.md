@@ -5,14 +5,14 @@ a more complete search experience.
 
 :loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
 
-### store.search.new
+### store.search.v2
 
 Add the dependencie `vtex.search` to your `manifest.json` file.
 
-Add the `store.search.new` block to your `blocks.json`, like:
+Add the `store.search.v2` block to your `blocks.json`, like:
 
 ```json
-"store.search.new": {
+"store.search.v2": {
   "blocks": ["search-result"]
 }
 ```
@@ -61,6 +61,6 @@ the future!
 
 ### API Integration
 
-To ensure that your catalog is up to date, you must generate an 
-[appKey and appToken](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes) 
-and send to biggy@vtex.com.br. 
+To ensure that your catalog is up to date, you must generate an
+[appKey and appToken](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes)
+and send to biggy@vtex.com.br.

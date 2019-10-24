@@ -1,9 +1,9 @@
 {
-  "searchWrapper.new": {
+  "searchWrapper.v2": {
     "component": "SearchWrapper"
   },
-  "store.search.new": {
-    "around": ["searchWrapper.new"],
+  "store.search.v2": {
+    "around": ["searchWrapper.v2"],
     "allowed": ["search-result", "search-result-layout"],
     "context": "SearchContext",
     "preview": {
