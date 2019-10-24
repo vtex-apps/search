@@ -1,5 +1,5 @@
 {
-  "store.search.new": {
+  "store.search.v2": {
     "path": "/search/*path"
   }
 }
