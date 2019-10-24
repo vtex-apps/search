@@ -1,145 +1,158 @@
-import { withApollo } from "react-apollo";
-import React, { Component } from "react";
-import { BiggyClient } from "./clients/biggy-client";
-import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
-import { VtexSearchResult } from "./models/vtex-search-result";
-import withAccount from "./withAccount";
+import React, { useMemo } from 'react';
+import { Query } from 'react-apollo';
+import { useRuntime } from 'vtex.render-runtime';
+import searchResultQuery from './graphql/searchResult.gql';
+import { vtexOrderToBiggyOrder } from './utils/vtex-utils';
+import VtexSearchResult from './models/vtex-search-result';
+import logError from './api/log';
 
-export class SearchContext extends Component {
-  maxItemsPerPage = 10;
-  client;
+const triggerSearchQueryEvent = (searchResult) => {
+  const {
+    query, operator, correction, total,
+  } = searchResult;
 
-  constructor(props) {
-    super(props);
-    this.state = { page: 1 };
-    this.client = new BiggyClient(this.props.account, this.props.client);
-    this.maxItemsPerPage = this.props.maxItemsPerPage || this.maxItemsPerPage;
+  const event = new CustomEvent('biggy.search.query', {
+    detail: {
+      query: query === '' ? '<empty>' : query,
+      operator,
+      misspelled: correction && correction.misspelled,
+      match: total,
+    },
+  });
+
+  window.dispatchEvent(event);
+};
+
+const getUrlByAttributePath = (attributePath, map) => {
+  if (!map || !attributePath) {
+    return attributePath;
   }
 
-  fetchSearchResult(page = this.state.page) {
-    const {
-      params: { path: attributePath },
-      query: { query, map, order },
-    } = this.props;
+  const facets = attributePath.split('/');
+  const apiUrlTerms = map
+    .split(',')
+    .slice(1)
+    .map((item, index) => `${item}/${facets[index]}`);
+  return apiUrlTerms.join('/');
+};
 
-    // cria url para a busca
-    let url = attributePath;
-    if (map && attributePath) {
-      const facets = attributePath.split("/");
-      const apiUrlTerms = map
-        .split(",")
-        .slice(1)
-        .map((item, index) => `${item}/${facets[index]}`);
-      url = apiUrlTerms.join("/");
-    }
+const SearchContext = (props) => {
+  const { account, workspace, route } = useRuntime();
 
-    return this.client.searchResult(
-      url,
-      query,
-      page,
-      vtexOrderToBiggyOrder(order),
-      this.maxItemsPerPage,
-    );
-  }
+  const {
+    params: { path: attributePath },
+    query: {
+      query, map, order, operator, fuzzy,
+    },
+  } = props;
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.query.query !== this.props.query.query ||
-      prevProps.params.path !== this.props.params.path ||
-      prevProps.query.order !== this.props.query.order
-    ) {
-      this.setState({ isLoading: true });
+  const url = useMemo(() => getUrlByAttributePath(attributePath, map), [
+    attributePath,
+    map,
+  ]);
 
-      this.fetchSearchResult(1).then(result => {
-        this.setState({
-          page: 1,
-          searchResult: result.data.searchResult,
-          count: result.data.searchResult.total,
-          isLoading: false,
-        });
-      });
-    }
-  }
+  const initialVariables = {
+    query,
+    operator,
+    fuzzy,
+    page: 1,
+    store: account,
+    attributePath: url,
+    sort: vtexOrderToBiggyOrder(order),
+    count: props.maxItemsPerPage,
+  };
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
+  const onFetchMoreFunction = (fetchMore) => ({ variables, updateQuery }) => {
+    const { to } = variables;
+    const page = parseInt(to / props.maxItemsPerPage, 10) + 1;
 
-    this.fetchSearchResult(1).then(result => {
-      this.setState({
-        searchResult: result.data.searchResult,
-        count: result.data.searchResult.total,
-        isLoading: false,
-      });
-    });
-  }
+    return fetchMore({
+      variables: { ...variables, page },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
 
-  fetchMore = wrapper => {
-    this.fetchSearchResult(this.state.page + 1).then(result => {
-      this.setState({
-        page: this.state.page + 1,
-      });
-
-      this.setState({
-        searchResult: {
-          ...this.state.searchResult,
-          products: [
-            ...this.state.searchResult.products,
-            ...result.data.searchResult.products,
-          ],
-        },
-      });
-
-      wrapper.updateQuery(
+        return {
+          ...fetchMoreResult,
+          searchResult: {
+            ...fetchMoreResult.searchResult,
+            products: [
+              ...prev.searchResult.products,
+              ...fetchMoreResult.searchResult.products,
+            ],
+          },
+        };
+      },
+    })
+    /* If the object from updateQuery is not returned, search-result gets an infinite loading.
+      A PR to search-result project is required
+    */
+      .then(() => updateQuery(
         { productSearch: { products: [] } },
         {
           fetchMoreResult: {
             productSearch: { products: [] },
           },
         },
-      );
-    });
+      ));
   };
 
-  render() {
-    try {
-      const {
-        params: { path: attributePath },
-        query: { query, map, order },
-        children,
-      } = this.props;
+  try {
+    return (
+      <Query
+        query={searchResultQuery}
+        variables={initialVariables}
+        onCompleted={(data) => triggerSearchQueryEvent(data.searchResult)}
+      >
+        {({
+          loading, error, data, fetchMore,
+        }) => {
+          if (error) {
+            logError(account, workspace, route.path, error);
+          }
 
-      const vtexSearchResult = new VtexSearchResult(
-        query,
-        this.state.page,
-        this.maxItemsPerPage,
-        order,
-        attributePath,
-        map,
-        this.fetchMore.bind(this),
-        this.state.searchResult,
-        this.state.isLoading,
-      );
+          const vtexSearchResult = error
+            ? VtexSearchResult.emptySearch()
+            : new VtexSearchResult(
+              query,
+              1,
+              props.maxItemsPerPage,
+              order,
+              attributePath,
+              map,
+              onFetchMoreFunction(fetchMore),
+              data.searchResult,
+              loading,
+            );
 
-      return React.cloneElement(children, {
-        searchResult: this.state.searchResult || {
-          query: this.props.params.query,
-        },
-        ...this.props,
-        ...vtexSearchResult,
-      });
-    } catch (e) {
-      console.error(e);
-      const vtexSearchResult = new VtexSearchResult.emptySearch();
+          return React.cloneElement(props.children, {
+            searchResult:
+              error || !data.searchResult
+                ? {
+                  query: props.params.query,
+                }
+                : data.searchResult,
+            ...props,
+            ...vtexSearchResult,
+          });
+        }}
+      </Query>
+    );
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
 
-      return React.cloneElement(this.props.children, {
-        searchResult: {
-          query: this.props.params.query,
-        },
-        ...this.props,
-        ...vtexSearchResult,
-      });
-    }
+    logError(account, workspace, route.path, error);
+
+    const vtexSearchResult = VtexSearchResult.emptySearch();
+
+    return React.cloneElement(props.children, {
+      searchResult: {
+        query: props.params.query,
+      },
+      ...props,
+      ...vtexSearchResult,
+    });
   }
-}
+};
 
-export default withAccount(withApollo(SearchContext));
+export default SearchContext;
