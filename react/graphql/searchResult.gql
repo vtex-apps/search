@@ -35,6 +35,10 @@ query searchResult(
         name
         value
       }
+      categories
+      skus {
+        id
+      }
       installment {
         count
         value

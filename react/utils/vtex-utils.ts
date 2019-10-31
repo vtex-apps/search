@@ -1,10 +1,19 @@
 import { IAttributeResponseKey } from "../models/search-result";
-import { IVtexFilter } from "../models/vtex-search-result-interfaces";
 const decode = require("unescape");
 
 export function fromAttributeResponseKeyToVtexFilter(
   attribute: IAttributeResponseKey,
-): IVtexFilter {
+) {
+  if (attribute.type === "number") {
+    return {
+      link: "/esportes/de-1-a-2000?map=c,priceFrom",
+      linkEncoded: "/esportes/de-1-a-2000?map=c,priceFrom",
+      map: "asdfasdf",
+      name: attribute.label,
+      slug: `de-${attribute.minValue}-a-${attribute.maxValue}`,
+    };
+  }
+
   return {
     name: attribute.label,
     facets: attribute.values.map(value => {

@@ -1,19 +1,17 @@
-import React, { useMemo } from 'react';
-import { Query } from 'react-apollo';
-import { useRuntime } from 'vtex.render-runtime';
-import searchResultQuery from './graphql/searchResult.gql';
-import { vtexOrderToBiggyOrder } from './utils/vtex-utils';
-import VtexSearchResult from './models/vtex-search-result';
-import logError from './api/log';
+import React, { useMemo } from "react";
+import { Query } from "react-apollo";
+import { useRuntime } from "vtex.render-runtime";
+import searchResultQuery from "./graphql/searchResult.gql";
+import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
+import VtexSearchResult from "./models/vtex-search-result";
+import logError from "./api/log";
 
-const triggerSearchQueryEvent = (searchResult) => {
-  const {
-    query, operator, correction, total,
-  } = searchResult;
+const triggerSearchQueryEvent = searchResult => {
+  const { query, operator, correction, total } = searchResult;
 
-  const event = new CustomEvent('biggy.search.query', {
+  const event = new CustomEvent("biggy.search.query", {
     detail: {
-      query: query === '' ? '<empty>' : query,
+      query: query === "" ? "<empty>" : query,
       operator,
       misspelled: correction && correction.misspelled,
       match: total,
@@ -28,22 +26,21 @@ const getUrlByAttributePath = (attributePath, map) => {
     return attributePath;
   }
 
-  const facets = attributePath.split('/');
+  const facets = attributePath.split("/");
   const apiUrlTerms = map
-    .split(',')
+    .split(",")
     .slice(1)
     .map((item, index) => `${item}/${facets[index]}`);
-  return apiUrlTerms.join('/');
+  return apiUrlTerms.join("/");
 };
 
-const SearchContext = (props) => {
-  const { account, workspace, route } = useRuntime();
+const SearchContext = props => {
+  let { account, workspace, route } = useRuntime();
+  account = "paguemenos";
 
   const {
     params: { path: attributePath },
-    query: {
-      query, map, order, operator, fuzzy,
-    },
+    query: { query, map, order, operator, fuzzy },
   } = props;
 
   const url = useMemo(() => getUrlByAttributePath(attributePath, map), [
@@ -62,38 +59,42 @@ const SearchContext = (props) => {
     count: props.maxItemsPerPage,
   };
 
-  const onFetchMoreFunction = (fetchMore) => ({ variables, updateQuery }) => {
+  const onFetchMoreFunction = fetchMore => ({ variables, updateQuery }) => {
     const { to } = variables;
     const page = parseInt(to / props.maxItemsPerPage, 10) + 1;
 
-    return fetchMore({
-      variables: { ...variables, page },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
+    return (
+      fetchMore({
+        variables: { ...variables, page },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return prev;
 
-        return {
-          ...fetchMoreResult,
-          searchResult: {
-            ...fetchMoreResult.searchResult,
-            products: [
-              ...prev.searchResult.products,
-              ...fetchMoreResult.searchResult.products,
-            ],
-          },
-        };
-      },
-    })
-    /* If the object from updateQuery is not returned, search-result gets an infinite loading.
+          return {
+            ...fetchMoreResult,
+            searchResult: {
+              ...fetchMoreResult.searchResult,
+              products: [
+                ...prev.searchResult.products,
+                ...fetchMoreResult.searchResult.products,
+              ],
+            },
+          };
+        },
+      })
+        /* If the object from updateQuery is not returned, search-result gets an infinite loading.
       A PR to search-result project is required
     */
-      .then(() => updateQuery(
-        { productSearch: { products: [] } },
-        {
-          fetchMoreResult: {
-            productSearch: { products: [] },
-          },
-        },
-      ));
+        .then(() =>
+          updateQuery(
+            { productSearch: { products: [] } },
+            {
+              fetchMoreResult: {
+                productSearch: { products: [] },
+              },
+            },
+          ),
+        )
+    );
   };
 
   try {
@@ -101,11 +102,9 @@ const SearchContext = (props) => {
       <Query
         query={searchResultQuery}
         variables={initialVariables}
-        onCompleted={(data) => triggerSearchQueryEvent(data.searchResult)}
+        onCompleted={data => triggerSearchQueryEvent(data.searchResult)}
       >
-        {({
-          loading, error, data, fetchMore,
-        }) => {
+        {({ loading, error, data, fetchMore }) => {
           if (error) {
             logError(account, workspace, route.path, error);
           }
@@ -113,23 +112,23 @@ const SearchContext = (props) => {
           const vtexSearchResult = error
             ? VtexSearchResult.emptySearch()
             : new VtexSearchResult(
-              query,
-              1,
-              props.maxItemsPerPage,
-              order,
-              attributePath,
-              map,
-              onFetchMoreFunction(fetchMore),
-              data.searchResult,
-              loading,
-            );
+                query,
+                1,
+                props.maxItemsPerPage,
+                order,
+                attributePath,
+                map,
+                onFetchMoreFunction(fetchMore),
+                data.searchResult,
+                loading,
+              );
 
           return React.cloneElement(props.children, {
             searchResult:
               error || !data.searchResult
                 ? {
-                  query: props.params.query,
-                }
+                    query: props.params.query,
+                  }
                 : data.searchResult,
             ...props,
             ...vtexSearchResult,

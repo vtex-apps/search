@@ -29,6 +29,7 @@ export interface IProductSummary {
   sku: ISkuItem;
   description: string;
   items: any;
+  categories: string[];
 }
 
 interface ISkuItem {
@@ -37,7 +38,7 @@ interface ISkuItem {
   nameComplete: string;
   complementName: string;
   images: ISkuImage[];
-  seller: {
+  sellers: {
     sellerId: string;
     sellerName: string;
     commertialOffer: {
@@ -58,7 +59,7 @@ interface ISkuItem {
       ListPrice: number;
       PriceWithoutDiscount: number;
     };
-  };
+  }[];
   image: ISkuImage;
 }
 
@@ -72,6 +73,8 @@ export class Product {
     public installment: IProductInstallment,
     public primaryImageUrl: string,
     public oldPrice: number,
+    public categories?: string[],
+    public skus?: any,
     public extraInfo?: IProductExtraInfo[],
     public secondaryImageUrl?: string,
   ) {}
@@ -104,37 +107,48 @@ export class Product {
     };
 
     const sku: ISkuItem = {
-      itemId: this.productId,
+      itemId:
+        this.skus && this.skus.length > 0 ? this.skus[0].id : this.productId,
       name: this.name,
       nameComplete: this.name,
       complementName: this.name,
       images: [mainImage],
-      seller: {
-        sellerId: this.findExtraInfoByKey("sellerId") || "1",
-        sellerName: this.findExtraInfoByKey("sellerName") || "Seller Name",
-        commertialOffer: {
-          AvailableQuantity: 1000000,
-          discountHighlights: [],
-          Installments: this.installment
-            ? [
-                {
-                  Value: this.installment.value,
-                  InterestRate: 0,
-                  TotalValuePlusInterestRate: this.price,
-                  NumberOfInstallments: this.installment.count,
-                  Name: "",
-                },
-              ]
-            : null,
-          Price: this.price,
-          ListPrice: this.oldPrice || this.price,
-          PriceWithoutDiscount: this.price,
+      sellers: [
+        {
+          sellerId: this.findExtraInfoByKey("sellerId") || "1",
+          sellerName: this.findExtraInfoByKey("sellerName") || "Seller Name",
+          commertialOffer: {
+            AvailableQuantity: 1000000,
+            discountHighlights: [],
+            Installments: this.installment
+              ? [
+                  {
+                    Value: this.installment.value,
+                    InterestRate: 0,
+                    TotalValuePlusInterestRate: this.price,
+                    NumberOfInstallments: this.installment.count,
+                    Name: "",
+                  },
+                ]
+              : null,
+            Price: this.price,
+            ListPrice: this.oldPrice || this.price,
+            PriceWithoutDiscount: this.price,
+          },
         },
-      },
+      ],
       image: mainImage,
     };
 
+    const categories: string[] = this.categories
+      ? this.categories.map((_, index: number) => {
+          const subArray = this.categories!.slice(0, index);
+          return `/${subArray.join("/")}/`;
+        })
+      : [];
+
     return {
+      categories,
       sku,
       cacheId: this.name.replace(" ", "-"),
       productId: this.productId,
@@ -148,7 +162,7 @@ export class Product {
         "",
       link: this.productUrl,
       description: this.name,
-      items: [],
+      items: [sku],
     };
   }
 

@@ -1,5 +1,5 @@
-import { fromAttributeResponseKeyToVtexFilter } from '../utils/vtex-utils';
-import { Product } from './product';
+import { fromAttributeResponseKeyToVtexFilter } from "../utils/vtex-utils";
+import { Product } from "./product";
 
 class VtexSearchResult {
   constructor(
@@ -14,34 +14,48 @@ class VtexSearchResult {
     isLoading,
   ) {
     const products = searchResult
-      ? searchResult.products.map((product) => new Product(
-        product.product,
-        product.name,
-        product.brand,
-        product.url,
-        product.price,
-        product.installment,
-        product.images && product.images.length > 0
-          ? product.images[0].value
-          : '',
-        product.oldPrice,
-        product.extraInfo,
-      ).toSummary())
+      ? searchResult.products.map(product =>
+          new Product(
+            product.product,
+            product.name,
+            product.brand,
+            product.url,
+            product.price,
+            product.installment,
+            product.images && product.images.length > 0
+              ? product.images[0].value
+              : "",
+            product.oldPrice,
+            product.categories,
+            product.skus,
+            product.extraInfo,
+          ).toSummary(),
+        )
       : [];
 
-    const facets = searchResult && searchResult.attributes
-      ? searchResult.attributes
-        .filter((attr) => attr.key !== 'preco')
-        .map((attr) => fromAttributeResponseKeyToVtexFilter(attr))
-      : [];
+    let attrPriceRangeIndex;
 
-    const map = mapQuery || 's';
+    const facets =
+      searchResult && searchResult.attributes
+        ? searchResult.attributes.map((attr, idx) => {
+            if (attr.type === "number") attrPriceRangeIndex = idx;
+            return fromAttributeResponseKeyToVtexFilter(attr);
+          })
+        : [];
+
+    const priceRangeFacet =
+      typeof attrPriceRangeIndex === "number"
+        ? facets.splice(attrPriceRangeIndex, 1)
+        : [];
+
+    const map = mapQuery || "s";
 
     this.page = page;
 
     this.searchQuery = {
       fetchMore,
       data: {
+        products,
         productSearch: {
           titleTag: null,
           metaTagDescription: null,
@@ -54,20 +68,20 @@ class VtexSearchResult {
           brands: [],
           specificationFilters: facets,
           categoriesTrees: [],
-          priceRanges: [],
+          priceRanges: priceRangeFacet,
         },
       },
       variables: {
         withFacets: true,
         query: `search${
-          attributePath && attributePath !== '' ? `/${attributePath}` : ''
+          attributePath && attributePath !== "" ? `/${attributePath}` : ""
         }`,
         map,
-        orderBy: '',
+        orderBy: "",
         from: 0,
         to: itemsPerPage * page - 1,
-        facetQuery: 'search',
-        facetMap: 'b',
+        facetQuery: "search",
+        facetMap: "b",
       },
       loading: isLoading,
       networkStatus: 7,
@@ -75,13 +89,13 @@ class VtexSearchResult {
     };
 
     this.map = map;
-    this.orderBy = orderBy || '';
+    this.orderBy = orderBy || "";
     this.from = 0;
     this.to = itemsPerPage * page - 1;
-    this.treePath = '';
+    this.treePath = "";
     this.preview = true;
-    this.querySchema = { maxItemsPerPage: 4, orderByField: orderBy || '' };
-    this.pagination = 'show-more';
+    this.querySchema = { maxItemsPerPage: 4, orderByField: orderBy || "" };
+    this.pagination = "show-more";
     this.params = { term: query };
     this.query = query;
     this.showMore = false;
@@ -90,12 +104,12 @@ class VtexSearchResult {
 
   static emptySearch() {
     return new VtexSearchResult(
-      '',
+      "",
       1,
       this.maxItemsPerPage,
-      'OrderByPriceDESC',
-      '',
-      '',
+      "OrderByPriceDESC",
+      "",
+      "",
       () => {},
       null,
       false,
