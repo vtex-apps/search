@@ -36,7 +36,7 @@ const getUrlByAttributePath = (attributePath, map) => {
 
 const SearchContext = props => {
   let { account, workspace, route } = useRuntime();
-  account = "paguemenos";
+  account = "exitocol";
 
   const {
     params: { path: attributePath },
