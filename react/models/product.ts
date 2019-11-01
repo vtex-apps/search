@@ -44,6 +44,7 @@ interface ISkuItem {
     commertialOffer: {
       AvailableQuantity: number;
       discountHighlights: string[];
+      teasers: any[];
       Installments:
         | [
             {
@@ -120,6 +121,7 @@ export class Product {
           commertialOffer: {
             AvailableQuantity: 1000000,
             discountHighlights: [],
+            teasers: [],
             Installments: this.installment
               ? [
                   {

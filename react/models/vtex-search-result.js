@@ -9,10 +9,13 @@ class VtexSearchResult {
     orderBy,
     attributePath,
     mapQuery,
+    priceRange,
     fetchMore,
-    searchResult,
+    data,
     isLoading,
   ) {
+    const searchResult = data ? data.searchResult : undefined;
+
     const products = searchResult
       ? searchResult.products.map(product =>
           new Product(
@@ -33,20 +36,12 @@ class VtexSearchResult {
         )
       : [];
 
-    let attrPriceRangeIndex;
-
     const facets =
-      searchResult && searchResult.attributes
-        ? searchResult.attributes.map((attr, idx) => {
-            if (attr.type === "number") attrPriceRangeIndex = idx;
-            return fromAttributeResponseKeyToVtexFilter(attr);
-          })
-        : [];
-
-    const priceRangeFacet =
-      typeof attrPriceRangeIndex === "number"
-        ? facets.splice(attrPriceRangeIndex, 1)
-        : [];
+      !searchResult || !searchResult.attributes
+        ? []
+        : searchResult.attributes.map(attr =>
+            fromAttributeResponseKeyToVtexFilter(attr),
+          );
 
     const map = mapQuery || "s";
 
@@ -66,9 +61,11 @@ class VtexSearchResult {
         facets: {
           departments: [],
           brands: [],
-          specificationFilters: facets,
+          specificationFilters: facets.filter(
+            facet => facet.map !== "priceRange",
+          ),
           categoriesTrees: [],
-          priceRanges: priceRangeFacet,
+          priceRanges: facets.filter(facet => facet.map === "priceRange"),
         },
       },
       variables: {
@@ -90,6 +87,7 @@ class VtexSearchResult {
 
     this.map = map;
     this.orderBy = orderBy || "";
+    this.priceRange = priceRange;
     this.from = 0;
     this.to = itemsPerPage * page - 1;
     this.treePath = "";

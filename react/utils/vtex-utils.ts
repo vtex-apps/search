@@ -1,4 +1,5 @@
 import { IAttributeResponseKey } from "../models/search-result";
+
 const decode = require("unescape");
 
 export function fromAttributeResponseKeyToVtexFilter(
@@ -6,9 +7,7 @@ export function fromAttributeResponseKeyToVtexFilter(
 ) {
   if (attribute.type === "number") {
     return {
-      link: "/esportes/de-1-a-2000?map=c,priceFrom",
-      linkEncoded: "/esportes/de-1-a-2000?map=c,priceFrom",
-      map: "asdfasdf",
+      map: "priceRange",
       name: attribute.label,
       slug: `de-${attribute.minValue}-a-${attribute.maxValue}`,
     };
