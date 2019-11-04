@@ -142,7 +142,7 @@ type ElasticProduct {
 A product's image.
 """
 type ElasticProductImage {
-  name: String!
+  name: String
   value: String!
 }
 

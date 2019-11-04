@@ -47,6 +47,7 @@ class VtexSearchResult {
     this.searchQuery = {
       fetchMore,
       data: {
+        products,
         productSearch: {
           titleTag: null,
           metaTagDescription: null,
