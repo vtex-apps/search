@@ -38,7 +38,7 @@ interface ISkuItem {
   nameComplete: string;
   complementName: string;
   images: ISkuImage[];
-  sellers: {
+  sellers: Array<{
     sellerId: string;
     sellerName: string;
     commertialOffer: {
@@ -60,7 +60,7 @@ interface ISkuItem {
       ListPrice: number;
       PriceWithoutDiscount: number;
     };
-  }[];
+  }>;
   image: ISkuImage;
 }
 
