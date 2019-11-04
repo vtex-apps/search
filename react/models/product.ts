@@ -26,9 +26,8 @@ export interface IProductSummary {
   linkText: string;
   brand: string;
   link: string;
-  sku: ISkuItem;
   description: string;
-  items: any;
+  items: ISkuItem[];
   categories: string[];
 }
 
@@ -151,7 +150,6 @@ export class Product {
 
     return {
       categories,
-      sku,
       cacheId: this.name.replace(" ", "-"),
       productId: this.productId,
       productName: this.name,
