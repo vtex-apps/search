@@ -1,6 +1,6 @@
 {
   "name": "search",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Search components and functionality for VTEX IO.",
   "main": "node/index.ts",
   "license": "MIT",

@@ -52,7 +52,7 @@ This can be accomplished by using the `Catalog > XML Integration` page in the ad
 
 Create a new XML following closely to the image below:
 
-![XML Integration](./docs/images/XML.jpg)
+![XML Integration](./images/XML.jpg)
 
 We're working on closely integrating into the VTEX Catalog, so that this step may be bypassed in
 the future!
