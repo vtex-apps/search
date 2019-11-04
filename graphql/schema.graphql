@@ -139,6 +139,17 @@ type ElasticProduct {
 }
 
 """
+A product's seller.
+"""
+type ElasticProductSeller {
+  id: String!
+  oldPrice: Float
+  price: Float
+  stock: Float
+  installment: ElasticProductInstallment
+}
+
+"""
 A product's image.
 """
 type ElasticProductImage {
@@ -185,6 +196,7 @@ type ElasticProductSku {
   oldPriceText: String
   priceText: String
   attributes: [ElasticProductSkuAttribute]
+  sellers: [ElasticProductSeller]
 }
 
 type ElasticProductSkuAttribute {
