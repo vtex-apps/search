@@ -39,7 +39,7 @@ class VtexSearchResult {
     const facets =
       !searchResult || !searchResult.attributes
         ? []
-        : searchResult.attributes.map(attr =>
+        : searchResult.attributes.filter(facet => facet.visible).map(attr =>
             fromAttributeResponseKeyToVtexFilter(attr),
           );
 

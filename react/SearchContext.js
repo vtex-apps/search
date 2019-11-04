@@ -6,8 +6,9 @@ import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
 
-const triggerSearchQueryEvent = searchResult => {
-  const { query, operator, correction, total } = searchResult;
+const triggerSearchQueryEvent = data => {
+  if (!data) return;
+  const { query, operator, correction, total } = data.searchResult;
 
   const event = new CustomEvent("biggy.search.query", {
     detail: {
@@ -42,7 +43,6 @@ const getUrlByAttributePath = (attributePath, map, priceRange) => {
 
 const SearchContext = props => {
   let { account, workspace, route } = useRuntime();
-  account = "exitocol";
 
   const {
     params: { path: attributePath },
@@ -107,7 +107,7 @@ const SearchContext = props => {
     if (!query) throw new Error("Empty search is not allowed");
 
     return (
-      <Query query={searchResultQuery} variables={initialVariables}>
+      <Query query={searchResultQuery} variables={initialVariables} onCompleted={(data) => triggerSearchQueryEvent(data)}>
         {({ loading, error, data, fetchMore }) => {
           if (error) {
             logError(account, workspace, route.path, error);

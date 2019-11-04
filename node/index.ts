@@ -9,7 +9,7 @@ const clients: ClientsConfig<Clients> = {
   options: {
     default: {
       retries: 2,
-      timeout: 2000,
+      timeout: 12000,
     },
     status: {
       memoryCache: new LRUCache<string, any>({ max: 5000 }),
