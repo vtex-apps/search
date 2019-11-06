@@ -141,7 +141,7 @@ export class Product {
             AvailableQuantity: 10000,
             discountHighlights: [],
             teasers: [],
-            Installments: [
+            Installments: installment ? [
               {
                 Value: installment.value,
                 InterestRate: 0,
@@ -149,7 +149,7 @@ export class Product {
                 NumberOfInstallments: installment.count,
                 Name: "",
               },
-            ],
+            ] : null,
             Price: price,
             ListPrice: oldPrice,
             PriceWithoutDiscount: price,
