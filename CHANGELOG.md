@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- BiggyClient
+- `brand`, `categories` and `sellers` to the object sent to `search-result`
+- Pricerange
+
+### Changed
+
+- Object sent to `search-result`
+
 ## [0.1.0] - 2019-10-31
 
 ### Changed
