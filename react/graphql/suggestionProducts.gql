@@ -39,6 +39,25 @@ query suggestionProducts(
         key
         value
       }
+      skus {
+        id
+        name
+        image
+        url
+        oldPrice
+        price
+        sellers {
+          id
+          oldPrice
+          price
+          installment {
+            count
+            value
+            interest
+            valueText
+          }
+        }
+      }
     }
   }
 }

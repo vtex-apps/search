@@ -24,17 +24,17 @@ export interface IProductSku {
   price: number;
   oldPrice: number;
   installment: {
-    count: number,
-    value: number,
+    count: number;
+    value: number;
   };
   sellers: Array<{
     id: string;
     price: number;
     oldPrice: number;
     installment: {
-      count: number,
-      value: number,
-    }
+      count: number;
+      value: number;
+    };
   }>;
 }
 
@@ -49,6 +49,7 @@ export interface IProductSummary {
   description: string;
   items: IProductSummarySku[];
   categories: string[];
+  sku: IProductSummarySku | undefined;
 }
 
 export interface ISeller {
@@ -83,6 +84,7 @@ interface IProductSummarySku {
   images: ISkuImage[];
   sellers: ISeller[];
   image: ISkuImage;
+  seller: ISeller;
 }
 
 export class Product {
@@ -106,7 +108,12 @@ export class Product {
   }
 
   public isAvailable() {
-    return this.price && this.price > 0 && this.skus && this.skus.some(sku => sku.sellers && sku.sellers.length > 0);
+    return (
+      this.price &&
+      this.price > 0 &&
+      this.skus &&
+      this.skus.some(sku => sku.sellers && sku.sellers.length > 0)
+    );
   }
 
   public findExtraInfoByKey(key: string) {
@@ -128,45 +135,54 @@ export class Product {
       imageText: "principal",
     };
 
-    const skus: IProductSummarySku[] = this.skus ? this.skus.map((sku) => {
-      const sellers: ISeller[] = sku.sellers ? sku.sellers.map(seller => {
-        const price = seller.price || sku.price || this.price;
-        const oldPrice = seller.oldPrice || sku.oldPrice || this.oldPrice;
-        const installment = seller.installment || sku.installment || this.installment;
+    const skus: IProductSummarySku[] = this.skus
+      ? this.skus.map(sku => {
+          const sellers: ISeller[] = sku.sellers
+            ? sku.sellers.map(seller => {
+                const price = seller.price || sku.price || this.price;
+                const oldPrice =
+                  seller.oldPrice || sku.oldPrice || this.oldPrice;
+                const installment =
+                  seller.installment || sku.installment || this.installment;
 
-        return {
-          sellerId: seller.id,
-          sellerName: "",
-          commertialOffer: {
-            AvailableQuantity: 10000,
-            discountHighlights: [],
-            teasers: [],
-            Installments: installment ? [
-              {
-                Value: installment.value,
-                InterestRate: 0,
-                TotalValuePlusInterestRate: price,
-                NumberOfInstallments: installment.count,
-                Name: "",
-              },
-            ] : null,
-            Price: price,
-            ListPrice: oldPrice,
-            PriceWithoutDiscount: price,
-          },
-        };
-      }) : [];
+                return {
+                  sellerId: seller.id,
+                  sellerName: "",
+                  commertialOffer: {
+                    AvailableQuantity: 10000,
+                    discountHighlights: [],
+                    teasers: [],
+                    Installments: installment
+                      ? [
+                          {
+                            Value: installment.value,
+                            InterestRate: 0,
+                            TotalValuePlusInterestRate: price,
+                            NumberOfInstallments: installment.count,
+                            Name: "",
+                          },
+                        ]
+                      : null,
+                    Price: price,
+                    ListPrice: oldPrice,
+                    PriceWithoutDiscount: price,
+                  },
+                };
+              })
+            : [];
 
-      return {
-        sellers,
-        itemId: sku.id,
-        name: this.name,
-        nameComplete: this.name,
-        complementName: this.name,
-        images: [mainImage],
-        image: mainImage,
-      };
-    }) : [];
+          return {
+            sellers,
+            seller: sellers[0],
+            itemId: sku.id,
+            name: this.name,
+            nameComplete: this.name,
+            complementName: this.name,
+            images: [mainImage],
+            image: mainImage,
+          };
+        })
+      : [];
 
     const categories: string[] = this.categories
       ? this.categories.map((_, index: number) => {
@@ -190,6 +206,7 @@ export class Product {
       link: this.productUrl,
       description: this.name,
       items: skus,
+      sku: skus.find(sku => sku.sellers && sku.sellers.length > 0),
     };
   }
 

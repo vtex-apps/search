@@ -304,6 +304,10 @@ type SearchProduct {
   installment: ElasticProductInstallment
   attributes: [ElasticProductText]
   extraInfo: [ExtraInfo]
+  brand: String
+  categories: [String]
+  product: String
+  skus: [ElasticProductSku]
 }
 
 type SearchSort {
