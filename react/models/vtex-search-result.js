@@ -13,6 +13,7 @@ class VtexSearchResult {
     fetchMore,
     data,
     isLoading,
+    showPriceRange,
   ) {
     const searchResult = data ? data.searchResult : undefined;
 
@@ -64,7 +65,7 @@ class VtexSearchResult {
             facet => facet.map !== "priceRange",
           ),
           categoriesTrees: [],
-          priceRanges: facets.filter(facet => facet.map === "priceRange"),
+          priceRanges: showPriceRange ? facets.filter(facet => facet.map === "priceRange") : [],
         },
       },
       variables: {

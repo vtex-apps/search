@@ -24,7 +24,7 @@ const triggerSearchQueryEvent = (data) => {
   window.dispatchEvent(event);
 };
 
-const getUrlByAttributePath = (attributePath, map, priceRange) => {
+const getUrlByAttributePath = (attributePath, map, priceRange, priceRangeKey) => {
   const facets = attributePath ? attributePath.split('/') : [];
   const apiUrlTerms = map
     ? map
@@ -35,9 +35,9 @@ const getUrlByAttributePath = (attributePath, map, priceRange) => {
 
   const url = apiUrlTerms.join('/');
 
-  if (priceRange) {
+  if (priceRange && priceRangeKey) {
     const [from, to] = priceRange.split(' TO ');
-    return `${url}/precio/${from}:${to}`;
+    return `${url}/${priceRangeKey}/${from}:${to}`;
   }
 
   return url;
@@ -54,7 +54,7 @@ const SearchContext = (props) => {
   } = props;
 
   const url = useMemo(
-    () => getUrlByAttributePath(attributePath, map, priceRange),
+    () => getUrlByAttributePath(attributePath, map, priceRange, props.priceRangeKey),
     [attributePath, map, priceRange],
   );
 
@@ -134,6 +134,7 @@ const SearchContext = (props) => {
               onFetchMoreFunction(fetchMore),
               data,
               loading,
+              !!props.priceRangeKey
             );
 
           return React.cloneElement(props.children, {
