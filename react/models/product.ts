@@ -59,17 +59,13 @@ export interface ISeller {
     AvailableQuantity: number;
     discountHighlights: string[];
     teasers: any[];
-    Installments:
-      | [
-          {
-            Value: number;
-            InterestRate: number;
-            TotalValuePlusInterestRate: number;
-            NumberOfInstallments: number;
-            Name: string;
-          },
-        ]
-      | null;
+    Installments?: Array<{
+      Value: number;
+      InterestRate: number;
+      TotalValuePlusInterestRate: number;
+      NumberOfInstallments: number;
+      Name: string;
+    }> | null;
     Price: number;
     ListPrice: number;
     PriceWithoutDiscount: number;
