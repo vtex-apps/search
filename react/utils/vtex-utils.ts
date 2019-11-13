@@ -1,6 +1,5 @@
+import decode from "unescape";
 import { IAttributeResponseKey } from "../models/search-result";
-
-const decode = require("unescape");
 
 export function fromAttributeResponseKeyToVtexFilter(
   attribute: IAttributeResponseKey,

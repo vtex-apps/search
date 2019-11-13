@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `brand`, `categories` and `sellers` to the object sent to `search-result`
 - Pricerange
 
+### Fixed
+
+- Error when the data from the search result query was not finished.
+
 ### Changed
 
 - Object sent to `search-result`
