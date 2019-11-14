@@ -1,6 +1,6 @@
 {
-  "name": "search-bar",
-  "version": "0.1.0",
+  "name": "react",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.15",
@@ -13,32 +13,43 @@
     "apollo-client": "2.4.12",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
-    "eslint": "^6.5.1",
-    "eslint-config-vtex-react": "^4.1.0",
-    "global": "^4.4.0",
     "graphql": "14.1.1",
-    "node-sass": "^4.12.0",
-    "node-sass-glob-importer": "^5.3.2",
     "prop-types": "^15.7.2",
-    "pubsub-js": "^1.7.0",
     "react": "^16.8.6",
     "react-apollo": "2.4.1",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "superagent": "^5.1.0",
     "typescript": "3.5.2",
     "unescape": "^1.0.1",
     "vtex": "^2.77.11"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint '**/*.js'"
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-vtex-react": "^4.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1",
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "tslint-config-prettier": "^1.18.0"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "scripts": {
+    "lint": "eslint . && tslint -p ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,md,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
@@ -51,13 +62,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "prettier": "^1.18.2",
-    "tslint": "^5.18.0"
   }
 }

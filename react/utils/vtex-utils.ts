@@ -1,6 +1,6 @@
+import unescape from "unescape";
 import { IAttributeResponseKey } from "../models/search-result";
 import { IVtexFilter } from "../models/vtex-search-result-interfaces";
-const decode = require("unescape");
 
 export function fromAttributeResponseKeyToVtexFilter(
   attribute: IAttributeResponseKey,
@@ -10,7 +10,7 @@ export function fromAttributeResponseKeyToVtexFilter(
     facets: attribute.values.map(value => {
       return {
         quantity: value.count,
-        name: decode(value.label),
+        name: unescape(value.label),
         link: value.proxyUrl,
         linkEncoded: value.proxyUrl,
         map: attribute.key,

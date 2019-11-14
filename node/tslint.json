@@ -1,15 +1,8 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint:recommended"],
+  "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
   "jsRules": {},
-  "rules": {
-    "max-line-length": false,
-    "object-literal-sort-keys": false,
-    "max-classes-per-file": false,
-    "arrow-parens": false,
-    "completed-docs": false,
-    "interface-name": false
-  },
+  "rules": {},
   "linterOptions": {
     "exclude": ["node_modules"]
   }

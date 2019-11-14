@@ -18,7 +18,7 @@ export class Clients extends IOClients {
   }
 }
 
-export default class BiggySearchClient extends ExternalClient {
+export class BiggySearchClient extends ExternalClient {
   constructor(context: IOContext, options?: InstanceOptions) {
     super("http://search.biggylabs.com.br/search-api/v1/", context, options);
   }

@@ -3,11 +3,8 @@
     "browser": true,
     "es6": true
   },
-  "extends": "airbnb",
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "plugins": ["react"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -15,15 +12,9 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react"],
   "rules": {
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0
-  },
-  "overrides": [
-    {
-      "files": ["commons/*.js", "components/*.js"]
-    }
-  ]
+  }
 }
