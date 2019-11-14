@@ -35,6 +35,19 @@ query searchResult(
         name
         value
       }
+      categories
+      skus {
+        id
+        sellers {
+          id
+          oldPrice
+          price
+          installment {
+            count
+            value
+          }
+        }
+      }
       installment {
         count
         value

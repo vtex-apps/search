@@ -3,8 +3,13 @@
     "component": "SearchWrapper"
   },
   "store.search.v2": {
-    "around": ["searchWrapper.v2"],
-    "allowed": ["search-result", "search-result-layout"],
+    "around": [
+      "searchWrapper.v2"
+    ],
+    "allowed": [
+      "search-result",
+      "search-result-layout"
+    ],
     "context": "SearchContext",
     "preview": {
       "type": "grid",

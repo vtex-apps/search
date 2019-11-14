@@ -139,10 +139,21 @@ type ElasticProduct {
 }
 
 """
+A product's seller.
+"""
+type ElasticProductSeller {
+  id: String!
+  oldPrice: Float
+  price: Float
+  stock: Float
+  installment: ElasticProductInstallment
+}
+
+"""
 A product's image.
 """
 type ElasticProductImage {
-  name: String!
+  name: String
   value: String!
 }
 
@@ -185,6 +196,7 @@ type ElasticProductSku {
   oldPriceText: String
   priceText: String
   attributes: [ElasticProductSkuAttribute]
+  sellers: [ElasticProductSeller]
 }
 
 type ElasticProductSkuAttribute {
@@ -292,6 +304,10 @@ type SearchProduct {
   installment: ElasticProductInstallment
   attributes: [ElasticProductText]
   extraInfo: [ExtraInfo]
+  brand: String
+  categories: [String]
+  product: String
+  skus: [ElasticProductSku]
 }
 
 type SearchSort {

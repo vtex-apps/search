@@ -6,8 +6,9 @@ import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
 
-const triggerSearchQueryEvent = searchResult => {
-  const { query, operator, correction, total } = searchResult;
+const triggerSearchQueryEvent = data => {
+  if (!data) return;
+  const { query, operator, correction, total } = data.searchResult;
 
   const event = new CustomEvent("biggy.search.query", {
     detail: {
@@ -21,17 +22,28 @@ const triggerSearchQueryEvent = searchResult => {
   window.dispatchEvent(event);
 };
 
-const getUrlByAttributePath = (attributePath, map) => {
-  if (!map || !attributePath) {
-    return attributePath;
+const getUrlByAttributePath = (
+  attributePath,
+  map,
+  priceRange,
+  priceRangeKey,
+) => {
+  const facets = attributePath ? attributePath.split("/") : [];
+  const apiUrlTerms = map
+    ? map
+        .split(",")
+        .slice(1)
+        .map((item, index) => `${item}/${facets[index]}`)
+    : [];
+
+  const url = apiUrlTerms.join("/");
+
+  if (priceRange && priceRangeKey) {
+    const [from, to] = priceRange.split(" TO ");
+    return `${url}/${priceRangeKey}/${from}:${to}`;
   }
 
-  const facets = attributePath.split("/");
-  const apiUrlTerms = map
-    .split(",")
-    .slice(1)
-    .map((item, index) => `${item}/${facets[index]}`);
-  return apiUrlTerms.join("/");
+  return url;
 };
 
 const SearchContext = props => {
@@ -39,13 +51,19 @@ const SearchContext = props => {
 
   const {
     params: { path: attributePath },
-    query: { query, map, order, operator, fuzzy },
+    query: { query, map, order, operator, fuzzy, priceRange },
   } = props;
 
-  const url = useMemo(() => getUrlByAttributePath(attributePath, map), [
-    attributePath,
-    map,
-  ]);
+  const url = useMemo(
+    () =>
+      getUrlByAttributePath(
+        attributePath,
+        map,
+        priceRange,
+        props.priceRangeKey,
+      ),
+    [attributePath, map, priceRange],
+  );
 
   const initialVariables = {
     query,
@@ -66,7 +84,7 @@ const SearchContext = props => {
       fetchMore({
         variables: { ...variables, page },
         updateQuery: (prev, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return prev;
+          if (!fetchMoreResult || page === 1) return prev;
 
           return {
             ...fetchMoreResult,
@@ -97,34 +115,39 @@ const SearchContext = props => {
   };
 
   try {
+    if (!query) throw new Error("Empty search is not allowed");
+
     return (
       <Query
         query={searchResultQuery}
         variables={initialVariables}
-        onCompleted={data => triggerSearchQueryEvent(data.searchResult)}
+        onCompleted={data => triggerSearchQueryEvent(data)}
       >
         {({ loading, error, data, fetchMore }) => {
           if (error) {
             logError(account, workspace, route.path, error);
           }
 
-          const vtexSearchResult = error
-            ? VtexSearchResult.emptySearch()
-            : new VtexSearchResult(
-                query,
-                1,
-                props.maxItemsPerPage,
-                order,
-                attributePath,
-                map,
-                onFetchMoreFunction(fetchMore),
-                data.searchResult,
-                loading,
-              );
+          const vtexSearchResult =
+            error || !data
+              ? VtexSearchResult.emptySearch()
+              : new VtexSearchResult(
+                  query,
+                  1,
+                  props.maxItemsPerPage,
+                  order,
+                  attributePath,
+                  map,
+                  priceRange,
+                  onFetchMoreFunction(fetchMore),
+                  data,
+                  loading,
+                  !!props.priceRangeKey,
+                );
 
           return React.cloneElement(props.children, {
             searchResult:
-              error || !data.searchResult
+              error || !data
                 ? {
                     query: props.params.query,
                   }

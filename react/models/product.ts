@@ -18,6 +18,26 @@ export interface IProductInstallment {
   valueText: string;
 }
 
+export interface IProductSku {
+  id: string;
+  references: string;
+  price: number;
+  oldPrice: number;
+  installment: {
+    count: number;
+    value: number;
+  };
+  sellers: {
+    id: string;
+    price: number;
+    oldPrice: number;
+    installment: {
+      count: number;
+      value: number;
+    };
+  }[];
+}
+
 export interface IProductSummary {
   cacheId: string;
   productId: string;
@@ -26,40 +46,43 @@ export interface IProductSummary {
   linkText: string;
   brand: string;
   link: string;
-  sku: ISkuItem;
   description: string;
-  items: any;
+  items: IProductSummarySku[];
+  categories: string[];
+  sku: IProductSummarySku | undefined;
 }
 
-interface ISkuItem {
+export interface ISeller {
+  sellerId: string;
+  sellerName: string;
+  commertialOffer: {
+    AvailableQuantity: number;
+    discountHighlights: string[];
+    teasers: any[];
+    Installments:
+      | {
+          Value: number;
+          InterestRate: number;
+          TotalValuePlusInterestRate: number;
+          NumberOfInstallments: number;
+          Name: string;
+        }[]
+      | null;
+    Price: number;
+    ListPrice: number;
+    PriceWithoutDiscount: number;
+  };
+}
+
+interface IProductSummarySku {
   itemId: string;
   name: string;
   nameComplete: string;
   complementName: string;
   images: ISkuImage[];
-  seller: {
-    sellerId: string;
-    sellerName: string;
-    commertialOffer: {
-      AvailableQuantity: number;
-      discountHighlights: string[];
-      Installments:
-        | [
-            {
-              Value: number;
-              InterestRate: number;
-              TotalValuePlusInterestRate: number;
-              NumberOfInstallments: number;
-              Name: string;
-            },
-          ]
-        | null;
-      Price: number;
-      ListPrice: number;
-      PriceWithoutDiscount: number;
-    };
-  };
+  sellers: ISeller[];
   image: ISkuImage;
+  seller: ISeller;
 }
 
 export class Product {
@@ -72,6 +95,8 @@ export class Product {
     public installment: IProductInstallment,
     public primaryImageUrl: string,
     public oldPrice: number,
+    public categories?: string[],
+    public skus?: IProductSku[],
     public extraInfo?: IProductExtraInfo[],
     public secondaryImageUrl?: string,
   ) {}
@@ -81,7 +106,12 @@ export class Product {
   }
 
   public isAvailable() {
-    return this.price && this.price > 0;
+    return (
+      this.price &&
+      this.price > 0 &&
+      this.skus &&
+      this.skus.some(sku => sku.sellers && sku.sellers.length > 0)
+    );
   }
 
   public findExtraInfoByKey(key: string) {
@@ -103,39 +133,64 @@ export class Product {
       imageText: "principal",
     };
 
-    const sku: ISkuItem = {
-      itemId: this.productId,
-      name: this.name,
-      nameComplete: this.name,
-      complementName: this.name,
-      images: [mainImage],
-      seller: {
-        sellerId: this.findExtraInfoByKey("sellerId") || "1",
-        sellerName: this.findExtraInfoByKey("sellerName") || "Seller Name",
-        commertialOffer: {
-          AvailableQuantity: 1000000,
-          discountHighlights: [],
-          Installments: this.installment
-            ? [
-                {
-                  Value: this.installment.value,
-                  InterestRate: 0,
-                  TotalValuePlusInterestRate: this.price,
-                  NumberOfInstallments: this.installment.count,
-                  Name: "",
-                },
-              ]
-            : null,
-          Price: this.price,
-          ListPrice: this.oldPrice || this.price,
-          PriceWithoutDiscount: this.price,
-        },
-      },
-      image: mainImage,
-    };
+    const skus: IProductSummarySku[] = this.skus
+      ? this.skus.map(sku => {
+          const sellers: ISeller[] = sku.sellers
+            ? sku.sellers.map(seller => {
+                const price = seller.price || sku.price || this.price;
+                const oldPrice =
+                  seller.oldPrice || sku.oldPrice || this.oldPrice;
+                const installment =
+                  seller.installment || sku.installment || this.installment;
+
+                return {
+                  sellerId: seller.id,
+                  sellerName: "",
+                  commertialOffer: {
+                    AvailableQuantity: 10000,
+                    discountHighlights: [],
+                    teasers: [],
+                    Installments: installment
+                      ? [
+                          {
+                            Value: installment.value,
+                            InterestRate: 0,
+                            TotalValuePlusInterestRate: price,
+                            NumberOfInstallments: installment.count,
+                            Name: "",
+                          },
+                        ]
+                      : null,
+                    Price: price,
+                    ListPrice: oldPrice,
+                    PriceWithoutDiscount: price,
+                  },
+                };
+              })
+            : [];
+
+          return {
+            sellers,
+            seller: sellers[0],
+            itemId: sku.id,
+            name: this.name,
+            nameComplete: this.name,
+            complementName: this.name,
+            images: [mainImage],
+            image: mainImage,
+          };
+        })
+      : [];
+
+    const categories: string[] = this.categories
+      ? this.categories.map((_, index: number) => {
+          const subArray = this.categories!.slice(0, index);
+          return `/${subArray.join("/")}/`;
+        })
+      : [];
 
     return {
-      sku,
+      categories,
       cacheId: this.name.replace(" ", "-"),
       productId: this.productId,
       productName: this.name,
@@ -148,7 +203,8 @@ export class Product {
         "",
       link: this.productUrl,
       description: this.name,
-      items: [],
+      items: skus,
+      sku: skus.find(sku => sku.sellers && sku.sellers.length > 0),
     };
   }
 
