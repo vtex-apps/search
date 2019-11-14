@@ -27,7 +27,7 @@ export interface IProductSku {
     count: number;
     value: number;
   };
-  sellers: Array<{
+  sellers: {
     id: string;
     price: number;
     oldPrice: number;
@@ -35,7 +35,7 @@ export interface IProductSku {
       count: number;
       value: number;
     };
-  }>;
+  }[];
 }
 
 export interface IProductSummary {
@@ -59,13 +59,15 @@ export interface ISeller {
     AvailableQuantity: number;
     discountHighlights: string[];
     teasers: any[];
-    Installments?: Array<{
-      Value: number;
-      InterestRate: number;
-      TotalValuePlusInterestRate: number;
-      NumberOfInstallments: number;
-      Name: string;
-    }> | null;
+    Installments:
+      | {
+          Value: number;
+          InterestRate: number;
+          TotalValuePlusInterestRate: number;
+          NumberOfInstallments: number;
+          Name: string;
+        }[]
+      | null;
     Price: number;
     ListPrice: number;
     PriceWithoutDiscount: number;

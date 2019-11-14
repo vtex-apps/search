@@ -2,7 +2,9 @@
   "defaultSeverity": "error",
   "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
   "jsRules": {},
-  "rules": {},
+  "rules": {
+    "import-name": false
+  },
   "linterOptions": {
     "exclude": ["node_modules"]
   }
