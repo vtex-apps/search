@@ -10,7 +10,7 @@ export const search = {
 
     result.products.forEach((product: any) => {
       const mapInfo = product.extraInfo || {};
-      const extraInfo: Array<{ key: string; value: string }> = [];
+      const extraInfo: { key: string; value: string }[] = [];
 
       // Transform ExtraInfo from Map<String, String> to Array<KeyValueTuple>.
       for (const key of Object.keys(mapInfo)) {
