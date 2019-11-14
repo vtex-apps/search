@@ -38,7 +38,7 @@
     "tslint-config-prettier": "^1.18.0"
   },
   "scripts": {
-    "lint": "eslint . && tslint -p ."
+    "lint": "eslint . && tslint './**/*.ts' -e './node_modules/**/*'"
   },
   "husky": {
     "hooks": {

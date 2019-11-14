@@ -14,7 +14,7 @@
     "typescript": "3.5.2"
   },
   "scripts": {
-    "lint": "tslint -p ."
+    "lint": "tslint './**/*.ts' -e './node_modules/**/*'"
   },
   "author": "",
   "license": "MIT"

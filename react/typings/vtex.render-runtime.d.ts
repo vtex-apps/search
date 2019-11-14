@@ -1,4 +1,5 @@
 /* Typings for `render-runtime` */
+// tslint:disable:variable-name
 declare module "vtex.render-runtime" {
   import { Component, ComponentType, ReactElement, ReactType } from "react";
   export { Helmet } from "react-helmet";
