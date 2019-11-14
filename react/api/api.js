@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axionsInstance = axios.create({
-  baseURL: 'https://search.biggylabs.com.br/search-api/v1',
+  baseURL: "https://search.biggylabs.com.br/search-api/v1",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 

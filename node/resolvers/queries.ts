@@ -1,5 +1,5 @@
 import { Apps, IOContext } from "@vtex/api";
-import BiggySearchClient from "../clients";
+import { BiggySearchClient } from "../clients";
 
 declare var process: {
   env: {

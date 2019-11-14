@@ -1,4 +1,4 @@
-import decode from "unescape";
+import unescape from "unescape";
 import { IAttributeResponseKey } from "../models/search-result";
 
 export function fromAttributeResponseKeyToVtexFilter(
@@ -17,7 +17,7 @@ export function fromAttributeResponseKeyToVtexFilter(
     facets: attribute.values.map(value => {
       return {
         quantity: value.count,
-        name: decode(value.label),
+        name: unescape(value.label),
         link: value.proxyUrl,
         linkEncoded: value.proxyUrl,
         map: attribute.key,

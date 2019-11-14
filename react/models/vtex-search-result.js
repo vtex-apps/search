@@ -65,7 +65,9 @@ class VtexSearchResult {
             facet => facet.map !== "priceRange",
           ),
           categoriesTrees: [],
-          priceRanges: showPriceRange ? facets.filter(facet => facet.map === "priceRange") : [],
+          priceRanges: showPriceRange
+            ? facets.filter(facet => facet.map === "priceRange")
+            : [],
         },
       },
       variables: {
