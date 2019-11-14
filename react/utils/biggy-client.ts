@@ -10,7 +10,7 @@ export default class BiggyClient {
 
   constructor(private client: ApolloClient<any>) {}
 
-  async topSearches(
+  public async topSearches(
     store: string,
     paidNavigation?: boolean,
   ): Promise<ApolloQueryResult<{ topSearches: ISearchesOutput }>> {
@@ -23,7 +23,7 @@ export default class BiggyClient {
     });
   }
 
-  async suggestionSearches(
+  public async suggestionSearches(
     store: string,
     term: string,
   ): Promise<ApolloQueryResult<{ suggestionSearches: ISearchesOutput }>> {
@@ -36,7 +36,7 @@ export default class BiggyClient {
     });
   }
 
-  async suggestionProducts(
+  public async suggestionProducts(
     store: string,
     term: string,
     attributeKey?: string,
@@ -53,13 +53,13 @@ export default class BiggyClient {
     });
   }
 
-  searchHistory(): string[] {
+  public searchHistory(): string[] {
     const history = getCookie(this.historyKey) || "";
 
     return history.split(",").filter(x => !!x);
   }
 
-  prependSearchHistory(term: string, limit: number = 5) {
+  public prependSearchHistory(term: string, limit: number = 5) {
     if (term == null || term.trim() === "") {
       return;
     }
