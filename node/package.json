@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.ts",
   "dependencies": {
-    "@vtex/api": "^3.55.0"
+    "@types/ramda": "^0.26.36",
+    "@vtex/api": "^3.55.0",
+    "ramda": "^0.26.1"
   },
   "devDependencies": {
     "prettier": "^1.18.2",

@@ -260,6 +260,7 @@ type ResultResponse {
   attributes: [AttributeResponseKey]
   suggestion: SuggestionSearchesOutput
   correction: PhraseSuggestion
+  redirect: String
 }
 
 type ResultResponsePagination {

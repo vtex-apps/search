@@ -34,6 +34,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Initial release.
-
-[0.2.0]: https://github.com/vtex-apps/search/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/vtex-apps/search/releases/tag/v0.1.0
