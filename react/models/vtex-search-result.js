@@ -25,11 +25,13 @@ class VtexSearchResult {
             product.brand,
             product.url,
             product.price,
+            product.priceText,
             product.installment,
             product.images && product.images.length > 0
               ? product.images[0].value
               : "",
             product.oldPrice,
+            product.oldPriceText,
             product.categories,
             product.skus,
             product.extraInfo,
