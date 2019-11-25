@@ -1,5 +1,5 @@
 import { SearchResultInput } from "../commons/inputs";
-import { IContext } from "./queries";
+import { IContext } from "..";
 
 export const search = {
   searchResult: async (_: any, args: SearchResultInput, ctx: IContext) => {

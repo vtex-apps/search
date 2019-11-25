@@ -1,6 +1,4 @@
 type Query {
-  getConfig: GetConfigResponse @cacheControl(scope: PUBLIC, maxAge: MEDIUM)
-
   """
   Get top searches for a given store.
 
@@ -48,11 +46,6 @@ type Query {
     operator: String
     fuzzy: Int
   ): ResultResponse
-}
-
-type GetConfigResponse {
-  apiKey: String
-  store: String
 }
 
 """

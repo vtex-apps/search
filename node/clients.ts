@@ -3,6 +3,7 @@ import {
   InstanceOptions,
   IOClients,
   IOContext,
+  CacheType,
 } from "@vtex/api";
 import {
   SearchResultInput,
@@ -54,6 +55,7 @@ export class BiggySearchClient extends ExternalClient {
         value: attributeValue,
       },
       metric: "suggestion-products",
+      cacheable: CacheType.None,
     });
   }
 
@@ -77,6 +79,7 @@ export class BiggySearchClient extends ExternalClient {
         fuzzy,
       },
       metric: "search-result",
+      cacheable: CacheType.None,
     });
   }
 }

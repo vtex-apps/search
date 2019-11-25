@@ -20,6 +20,7 @@ export default class BiggyClient {
         store,
         paidNavigation,
       },
+      fetchPolicy: "network-only",
     });
   }
 
@@ -33,6 +34,7 @@ export default class BiggyClient {
         store,
         term,
       },
+      fetchPolicy: "network-only",
     });
   }
 
@@ -50,6 +52,7 @@ export default class BiggyClient {
         attributeKey,
         attributeValue,
       },
+      fetchPolicy: "network-only",
     });
   }
 

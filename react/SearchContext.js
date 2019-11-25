@@ -122,6 +122,7 @@ const SearchContext = props => {
         query={searchResultQuery}
         variables={initialVariables}
         onCompleted={data => triggerSearchQueryEvent(data)}
+        fetchPolicy={"network-only"}
       >
         {({ loading, error, data, fetchMore }) => {
           if (error) {

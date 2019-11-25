@@ -1,4 +1,4 @@
-import { IContext } from "./queries";
+import { IContext } from "..";
 
 import {
   SuggestionProductsInput,
