@@ -22,7 +22,7 @@ the `customPageUrl` prop on the `search-bar` component.
 ```json
 "search-bar": {
   "props": {
-    "customSearchPageUrl": "/search?query=${term}"
+    "customSearchPageUrl": "/search?_query=${term}"
   }
 }
 ```
