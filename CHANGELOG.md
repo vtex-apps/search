@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Change querystring from `query` to `_query`
 
+## [0.2.3] - 2019-11-25
+
+## [0.2.2] - 2019-11-25
+
+## [0.2.1] - 2019-11-21
+
+### Added
+
+- `docs` builder.
+
 ## [0.2.0] - 2019-11-14
 
 ### Added

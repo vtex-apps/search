@@ -1,7 +1,7 @@
 {
   "name": "search",
   "vendor": "vtex",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "scripts": {
@@ -12,7 +12,8 @@
     "react": "3.x",
     "styles": "1.x",
     "graphql": "1.x",
-    "node": "4.x"
+    "node": "4.x",
+    "docs": "0.x"
   },
   "dependencies": {
     "vtex.native-types": "0.x",
