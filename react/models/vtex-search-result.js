@@ -57,7 +57,7 @@ class VtexSearchResult {
           titleTag: null,
           metaTagDescription: null,
           products,
-          breadcrumb: [{ name: query, href: `/search?query=${query}` }],
+          breadcrumb: [{ name: query, href: `/search?_query=${query}` }],
           recordsFiltered: !searchResult ? 0 : searchResult.total,
         },
         facets: {
