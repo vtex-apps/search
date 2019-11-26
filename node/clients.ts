@@ -66,6 +66,7 @@ export class BiggySearchClient extends ExternalClient {
     sort,
     operator,
     fuzzy,
+    leap,
   }: SearchResultInput): Promise<any> {
     return this.http.get<any>(`${store}/api/search/${attributePath || ""}`, {
       params: {
@@ -75,6 +76,7 @@ export class BiggySearchClient extends ExternalClient {
         sort,
         operator,
         fuzzy,
+        bgy_leap: leap ? true : undefined,
       },
       metric: "search-result",
     });

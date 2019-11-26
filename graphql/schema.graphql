@@ -47,6 +47,7 @@ type Query {
     sort: String
     operator: String
     fuzzy: Int
+    leap: Boolean
   ): ResultResponse
 }
 
