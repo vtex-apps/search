@@ -8,17 +8,14 @@ const useRedirect = () => {
   useEffect(() => {
     if (redirect) {
       const originRedirect = redirect.replace(/(http(s)?:)?\/\//, "");
-      const origin = document.location.origin.replace(/(http(s)?:)?\/\//, "");
+      const origin = window.location.origin.replace(/(http(s)?:)?\/\//, "");
 
       if (originRedirect.startsWith(origin)) {
         navigate({
           to: originRedirect.replace(origin, ""),
         });
       } else {
-        navigate({
-          to: originRedirect,
-          fallbackToWindowLocation: true,
-        });
+        window.location.href = redirect;
       }
     }
   }, [redirect]);
