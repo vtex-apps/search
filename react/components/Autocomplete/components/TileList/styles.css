@@ -1,0 +1,39 @@
+.tileList {
+  display: none;
+  width: calc(100% - 231px);
+  vertical-align: top;
+  border-left: 1px solid #eee;
+}
+
+.tileList ul {
+  padding: 0;
+}
+
+.tileListTitle {
+  margin-bottom: 5px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0054a5;
+  text-transform: uppercase;
+}
+
+.tileListItem {
+  display: inline-block;
+  width: 33%;
+}
+
+.tileListSeeMore {
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  font-size: 13px;
+  color: #787878;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1024px) {
+  .tileList {
+    display: inline-block;
+  }
+}

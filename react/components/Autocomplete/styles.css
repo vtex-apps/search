@@ -1,0 +1,17 @@
+.biggy-autocomplete {
+  position: absolute;
+  transition: opacity 0.15s ease-in 0.05s, max-height 0.3s ease-out,
+    padding 0.6s ease-out;
+  padding: 20px 0 10px 0;
+  max-height: 630px;
+  webkit-box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  overflow: hidden;
+}
+
+.biggy-js-container--hidden {
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+}

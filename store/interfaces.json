@@ -15,5 +15,8 @@
       "type": "grid",
       "height": 1400
     }
+  },
+  "autocomplete-result-list.v2": {
+    "component": "Autocomplete"
   }
 }
