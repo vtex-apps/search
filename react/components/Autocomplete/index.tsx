@@ -13,6 +13,7 @@ interface AutoCompleteProps {
   isOpen: boolean;
   runtime: { account: string };
   inputValue: string;
+  queryFromHover: { key: string; value: string };
 }
 
 interface AutoCompleteState {
@@ -242,13 +243,15 @@ class AutoComplete extends React.Component<
       : "";
 
     return (
-      <section
-        ref={this.autocompleteRef}
-        // tslint:disable-next-line: max-line-length
-        className={`${stylesCss["biggy-autocomplete"]} ${hiddenClass}`}
-      >
-        {this.renderContent()}
-      </section>
+      <div style={{ width: "50vw" }}>
+        <section
+          ref={this.autocompleteRef}
+          // tslint:disable-next-line: max-line-length
+          className={`${stylesCss["biggy-autocomplete"]} ${hiddenClass} w-100`}
+        >
+          {this.renderContent()}
+        </section>
+      </div>
     );
   }
 }
