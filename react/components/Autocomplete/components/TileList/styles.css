@@ -1,12 +1,14 @@
 .tileList {
-  display: none;
-  width: calc(100% - 231px);
+  display: flex;
+  flex: 2;
   vertical-align: top;
   border-left: 1px solid #eee;
 }
 
 .tileList ul {
   padding: 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .tileListTitle {
@@ -20,7 +22,6 @@
 
 .tileListItem {
   display: inline-block;
-  width: 33%;
 }
 
 .tileListSeeMore {

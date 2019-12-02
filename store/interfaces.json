@@ -17,6 +17,7 @@
     }
   },
   "autocomplete-result-list.v2": {
-    "component": "Autocomplete"
+    "component": "Autocomplete",
+    "required": ["product-summary"]
   }
 }

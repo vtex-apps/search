@@ -14,6 +14,10 @@ interface TileListProps {
 
 export class TileList extends React.Component<TileListProps> {
   render() {
+    if (this.props.products.length === 0) {
+      return null;
+    }
+
     const unseenProductsCount = Math.max(
       this.props.totalProducts - this.props.shelfProductCount,
       0,
@@ -26,7 +30,7 @@ export class TileList extends React.Component<TileListProps> {
         ) : null}
 
         <ul className={styles.tileListList}>
-          {this.props.products.slice(0, 3).map((product, index) => (
+          {this.props.products.map((product, index) => (
             <li key={index} className={styles.tileListItem}>
               <ExtensionPoint
                 id="product-summary"

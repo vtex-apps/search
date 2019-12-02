@@ -17,6 +17,6 @@ export interface AttributeItem {
   key: string;
 }
 
-export function instaceOfAttributeItem(object: any): object is AttributeItem {
+export function instanceOfAttributeItem(object: any): object is AttributeItem {
   return "groupValue" in object;
 }

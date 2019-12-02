@@ -1,6 +1,6 @@
 .itemList {
   display: inline-block;
-  width: 50%;
+  flex: 1;
   vertical-align: top;
   font-family: Open Sans, Roboto, sans-serif;
 }
@@ -64,7 +64,6 @@
 }
 
 .itemList--suggestion {
-  width: 230px;
 }
 
 .itemList--history {

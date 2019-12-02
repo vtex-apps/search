@@ -10,6 +10,7 @@ interface ItemListProps {
   showTitle: boolean;
   modifier?: string;
   onItemHover?: (item: Item | AttributeItem) => void;
+  showTitleOnEmpty?: boolean;
 }
 
 interface ItemListState {
@@ -72,6 +73,10 @@ export class ItemList extends React.Component<ItemListProps> {
   }
 
   render() {
+    if (this.props.items.length === 0 && !this.props.showTitleOnEmpty) {
+      return null;
+    }
+
     const modifier = this.props.modifier
       ? stylesCss[`itemList--${this.props.modifier}`]
       : "";

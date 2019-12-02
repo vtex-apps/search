@@ -5,6 +5,11 @@ import searchResultQuery from "./graphql/searchResult.gql";
 import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
+import BiggyClient from "./utils/biggy-client";
+
+const saveTermInHistory = term => {
+  new BiggyClient().prependSearchHistory(term);
+};
 
 const triggerSearchQueryEvent = data => {
   if (!data) return;
@@ -121,7 +126,10 @@ const SearchContext = props => {
       <Query
         query={searchResultQuery}
         variables={initialVariables}
-        onCompleted={data => triggerSearchQueryEvent(data)}
+        onCompleted={data => {
+          triggerSearchQueryEvent(data);
+          saveTermInHistory(initialVariables.query);
+        }}
       >
         {({ loading, error, data, fetchMore }) => {
           if (error) {

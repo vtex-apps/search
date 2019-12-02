@@ -2,18 +2,30 @@ import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { withApollo, WithApolloClient } from "react-apollo";
 import { ItemList } from "./components/ItemList/ItemList";
-import { Item } from "./components/ItemList/types";
+import {
+  Item,
+  instanceOfAttributeItem,
+  AttributeItem,
+} from "./components/ItemList/types";
 import { TileList } from "./components/TileList/TileList";
 import stylesCss from "./styles.css";
 import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
 
+const MAX_TOP_SEARCHES_DEFAULT = 5;
+const MAX_SUGGESTED_TERMS_DEFAULT = 5;
+const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3;
+const MAX_HISTORY_DEFAULT = 5;
+
 interface AutoCompleteProps {
   isOpen: boolean;
   runtime: { account: string };
   inputValue: string;
-  queryFromHover: { key: string; value: string };
+  maxTopSearches: number;
+  maxSuggestedTerms: number;
+  maxSuggestedProducts: number;
+  maxHistory: number;
 }
 
 interface AutoCompleteState {
@@ -23,6 +35,8 @@ interface AutoCompleteState {
   products: Product[];
   totalProducts: number;
   isFocused: boolean;
+  queryFromHover: { key?: string; value?: string };
+  dynamicTerm: string;
 }
 
 class AutoComplete extends React.Component<
@@ -32,19 +46,22 @@ class AutoComplete extends React.Component<
   autocompleteRef: React.RefObject<any>;
   client: BiggyClient;
 
+  public readonly state: AutoCompleteState = {
+    topSearchedItems: [],
+    history: [],
+    products: [],
+    suggestionItems: [],
+    isFocused: false,
+    totalProducts: 0,
+    queryFromHover: {},
+    dynamicTerm: "",
+  };
+
   constructor(props: WithApolloClient<AutoCompleteProps>) {
     super(props);
 
     this.client = new BiggyClient(this.props.client);
     this.autocompleteRef = React.createRef();
-
-    this.state = {
-      topSearchedItems: [],
-      history: [],
-      products: [],
-      isFocused: false,
-      totalProducts: 0,
-    };
   }
 
   componentDidMount() {
@@ -56,17 +73,22 @@ class AutoComplete extends React.Component<
     return prevProps.inputValue !== this.props.inputValue;
   }
 
-  componentDidUpdate(
-    prevProps: AutoCompleteProps,
-    _: AutoCompleteState,
-    __: any,
-  ) {
-    const { inputValue } = this.props;
-
+  componentDidUpdate(prevProps: AutoCompleteProps) {
     if (this.shouldUpdate(prevProps)) {
+      const { inputValue } = this.props;
+
+      this.setState({
+        dynamicTerm: inputValue,
+      });
+
       if (inputValue === null || inputValue === "") {
         this.updateTopSearches();
         this.updateHistory();
+
+        this.setState({
+          suggestionItems: [],
+          products: [],
+        });
       } else {
         this.updateSuggestions().then(() => this.updateProducts());
       }
@@ -75,12 +97,13 @@ class AutoComplete extends React.Component<
 
   async updateSuggestions() {
     const result = await this.client.suggestionSearches(
-      this.props.runtime.account,
+      "exitocol",
       this.props.inputValue,
     );
     const { searches } = result.data.suggestionSearches;
+    const { maxSuggestedTerms = MAX_SUGGESTED_TERMS_DEFAULT } = this.props;
 
-    const items = searches.map(query => {
+    const items = searches.slice(0, maxSuggestedTerms).map(query => {
       const attributes = query.attributes || [];
 
       return {
@@ -107,47 +130,64 @@ class AutoComplete extends React.Component<
   }
 
   async updateProducts() {
-    // const term = this.props.inputValue;
-    // if (!term) {
-    //   this.setState({
-    //     products: [],
-    //     totalProducts: 0,
-    //   });
-    //   return;
-    // }
-    // const result = await this.client.suggestionProducts(
-    //   this.props.runtime.account,
-    //   term,
-    //   query.key,
-    //   query.value,
-    // );
-    // const { suggestionProducts } = result.data;
-    // const products = suggestionProducts.products.map(
-    //   product =>
-    //     new Product(
-    //       product.id,
-    //       product.name,
-    //       product.url,
-    //       product.price,
-    //       product.installment,
-    //       product.images && product.images.length > 0
-    //         ? product.images[0].value
-    //         : '',
-    //       product.oldPrice,
-    //       product.extraInfo,
-    //     ),
-    // );
-    // this.setState({
-    //   products,
-    //   totalProducts: suggestionProducts.count,
-    // });
+    const term = this.state.dynamicTerm;
+    const { queryFromHover } = this.state;
+
+    if (!term) {
+      this.setState({
+        products: [],
+        totalProducts: 0,
+      });
+      return;
+    }
+
+    const result = await this.client.suggestionProducts(
+      "exitocol",
+      term,
+      queryFromHover ? queryFromHover.key : undefined,
+      queryFromHover ? queryFromHover.value : undefined,
+    );
+    const { suggestionProducts } = result.data;
+
+    const {
+      maxSuggestedProducts = MAX_SUGGESTED_PRODUCTS_DEFAULT,
+    } = this.props;
+
+    const products = suggestionProducts.products
+      .slice(0, maxSuggestedProducts)
+      .map(
+        product =>
+          new Product(
+            product.id,
+            product.name,
+            product.brand,
+            product.url,
+            product.price,
+            product.priceText,
+            product.installment,
+            product.images && product.images.length > 0
+              ? product.images[0].value
+              : "",
+            product.oldPrice,
+            product.oldPriceText,
+            product.categories,
+            product.skus,
+            product.extraInfo,
+          ),
+      );
+
+    this.setState({
+      products,
+      totalProducts: suggestionProducts.count,
+    });
   }
 
   async updateTopSearches() {
-    const result = await this.client.topSearches(this.props.runtime.account);
+    const result = await this.client.topSearches("exitocol");
     const { searches } = result.data.topSearches;
+    const { maxTopSearches = MAX_TOP_SEARCHES_DEFAULT } = this.props;
 
-    const topSearchedItems = searches.map(
+    const topSearchedItems = searches.slice(0, maxTopSearches).map(
       (query, index) =>
         ({
           prefix: `${index + 1}º`,
@@ -160,18 +200,43 @@ class AutoComplete extends React.Component<
   }
 
   updateHistory() {
-    const history = this.client.searchHistory().map((item: string) => {
-      return {
-        label: item,
-        value: item,
-        link: `/search?query=${item}`,
-        icon: faHistory,
-      };
-    });
+    const history = this.client
+      .searchHistory()
+      .slice(0, this.props.maxHistory || MAX_HISTORY_DEFAULT)
+      .map((item: string) => {
+        return {
+          label: item,
+          value: item,
+          link: `/search?query=${item}`,
+          icon: faHistory,
+        };
+      });
 
     this.setState({
       history,
     });
+  }
+
+  updateQueryByItemHover(item: Item | AttributeItem) {
+    if (instanceOfAttributeItem(item)) {
+      this.setState({
+        dynamicTerm: item.groupValue,
+        queryFromHover: {
+          key: item.key,
+          value: item.value,
+        },
+      });
+    } else {
+      this.setState({
+        dynamicTerm: item.value,
+        queryFromHover: {
+          key: undefined,
+          value: undefined,
+        },
+      });
+    }
+
+    this.updateProducts();
   }
 
   renderSuggestions() {
@@ -186,16 +251,15 @@ class AutoComplete extends React.Component<
         items={this.state.suggestionItems || []}
         modifier="suggestion"
         showTitle={!hasSuggestion}
-        onItemHover={() => {
-          console.log("hover");
-        }}
+        onItemHover={this.updateQueryByItemHover.bind(this)}
+        showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
       />
     );
   }
 
   contentWhenQueryIsEmpty() {
     return (
-      <div>
+      <>
         <ItemList
           modifier="top-search"
           title={"NEEDSINTL"}
@@ -209,23 +273,25 @@ class AutoComplete extends React.Component<
           items={this.state.history || []}
           showTitle={false}
         />
-      </div>
+      </>
     );
   }
 
   contentWhenQueryIsNotEmpty() {
     return (
-      <div>
+      <>
         {this.renderSuggestions()}
         <TileList
           term={this.props.inputValue || ""}
-          shelfProductCount={3}
+          shelfProductCount={
+            this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
+          }
           title={"NEEDSINTL"}
           products={this.state.products || []}
           showTitle={false}
           totalProducts={this.state.totalProducts || 0}
         />
-      </div>
+      </>
     );
   }
 
@@ -237,10 +303,22 @@ class AutoComplete extends React.Component<
       : this.contentWhenQueryIsEmpty();
   }
 
+  hasContent() {
+    const { topSearchedItems, suggestionItems, history, products } = this.state;
+
+    return (
+      topSearchedItems.length > 0 ||
+      suggestionItems.length > 0 ||
+      history.length > 0 ||
+      products.length > 0
+    );
+  }
+
   render() {
-    const hiddenClass = !this.props.isOpen
-      ? stylesCss["biggy-js-container--hidden"]
-      : "";
+    const hiddenClass =
+      !this.props.isOpen || !this.hasContent()
+        ? stylesCss["biggy-js-container--hidden"]
+        : "";
 
     return (
       <div style={{ width: "50vw" }}>
