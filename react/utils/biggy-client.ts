@@ -62,7 +62,6 @@ export default class BiggyClient {
   }
 
   public prependSearchHistory(term: string, limit: number = 5) {
-    console.log("here we go");
     if (term == null || term.trim() === "") {
       return;
     }

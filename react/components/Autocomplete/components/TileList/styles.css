@@ -8,7 +8,6 @@
 .tileList ul {
   padding: 0;
   display: flex;
-  flex-direction: row;
 }
 
 .tileListTitle {
@@ -16,12 +15,12 @@
   padding: 0 20px;
   font-size: 14px;
   font-weight: 600;
-  color: #0054a5;
   text-transform: uppercase;
 }
 
 .tileListItem {
   display: inline-block;
+  flex: 1;
 }
 
 .tileListSeeMore {

@@ -56,13 +56,13 @@ export class ItemList extends React.Component<ItemListProps> {
         {item.attributes.map((attribute, index) => (
           <li
             key={index}
-            className={stylesCss.itemListSubItem}
+            className={`${stylesCss.itemListSubItem} c-on-base pointer`}
             onMouseOver={e => this.handleMouseOver(e, attribute)}
             onMouseOut={() => this.handleMouseOut()}
           >
             <Link
               to={`/search/${attribute.value}`}
-              query={`query=${item.value}&map=s,${attribute.key}`}
+              query={`_query=${item.value}&map=s,${attribute.key}`}
             >
               {attribute.label}
             </Link>
@@ -84,18 +84,20 @@ export class ItemList extends React.Component<ItemListProps> {
     return (
       <article className={`${stylesCss.itemList} ${modifier}`}>
         {this.props.showTitle ? (
-          <h1 className={stylesCss.itemListTitle}>{this.props.title}</h1>
+          <h1 className={`${stylesCss.itemListTitle} c-on-base`}>
+            {this.props.title}
+          </h1>
         ) : null}
         <ol className={stylesCss.itemListList}>
           {this.props.items.map(item => {
             return (
               <li
-                key={item.value}
+                key={item.label}
                 className={`${stylesCss.itemListItem}`}
                 onMouseOver={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
               >
-                <Link to={item.link} query={`query=${item.value}`}>
+                <Link to={item.link} query={`_query=${item.value}`}>
                   {item.icon ? (
                     <span className={stylesCss.itemListIcon}>
                       <FontAwesomeIcon icon={item.icon} />
@@ -107,7 +109,7 @@ export class ItemList extends React.Component<ItemListProps> {
                       {item.prefix}
                     </span>
                   ) : null}
-                  <span>{item.value}</span>
+                  <span className="c-on-base">{item.value}</span>
                 </Link>
                 {this.renderAttributes(item)}
               </li>

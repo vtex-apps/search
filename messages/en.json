@@ -1,0 +1,8 @@
+{
+    "store/topSearches": "Top Searches",
+    "store/history": "Search History",
+    "store/suggestions" : "Suggestions",
+    "store/emptySuggestion": "No Suggestions",
+    "store/seeMore": "See more {count} products",
+    "store/suggestedProducts": "Products for {term}"
+}

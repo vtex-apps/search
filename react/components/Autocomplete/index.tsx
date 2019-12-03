@@ -12,11 +12,18 @@ import stylesCss from "./styles.css";
 import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
+import { injectIntl } from "react-intl";
+import { IconClose } from "vtex.styleguide";
 
-const MAX_TOP_SEARCHES_DEFAULT = 5;
+const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
 const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3;
 const MAX_HISTORY_DEFAULT = 5;
+
+export enum ProductLayout {
+  Horizontal = "HORIZONTAL",
+  Vertical = "VERTICAL",
+}
 
 interface AutoCompleteProps {
   isOpen: boolean;
@@ -26,6 +33,11 @@ interface AutoCompleteProps {
   maxSuggestedTerms: number;
   maxSuggestedProducts: number;
   maxHistory: number;
+  width: number;
+  productLayout: ProductLayout;
+  hideTitles: boolean;
+  historyFirst: boolean;
+  intl: any;
 }
 
 interface AutoCompleteState {
@@ -95,6 +107,25 @@ class AutoComplete extends React.Component<
     }
   }
 
+  highlightTerm(label: string, query: string) {
+    const splitedLabel = label.split(query);
+
+    return (
+      <>
+        {splitedLabel.map((str: string, index: number) => {
+          return (
+            <>
+              {str}
+              {index !== splitedLabel.length - 1 ? (
+                <span className="b">{query}</span>
+              ) : null}
+            </>
+          );
+        })}
+      </>
+    );
+  }
+
   async updateSuggestions() {
     const result = await this.client.suggestionSearches(
       "exitocol",
@@ -111,7 +142,7 @@ class AutoComplete extends React.Component<
         attributes: attributes.map(att => ({
           label: att.labelValue,
           value: att.value,
-          link: `/search/${att.key}/${att.value}?query=${query.term}`,
+          link: `/search/${att.key}/${att.value}?_query=${query.term}`,
           groupValue: query.term,
           key: att.key,
         })),
@@ -120,9 +151,9 @@ class AutoComplete extends React.Component<
 
     const suggestionItems: Item[] = items.map(suggestion => ({
       label: suggestion.term,
-      value: suggestion.term,
+      value: this.highlightTerm(suggestion.term, this.props.inputValue),
       groupValue: suggestion.term,
-      link: `/search?query=${suggestion.term}`,
+      link: `/search?_query=${suggestion.term}`,
       attributes: suggestion.attributes,
     }));
 
@@ -192,7 +223,7 @@ class AutoComplete extends React.Component<
         ({
           prefix: `${index + 1}º`,
           value: query.term,
-          link: `/search?query=${query.term}`,
+          link: `/search?_query=${query.term}`,
         } as Item),
     );
 
@@ -207,7 +238,7 @@ class AutoComplete extends React.Component<
         return {
           label: item,
           value: item,
-          link: `/search?query=${item}`,
+          link: `/search?_query=${item}`,
           icon: faHistory,
         };
       });
@@ -228,7 +259,7 @@ class AutoComplete extends React.Component<
       });
     } else {
       this.setState({
-        dynamicTerm: item.value,
+        dynamicTerm: item.label,
         queryFromHover: {
           key: undefined,
           value: undefined,
@@ -243,14 +274,16 @@ class AutoComplete extends React.Component<
     const hasSuggestion =
       !!this.state.suggestionItems && this.state.suggestionItems.length > 0;
 
-    const title = hasSuggestion ? "Sugestões" : "Sem sugestões";
+    const titleMessageId = hasSuggestion
+      ? "store/suggestions"
+      : "store/emptySuggestion";
 
     return (
       <ItemList
-        title={title}
+        title={this.props.intl.formatMessage({ id: titleMessageId })}
         items={this.state.suggestionItems || []}
         modifier="suggestion"
-        showTitle={!hasSuggestion}
+        showTitle={!hasSuggestion || !this.props.hideTitles}
         onItemHover={this.updateQueryByItemHover.bind(this)}
         showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
       />
@@ -259,21 +292,26 @@ class AutoComplete extends React.Component<
 
   contentWhenQueryIsEmpty() {
     return (
-      <>
+      <div
+        className={stylesCss["history-and-top-wrapper"]}
+        style={{
+          flexDirection: this.props.historyFirst ? "row-reverse" : "row",
+        }}
+      >
         <ItemList
           modifier="top-search"
-          title={"NEEDSINTL"}
+          title={this.props.intl.formatMessage({ id: "store/topSearches" })}
           items={this.state.topSearchedItems || []}
-          showTitle={false}
+          showTitle={!this.props.hideTitles}
         />
 
         <ItemList
           modifier="history"
-          title={"NEEDSINTL"}
+          title={this.props.intl.formatMessage({ id: "store/history" })}
           items={this.state.history || []}
-          showTitle={false}
+          showTitle={!this.props.hideTitles}
         />
-      </>
+      </div>
     );
   }
 
@@ -286,10 +324,15 @@ class AutoComplete extends React.Component<
           shelfProductCount={
             this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
           }
-          title={"NEEDSINTL"}
+          title={this.props.intl.formatMessage(
+            { id: "store/suggestedProducts" },
+            { term: this.props.inputValue },
+          )}
           products={this.state.products || []}
-          showTitle={false}
+          showTitle={!this.props.hideTitles}
           totalProducts={this.state.totalProducts || 0}
+          layout={this.props.productLayout}
+          intl={this.props.intl}
         />
       </>
     );
@@ -321,17 +364,26 @@ class AutoComplete extends React.Component<
         : "";
 
     return (
-      <div style={{ width: "50vw" }}>
+      <div style={{ width: `${this.props.width | 50}vw` }}>
         <section
           ref={this.autocompleteRef}
           // tslint:disable-next-line: max-line-length
           className={`${stylesCss["biggy-autocomplete"]} ${hiddenClass} w-100`}
+          style={{
+            flexDirection:
+              this.props.productLayout === ProductLayout.Horizontal
+                ? "column"
+                : "row",
+          }}
         >
           {this.renderContent()}
+          <button className={stylesCss["close-btn"]}>
+            <IconClose />
+          </button>
         </section>
       </div>
     );
   }
 }
 
-export default withApollo(withRuntime(AutoComplete));
+export default injectIntl(withApollo(withRuntime(AutoComplete)));
