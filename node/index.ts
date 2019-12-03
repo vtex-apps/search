@@ -1,7 +1,6 @@
 import { ClientsConfig, LRUCache, Service } from "@vtex/api";
 import { Clients } from "./clients";
 import { autocomplete } from "./resolvers/autocomplete";
-import { queries } from "./resolvers/queries";
 import { search } from "./resolvers/search";
 
 const clients: ClientsConfig<Clients> = {
@@ -23,7 +22,6 @@ export default new Service({
     resolvers: {
       Query: {
         ...autocomplete,
-        ...queries,
         ...search,
       },
     },

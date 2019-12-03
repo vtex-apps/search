@@ -1,6 +1,4 @@
 type Query {
-  getConfig: GetConfigResponse @cacheControl(scope: PUBLIC, maxAge: MEDIUM)
-
   """
   Get top searches for a given store.
 
@@ -22,7 +20,7 @@ type Query {
     term: String!
     attributeKey: String
     attributeValue: String
-  ): SuggestionProductsOutput
+  ): SuggestionProductsOutput @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get attribute keys for a store.
@@ -47,7 +45,7 @@ type Query {
     sort: String
     operator: String
     fuzzy: Int
-  ): ResultResponse
+  ): ResultResponse @cacheControl(scope: PUBLIC, maxAge: SHORT)
 }
 
 type GetConfigResponse {

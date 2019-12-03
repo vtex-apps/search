@@ -1,21 +1,21 @@
-export interface TopSearchesInput {
+interface TopSearchesInput {
   store: string;
   paidNavigation?: boolean;
 }
 
-export interface SuggestionSearchesInput {
+interface SuggestionSearchesInput {
   store: string;
   term: string;
 }
 
-export interface SuggestionProductsInput {
+interface SuggestionProductsInput {
   store: string;
   term: string;
   attributeKey?: string;
   attributeValue?: string;
 }
 
-export interface SearchResultInput {
+interface SearchResultInput {
   store: string;
   attributePath: string;
   query: string;

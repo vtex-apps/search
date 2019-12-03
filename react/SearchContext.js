@@ -1,10 +1,16 @@
 import React, { useMemo } from "react";
 import { Query } from "react-apollo";
+import { clone, compose, map as mapF, path, pathOr } from "ramda";
 import { useRuntime } from "vtex.render-runtime";
-import searchResultQuery from "./graphql/searchResult.gql";
-import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
+import {
+  vtexOrderToBiggyOrder,
+  fromAttributeResponseKeyToVtexFilter,
+} from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
+
+import searchResultQuery from "./graphql/searchResult.gql";
+import productsByIdQuery from "./graphql/productsById.gql";
 
 const triggerSearchQueryEvent = data => {
   if (!data) return;
@@ -114,55 +120,12 @@ const SearchContext = props => {
     );
   };
 
-  try {
-    if (!_query) throw new Error("Empty search is not allowed");
-
-    return (
-      <Query
-        query={searchResultQuery}
-        variables={initialVariables}
-        onCompleted={data => triggerSearchQueryEvent(data)}
-      >
-        {({ loading, error, data, fetchMore }) => {
-          if (error) {
-            logError(account, workspace, route.path, error);
-          }
-
-          const vtexSearchResult =
-            error || !data
-              ? VtexSearchResult.emptySearch()
-              : new VtexSearchResult(
-                  _query,
-                  1,
-                  props.maxItemsPerPage,
-                  order,
-                  attributePath,
-                  map,
-                  priceRange,
-                  onFetchMoreFunction(fetchMore),
-                  data,
-                  loading,
-                  !!props.priceRangeKey,
-                );
-
-          return React.cloneElement(props.children, {
-            searchResult:
-              error || !data
-                ? {
-                    query: _query,
-                  }
-                : data.searchResult,
-            ...props,
-            ...vtexSearchResult,
-          });
-        }}
-      </Query>
-    );
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-
-    logError(account, workspace, route.path, error);
+  const emptySearch = error => {
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      logError(account, workspace, route.path, error);
+    }
 
     const vtexSearchResult = VtexSearchResult.emptySearch();
 
@@ -173,7 +136,133 @@ const SearchContext = props => {
       ...props,
       ...vtexSearchResult,
     });
+  };
+
+  if (!_query) {
+    return emptySearch(new Error("Empty search is not allowed"));
   }
+
+  return (
+    <Query
+      query={searchResultQuery}
+      variables={initialVariables}
+      onCompleted={data => triggerSearchQueryEvent(data)}
+    >
+      {searchResult => {
+        if (!searchResult.data) {
+          return emptySearch();
+        }
+
+        const productIds = mapF(
+          path(["product"]),
+          pathOr([], ["data", "searchResult", "products"], searchResult),
+        );
+
+        return (
+          <Query
+            query={productsByIdQuery}
+            variables={{ ids: productIds }}
+            fetchPolicy="network-only"
+          >
+            {productsById => {
+              if (!productsById.data) {
+                return emptySearch();
+              }
+
+              const searchResultCopy = clone(searchResult);
+
+              const facets = pathOr(
+                [],
+                ["data", "searchResult", "attributes"],
+                searchResultCopy,
+              )
+                .filter(facet => facet.visible)
+                .map(attr => fromAttributeResponseKeyToVtexFilter(attr));
+
+              const recordsFiltered = pathOr(
+                0,
+                ["data", "searchResult", "total"],
+                searchResultCopy,
+              );
+
+              searchResultCopy.data = {
+                productSearch: {
+                  products: productsById.data.productsByIdentifier,
+                  breadcrumb: [
+                    { name: _query, href: `/search?_query=${_query}` },
+                  ],
+                  recordsFiltered,
+                },
+                facets: {
+                  departments: [],
+                  brands: [],
+                  specificationFilters: facets.filter(
+                    facet => facet.map !== "priceRange",
+                  ),
+                  categoriesTrees: [],
+                  priceRanges: props.priceRangeKey
+                    ? facets.filter(facet => facet.map === "priceRange")
+                    : [],
+                },
+                recordsFiltered,
+              };
+
+              searchResultCopy.variables = {
+                withFacets: true,
+                query: `search${
+                  attributePath && attributePath !== ""
+                    ? `/${attributePath}`
+                    : ""
+                }`,
+                map: map || "s",
+                orderBy: "",
+                from: 0,
+                to: props.maxItemsPerPage * initialVariables.page - 1,
+                facetQuery: "search",
+                facetMap: "b",
+              };
+
+              searchResultCopy.loading =
+                searchResult.loading || productsById.loading;
+              searchResultCopy.fetchMore = compose(
+                searchResult.fetchMore,
+                onFetchMoreFunction,
+              );
+              searchResultCopy.refetch = () =>
+                searchResult.refetch(searchResult.variables);
+
+              // const vtexSearchResult = new VtexSearchResult(
+              //   _query,
+              //   productsById.data.productsByIdentifier,
+              //   1,
+              //   props.maxItemsPerPage,
+              //   order,
+              //   attributePath,
+              //   map,
+              //   priceRange,
+              //   onFetchMoreFunction(searchResult.fetchMore),
+              //   searchResult,
+              //   searchResult.loading && productsById.loading,
+              //   !!props.priceRangeKey,
+              // );
+
+              return React.cloneElement(props.children, {
+                ...props,
+                priceRange,
+                map: map || "s",
+                orderBy: order || "",
+                pagination: "show-more",
+                searchResultOriginal: searchResult,
+                searchResult: searchResult.data.searchResult,
+                searchQuery: searchResultCopy,
+                loading: searchResultCopy.loading,
+              });
+            }}
+          </Query>
+        );
+      }}
+    </Query>
+  );
 };
 
 export default SearchContext;

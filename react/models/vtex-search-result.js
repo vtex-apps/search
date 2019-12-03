@@ -1,9 +1,10 @@
+import { path } from "ramda";
 import { fromAttributeResponseKeyToVtexFilter } from "../utils/vtex-utils";
-import { Product } from "./product";
 
 class VtexSearchResult {
   constructor(
     query,
+    products,
     page,
     itemsPerPage,
     orderBy,
@@ -11,33 +12,11 @@ class VtexSearchResult {
     mapQuery,
     priceRange,
     fetchMore,
-    data,
+    searchResultQuery,
     isLoading,
     showPriceRange,
   ) {
-    const searchResult = data ? data.searchResult : undefined;
-
-    const products = searchResult
-      ? searchResult.products.map(product =>
-          new Product(
-            product.product,
-            product.name,
-            product.brand,
-            product.url,
-            product.price,
-            product.priceText,
-            product.installment,
-            product.images && product.images.length > 0
-              ? product.images[0].value
-              : "",
-            product.oldPrice,
-            product.oldPriceText,
-            product.categories,
-            product.skus,
-            product.extraInfo,
-          ).toSummary(),
-        )
-      : [];
+    const searchResult = path(["data", "searchResult"], searchResultQuery);
 
     const facets =
       !searchResult || !searchResult.attributes
@@ -84,6 +63,7 @@ class VtexSearchResult {
         facetQuery: "search",
         facetMap: "b",
       },
+      refetch: () => {},
       loading: isLoading,
       networkStatus: 7,
       recordsFiltered: !searchResult ? 0 : searchResult.total,
