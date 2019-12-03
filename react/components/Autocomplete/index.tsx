@@ -14,6 +14,7 @@ import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
 import { injectIntl } from "react-intl";
 import { IconClose } from "vtex.styleguide";
+import { withDevice } from "vtex.device-detector";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
@@ -33,11 +34,12 @@ interface AutoCompleteProps {
   maxSuggestedTerms: number;
   maxSuggestedProducts: number;
   maxHistory: number;
-  width: number;
+  autocompleteWidth: number;
   productLayout: ProductLayout;
   hideTitles: boolean;
   historyFirst: boolean;
   intl: any;
+  isMobile: boolean;
 }
 
 interface AutoCompleteState {
@@ -82,7 +84,10 @@ class AutoComplete extends React.Component<
   }
 
   shouldUpdate(prevProps: AutoCompleteProps) {
-    return prevProps.inputValue !== this.props.inputValue;
+    return (
+      prevProps.inputValue !== this.props.inputValue ||
+      prevProps.isOpen !== this.props.isOpen
+    );
   }
 
   componentDidUpdate(prevProps: AutoCompleteProps) {
@@ -151,7 +156,10 @@ class AutoComplete extends React.Component<
 
     const suggestionItems: Item[] = items.map(suggestion => ({
       label: suggestion.term,
-      value: this.highlightTerm(suggestion.term, this.props.inputValue),
+      value: this.highlightTerm(
+        suggestion.term.toLowerCase(),
+        this.props.inputValue.toLocaleLowerCase(),
+      ),
       groupValue: suggestion.term,
       link: `/search?_query=${suggestion.term}`,
       attributes: suggestion.attributes,
@@ -298,19 +306,26 @@ class AutoComplete extends React.Component<
           flexDirection: this.props.historyFirst ? "row-reverse" : "row",
         }}
       >
-        <ItemList
-          modifier="top-search"
-          title={this.props.intl.formatMessage({ id: "store/topSearches" })}
-          items={this.state.topSearchedItems || []}
-          showTitle={!this.props.hideTitles}
-        />
+        {!this.props.isMobile ||
+        (this.props.isMobile && !this.props.historyFirst) ||
+        this.state.history.length === 0 ? (
+          <ItemList
+            modifier="top-search"
+            title={this.props.intl.formatMessage({ id: "store/topSearches" })}
+            items={this.state.topSearchedItems || []}
+            showTitle={!this.props.hideTitles}
+          />
+        ) : null}
 
-        <ItemList
-          modifier="history"
-          title={this.props.intl.formatMessage({ id: "store/history" })}
-          items={this.state.history || []}
-          showTitle={!this.props.hideTitles}
-        />
+        {!this.props.isMobile ||
+        (this.props.isMobile && this.props.historyFirst) ? (
+          <ItemList
+            modifier="history"
+            title={this.props.intl.formatMessage({ id: "store/history" })}
+            items={this.state.history || []}
+            showTitle={!this.props.hideTitles}
+          />
+        ) : null}
       </div>
     );
   }
@@ -364,7 +379,7 @@ class AutoComplete extends React.Component<
         : "";
 
     return (
-      <div style={{ width: `${this.props.width | 50}vw` }}>
+      <div style={{ width: `${this.props.autocompleteWidth || 50}vw` }}>
         <section
           ref={this.autocompleteRef}
           // tslint:disable-next-line: max-line-length
@@ -386,4 +401,5 @@ class AutoComplete extends React.Component<
   }
 }
 
-export default injectIntl(withApollo(withRuntime(AutoComplete)));
+// TO DO: usar compose
+export default withDevice(injectIntl(withApollo(withRuntime(AutoComplete))));

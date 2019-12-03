@@ -18,6 +18,12 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
           <article
             className={`${styles.element} flex flex-row justify-start items-center pa3 bg-animate hover-bg-light-gray`}
           >
+            {product.price < product.oldPrice ? (
+              <p className={styles.discount}>
+                -{((1 - product.price / product.oldPrice) * 100).toFixed(0)}%
+              </p>
+            ) : null}
+
             <div className={`${styles.imageContainer} h3`}>
               <img
                 className={`${styles.image} h-100 w-auto mw-none`}

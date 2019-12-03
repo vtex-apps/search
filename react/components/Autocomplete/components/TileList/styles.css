@@ -1,5 +1,4 @@
 .tileList {
-  display: flex;
   flex: 2;
   vertical-align: top;
   border-left: 1px solid #eee;

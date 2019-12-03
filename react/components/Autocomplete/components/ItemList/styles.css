@@ -65,19 +65,8 @@
 }
 
 .itemList--history {
-  display: none;
 }
 
 .itemList--top-search {
   width: 100%;
-}
-
-@media only screen and (min-width: 1024px) {
-  .itemList--history {
-    display: inline-block;
-  }
-
-  .itemList--top-search {
-    width: 50%;
-  }
 }

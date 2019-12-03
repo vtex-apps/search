@@ -97,7 +97,7 @@ export class ItemList extends React.Component<ItemListProps> {
                 onMouseOver={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
               >
-                <Link to={item.link} query={`_query=${item.value}`}>
+                <Link to={item.link} query={`_query=${item.label}`}>
                   {item.icon ? (
                     <span className={stylesCss.itemListIcon}>
                       <FontAwesomeIcon icon={item.icon} />
