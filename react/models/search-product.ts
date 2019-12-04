@@ -1,3 +1,5 @@
+import { IProductSku } from "./product";
+
 export interface ISearchProductText {
   key: string;
   value: string;
@@ -7,18 +9,44 @@ export interface ISearchProductText {
 
 export interface ISearchProduct {
   id: string;
-  product: string;
   name: string;
-  brand: string;
   url: string;
-  images: ISearchProductImage[];
+  images: IElasticProductImage[];
   oldPrice: number;
   price: number;
   oldPriceText: string;
   priceText: string;
-  installment: ISearchProductInstallment;
-  attributes: ISearchProductText[];
-  extraInfo: ISearchProductExtraInfo[];
+  installment: IElasticProductInstallment;
+  attributes: IElasticProductText[];
+  extraInfo: IExtraInfo[];
+  brand: string;
+  product: string;
+  categories: string[];
+  skus: IProductSku[];
+}
+
+interface IElasticProductImage {
+  name: string;
+  value: string;
+}
+
+export interface IElasticProductInstallment {
+  count: number;
+  value: number;
+  interest: boolean;
+  valueText: string;
+}
+
+interface IElasticProductText {
+  key: string;
+  value: string;
+  labelKey: string;
+  labelValue: string;
+}
+
+export interface IExtraInfo {
+  key: string;
+  value: string;
 }
 
 export interface ISearchProductImage {

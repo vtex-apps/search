@@ -1,0 +1,38 @@
+.tileList {
+  flex: 2;
+  vertical-align: top;
+  border-left: 1px solid #eee;
+}
+
+.tileList ul {
+  padding: 0;
+  display: flex;
+}
+
+.tileListTitle {
+  margin-bottom: 5px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tileListItem {
+  display: inline-block;
+  flex: 1;
+}
+
+.tileListSeeMore {
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  font-size: 13px;
+  color: #787878;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1024px) {
+  .tileList {
+    display: inline-block;
+  }
+}

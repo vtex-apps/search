@@ -1,0 +1,72 @@
+.itemList {
+  display: inline-block;
+  flex: 1;
+  vertical-align: top;
+  font-family: Open Sans, Roboto, sans-serif;
+}
+
+.itemListList {
+  padding: 0;
+  margin: 0;
+}
+
+.itemListList li{
+  padding: 0;
+  margin: 0;
+}
+
+.itemList ol,
+.itemList ul {
+  padding: 0;
+  list-style: none;
+}
+
+.itemListTitle {
+  margin-bottom: 5px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.itemListItem a,
+.itemListItem a:hover {
+  display: block;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 20px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.itemListItem a:hover {
+  background: #eee;
+}
+
+.itemListSubItem a {
+  padding: 0 30px;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 16px;
+  overflow: hidden;
+}
+
+.itemListPrefix,
+.itemListIcon {
+  display: inline-block;
+  width: 30px;
+  font-weight: 600;
+  color: #999;
+}
+
+.itemList--suggestion {
+}
+
+.itemList--history {
+}
+
+.itemList--top-search {
+  width: 100%;
+}

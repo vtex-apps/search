@@ -13,7 +13,8 @@
     "styles": "1.x",
     "graphql": "1.x",
     "node": "4.x",
-    "docs": "0.x"
+    "docs": "0.x",
+    "messages": "1.x"
   },
   "dependencies": {
     "vtex.native-types": "0.x",
@@ -30,7 +31,8 @@
     "vtex.search-result": "3.x",
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
-    "vtex.search-graphql": "0.x"
+    "vtex.search-graphql": "0.x",
+    "vtex.device-detector": "0.x"
   },
   "policies": [
     {

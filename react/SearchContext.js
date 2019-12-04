@@ -8,9 +8,14 @@ import {
 } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
+import BiggyClient from "./utils/biggy-client";
 
 import searchResultQuery from "./graphql/searchResult.gql";
 import productsByIdQuery from "./graphql/productsById.gql";
+
+const saveTermInHistory = term => {
+  new BiggyClient().prependSearchHistory(term);
+};
 
 const triggerSearchQueryEvent = data => {
   if (!data) return;
@@ -146,7 +151,10 @@ const SearchContext = props => {
     <Query
       query={searchResultQuery}
       variables={initialVariables}
-      onCompleted={data => triggerSearchQueryEvent(data)}
+      onCompleted={data => {
+        saveTermInHistory(initialVariables.query);
+        triggerSearchQueryEvent(data);
+      }}
     >
       {searchResult => {
         if (!searchResult.data) {
