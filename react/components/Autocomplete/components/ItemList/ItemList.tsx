@@ -92,12 +92,12 @@ export class ItemList extends React.Component<ItemListProps> {
           {this.props.items.map(item => {
             return (
               <li
-                key={item.label}
+                key={item.value}
                 className={`${stylesCss.itemListItem}`}
                 onMouseOver={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
               >
-                <Link to={item.link} query={`_query=${item.label}`}>
+                <Link to={item.link} query={`_query=${item.value}`}>
                   {item.icon ? (
                     <span className={stylesCss.itemListIcon}>
                       <FontAwesomeIcon icon={item.icon} />
@@ -109,7 +109,7 @@ export class ItemList extends React.Component<ItemListProps> {
                       {item.prefix}
                     </span>
                   ) : null}
-                  <span className="c-on-base">{item.value}</span>
+                  <span className="c-on-base">{item.label}</span>
                 </Link>
                 {this.renderAttributes(item)}
               </li>

@@ -1,8 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface Item {
-  label: string;
-  value: string | JSX.Element;
+  label: string | JSX.Element;
+  value: string;
   link: string;
   attributes?: AttributeItem[];
   icon?: IconProp;

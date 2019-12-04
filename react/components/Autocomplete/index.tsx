@@ -155,11 +155,11 @@ class AutoComplete extends React.Component<
     });
 
     const suggestionItems: Item[] = items.map(suggestion => ({
-      label: suggestion.term,
-      value: this.highlightTerm(
+      label: this.highlightTerm(
         suggestion.term.toLowerCase(),
         this.props.inputValue.toLocaleLowerCase(),
       ),
+      value: suggestion.term,
       groupValue: suggestion.term,
       link: `/search?_query=${suggestion.term}`,
       attributes: suggestion.attributes,
@@ -231,6 +231,7 @@ class AutoComplete extends React.Component<
         ({
           prefix: `${index + 1}º`,
           value: query.term,
+          label: query.term,
           link: `/search?_query=${query.term}`,
         } as Item),
     );
@@ -267,7 +268,7 @@ class AutoComplete extends React.Component<
       });
     } else {
       this.setState({
-        dynamicTerm: item.label,
+        dynamicTerm: item.value,
         queryFromHover: {
           key: undefined,
           value: undefined,
