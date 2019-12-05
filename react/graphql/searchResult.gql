@@ -7,6 +7,7 @@ query searchResult(
   $sort: String
   $operator: String
   $fuzzy: Int
+  $leap: Boolean
 ) {
   searchResult(
     store: $store
@@ -17,10 +18,12 @@ query searchResult(
     sort: $sort
     operator: $operator
     fuzzy: $fuzzy
+    leap: $leap
   ) {
     query
     operator
     total
+    redirect
     products {
       id
       product

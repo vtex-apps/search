@@ -5,6 +5,7 @@ import searchResultQuery from "./graphql/searchResult.gql";
 import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
+import useRedirect from "./useRedirect";
 
 const triggerSearchQueryEvent = data => {
   if (!data) return;
@@ -48,10 +49,11 @@ const getUrlByAttributePath = (
 
 const SearchContext = props => {
   const { account, workspace, route } = useRuntime();
+  const { setRedirect } = useRedirect();
 
   const {
     params: { path: attributePath },
-    query: { query, map, order, operator, fuzzy, priceRange },
+    query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
   } = props;
 
   const url = useMemo(
@@ -66,14 +68,15 @@ const SearchContext = props => {
   );
 
   const initialVariables = {
-    query,
     operator,
     fuzzy,
+    query: _query,
     page: 1,
     store: account,
     attributePath: url,
     sort: vtexOrderToBiggyOrder(order),
     count: props.maxItemsPerPage,
+    leap: !!leap,
   };
 
   const onFetchMoreFunction = fetchMore => ({ variables, updateQuery }) => {
@@ -115,7 +118,7 @@ const SearchContext = props => {
   };
 
   try {
-    if (!query) throw new Error("Empty search is not allowed");
+    if (!_query) throw new Error("Empty search is not allowed");
 
     return (
       <Query
@@ -129,11 +132,15 @@ const SearchContext = props => {
             logError(account, workspace, route.path, error);
           }
 
+          if (data.searchResult && data.searchResult.redirect) {
+            setRedirect(data.searchResult.redirect);
+          }
+
           const vtexSearchResult =
             error || !data
               ? VtexSearchResult.emptySearch()
               : new VtexSearchResult(
-                  query,
+                  _query,
                   1,
                   props.maxItemsPerPage,
                   order,
@@ -150,7 +157,7 @@ const SearchContext = props => {
             searchResult:
               error || !data
                 ? {
-                    query: props.params.query,
+                    query: _query,
                   }
                 : data.searchResult,
             ...props,
@@ -169,7 +176,7 @@ const SearchContext = props => {
 
     return React.cloneElement(props.children, {
       searchResult: {
-        query: props.params.query,
+        query: _query,
       },
       ...props,
       ...vtexSearchResult,

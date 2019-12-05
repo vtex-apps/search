@@ -1,3 +1,4 @@
+import { path } from "ramda";
 import { SearchResultInput } from "../commons/inputs";
 import { IContext } from "..";
 
@@ -5,7 +6,18 @@ export const search = {
   searchResult: async (_: any, args: SearchResultInput, ctx: IContext) => {
     const { biggySearch } = ctx.clients;
 
-    const result = (await biggySearch.searchResult(args)) || {};
+    let result: any = {};
+    try {
+      result = (await biggySearch.searchResult(args)) || {};
+    } catch (err) {
+      if (path(["response", "status"], err) === 302) {
+        const redirect = path(["response", "headers", "location"], err);
+        return { redirect, products: [] };
+      }
+
+      throw err;
+    }
+
     result.products = result.products || [];
 
     result.products.forEach((product: any) => {
