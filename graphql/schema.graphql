@@ -47,6 +47,7 @@ type Query {
     sort: String
     operator: String
     fuzzy: Int
+    leap: Boolean
   ): ResultResponse
 }
 
@@ -260,6 +261,7 @@ type ResultResponse {
   attributes: [AttributeResponseKey]
   suggestion: SuggestionSearchesOutput
   correction: PhraseSuggestion
+  redirect: String
 }
 
 type ResultResponsePagination {

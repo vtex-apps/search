@@ -5,6 +5,7 @@ import searchResultQuery from "./graphql/searchResult.gql";
 import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
+import useRedirect from "./useRedirect";
 
 const triggerSearchQueryEvent = data => {
   if (!data) return;
@@ -48,10 +49,11 @@ const getUrlByAttributePath = (
 
 const SearchContext = props => {
   const { account, workspace, route } = useRuntime();
+  const { setRedirect } = useRedirect();
 
   const {
     params: { path: attributePath },
-    query: { _query, map, order, operator, fuzzy, priceRange },
+    query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
   } = props;
 
   const url = useMemo(
@@ -74,6 +76,7 @@ const SearchContext = props => {
     attributePath: url,
     sort: vtexOrderToBiggyOrder(order),
     count: props.maxItemsPerPage,
+    leap: !!leap,
   };
 
   const onFetchMoreFunction = fetchMore => ({ variables, updateQuery }) => {
@@ -126,6 +129,10 @@ const SearchContext = props => {
         {({ loading, error, data, fetchMore }) => {
           if (error) {
             logError(account, workspace, route.path, error);
+          }
+
+          if (data.searchResult && data.searchResult.redirect) {
+            setRedirect(data.searchResult.redirect);
           }
 
           const vtexSearchResult =
