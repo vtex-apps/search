@@ -24,4 +24,5 @@ export interface SearchResultInput {
   sort: string;
   operator: string;
   fuzzy: number;
+  leap: boolean;
 }

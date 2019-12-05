@@ -25,11 +25,13 @@ class VtexSearchResult {
             product.brand,
             product.url,
             product.price,
+            product.priceText,
             product.installment,
             product.images && product.images.length > 0
               ? product.images[0].value
               : "",
             product.oldPrice,
+            product.oldPriceText,
             product.categories,
             product.skus,
             product.extraInfo,
@@ -55,7 +57,7 @@ class VtexSearchResult {
           titleTag: null,
           metaTagDescription: null,
           products,
-          breadcrumb: [{ name: query, href: `/search?query=${query}` }],
+          breadcrumb: [{ name: query, href: `/search?_query=${query}` }],
           recordsFiltered: !searchResult ? 0 : searchResult.total,
         },
         facets: {
