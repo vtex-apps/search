@@ -4,6 +4,7 @@ import styles from "./styles";
 import { Product } from "../../../../models/product";
 import { CustomListItem } from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
+import { Spinner } from "vtex.styleguide";
 
 interface TileListProps {
   term: string;
@@ -14,11 +15,12 @@ interface TileListProps {
   totalProducts: number;
   layout: ProductLayout;
   intl: any;
+  isLoading: boolean;
 }
 
 export class TileList extends React.Component<TileListProps> {
   render() {
-    if (this.props.products.length === 0) {
+    if (this.props.products.length === 0 && !this.props.isLoading) {
       return null;
     }
 
@@ -34,41 +36,50 @@ export class TileList extends React.Component<TileListProps> {
             {this.props.title}
           </h1>
         ) : null}
-
-        <ul
-          className={styles.tileListList}
-          style={{
-            flexDirection:
-              this.props.layout === ProductLayout.Horizontal ? "column" : "row",
-          }}
-        >
-          {this.props.products.map(product => (
-            <li key={product.productId} className={styles.tileListItem}>
-              {this.props.layout === ProductLayout.Horizontal ? (
-                <CustomListItem product={product} />
-              ) : (
-                <ExtensionPoint
-                  id="product-summary"
-                  product={product.toSummary()}
-                />
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <footer>
-          {unseenProductsCount > 0 ? (
-            <a
-              className={styles.tileListSeeMore}
-              href={`/search?_query=${this.props.term}`}
+        {this.props.isLoading ? (
+          <div className={styles.tileListSpinner}>
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            <ul
+              className={styles.tileListList}
+              style={{
+                flexDirection:
+                  this.props.layout === ProductLayout.Horizontal
+                    ? "column"
+                    : "row",
+              }}
             >
-              {this.props.intl.formatMessage(
-                { id: "store/seeMore" },
-                { count: unseenProductsCount },
-              )}
-            </a>
-          ) : null}
-        </footer>
+              {this.props.products.map(product => (
+                <li key={product.productId} className={styles.tileListItem}>
+                  {this.props.layout === ProductLayout.Horizontal ? (
+                    <CustomListItem product={product} />
+                  ) : (
+                    <ExtensionPoint
+                      id="product-summary"
+                      product={product.toSummary()}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <footer>
+              {unseenProductsCount > 0 ? (
+                <a
+                  className={styles.tileListSeeMore}
+                  href={`/search?_query=${this.props.term}`}
+                >
+                  {this.props.intl.formatMessage(
+                    { id: "store/seeMore" },
+                    { count: unseenProductsCount },
+                  )}
+                </a>
+              ) : null}
+            </footer>
+          </>
+        )}
       </section>
     );
   }

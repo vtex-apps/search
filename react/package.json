@@ -22,7 +22,7 @@
     "react": "^16.8.6",
     "react-apollo": "2.4.1",
     "react-dom": "^16.8.6",
-    "typescript": "3.5.2",
+    "typescript": "3.7.3",
     "unescape": "^1.0.1",
     "vtex": "^2.77.11"
   },

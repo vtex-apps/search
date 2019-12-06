@@ -18,7 +18,7 @@
 }
 
 .tileListItem {
-  display: inline-block;
+  display: flex;
   flex: 1;
 }
 
@@ -29,6 +29,13 @@
   font-size: 13px;
   color: #787878;
   text-align: center;
+}
+
+.tileListSpinner {
+  display: flex;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (min-width: 1024px) {

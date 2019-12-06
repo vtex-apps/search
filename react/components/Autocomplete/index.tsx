@@ -51,6 +51,7 @@ interface AutoCompleteState {
   isFocused: boolean;
   queryFromHover: { key?: string; value?: string };
   dynamicTerm: string;
+  isProductsLoading: boolean;
 }
 
 class AutoComplete extends React.Component<
@@ -69,6 +70,7 @@ class AutoComplete extends React.Component<
     totalProducts: 0,
     queryFromHover: {},
     dynamicTerm: "",
+    isProductsLoading: false,
   };
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -180,12 +182,21 @@ class AutoComplete extends React.Component<
       return;
     }
 
+    this.setState({
+      isProductsLoading: true,
+    });
+
     const result = await this.client.suggestionProducts(
       "exitocol",
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
     );
+
+    this.setState({
+      isProductsLoading: false,
+    });
+
     const { suggestionProducts } = result.data;
 
     const {
@@ -349,6 +360,7 @@ class AutoComplete extends React.Component<
           totalProducts={this.state.totalProducts || 0}
           layout={this.props.productLayout}
           intl={this.props.intl}
+          isLoading={this.state.isProductsLoading}
         />
       </>
     );
