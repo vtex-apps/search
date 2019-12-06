@@ -3,6 +3,7 @@
   flex: 1;
   vertical-align: top;
   font-family: Open Sans, Roboto, sans-serif;
+  overflow: hidden;
 }
 
 .itemListList {
@@ -37,6 +38,10 @@
   padding: 0 20px;
   font-size: 13px;
   text-decoration: none;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .itemListItem a:hover {
