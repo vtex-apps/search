@@ -38,7 +38,7 @@ export class TileList extends React.Component<TileListProps> {
         ) : null}
         {this.props.isLoading ? (
           <div className={styles.tileListSpinner}>
-            <Spinner />
+            <Spinner color="#222222" />
           </div>
         ) : (
           <>
