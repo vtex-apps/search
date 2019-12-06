@@ -1,27 +1,12 @@
 import React, { useMemo } from "react";
 import { Query } from "react-apollo";
 import { useRuntime } from "vtex.render-runtime";
+import { onSearchResult, SearchClickPixel } from "vtex.sae-analytics";
 import searchResultQuery from "./graphql/searchResult.gql";
 import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
 import useRedirect from "./useRedirect";
-
-const triggerSearchQueryEvent = data => {
-  if (!data) return;
-  const { query, operator, correction, total } = data.searchResult;
-
-  const event = new CustomEvent("biggy.search.query", {
-    detail: {
-      query: query === "" ? "<empty>" : query,
-      operator,
-      misspelled: correction && correction.misspelled,
-      match: total,
-    },
-  });
-
-  window.dispatchEvent(event);
-};
 
 const getUrlByAttributePath = (
   attributePath,
@@ -124,7 +109,7 @@ const SearchContext = props => {
       <Query
         query={searchResultQuery}
         variables={initialVariables}
-        onCompleted={data => triggerSearchQueryEvent(data)}
+        onCompleted={onSearchResult}
       >
         {({ loading, error, data, fetchMore }) => {
           if (error) {
@@ -152,16 +137,22 @@ const SearchContext = props => {
                   !!props.priceRangeKey,
                 );
 
-          return React.cloneElement(props.children, {
-            searchResult:
-              error || !data
-                ? {
-                    query: _query,
-                  }
-                : data.searchResult,
-            ...props,
-            ...vtexSearchResult,
-          });
+          return (
+            <>
+              <SearchClickPixel query={query} />
+
+              {React.cloneElement(props.children, {
+                searchResult:
+                  error || !data
+                    ? {
+                        query: props.params.query,
+                      }
+                    : data.searchResult,
+                ...props,
+                ...vtexSearchResult,
+              })}
+            </>
+          );
         }}
       </Query>
     );
