@@ -48,7 +48,6 @@ interface AutoCompleteState {
   history: Item[];
   products: Product[];
   totalProducts: number;
-  isFocused: boolean;
   queryFromHover: { key?: string; value?: string };
   dynamicTerm: string;
   isProductsLoading: boolean;
@@ -66,7 +65,6 @@ class AutoComplete extends React.Component<
     history: [],
     products: [],
     suggestionItems: [],
-    isFocused: false,
     totalProducts: 0,
     queryFromHover: {},
     dynamicTerm: "",
