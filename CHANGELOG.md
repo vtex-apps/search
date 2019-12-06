@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove cache from some queries.
 
+## [0.3.1] - 2019-12-06
+
+### Changed
+
+- Old `SearchAnalytics` calls to `sae-analytics`
+
 ### Added
 
 - Redirect functionality.
