@@ -139,7 +139,7 @@ const SearchContext = props => {
 
           return (
             <>
-              <SearchClickPixel query={query} />
+              <SearchClickPixel query={_query} />
 
               {React.cloneElement(props.children, {
                 searchResult:
