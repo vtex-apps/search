@@ -9,6 +9,7 @@ a more complete search experience.
 
 - [Usage](#usage)
   - [Custom Search Page URL](#custom-search-page-url)
+  - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
   - [Catalog Integration](#catalog-integration)
 - [Blocks API](#blocks-api)
@@ -55,6 +56,41 @@ the `customSearchPageUrl` prop on the `search-bar` component.
   }
 }
 ```
+
+### Autocomplete
+
+We provide a customized autocomplete with new features. It includes:
+
+- Top searches list
+- Search history list
+- Product suggestion
+- Search term suggestion
+
+To use our autocomplete, first, you need to declare a block for it.
+
+```json
+{
+  "autocomplete-result-list.v2": {
+    "blocks": ["product-summary"]
+  }
+}
+```
+
+Finally, append this block in the search bar. To improve the client experience, we also recommend to add the `openAutocompleteOnFocus` prop.
+
+```json
+{
+  "search-bar": {
+    "blocks": ["autocomplete-result-list.v2"],
+    "props": {
+      "customSearchPageUrl": "/search?_query=${term}",
+      "openAutocompleteOnFocus": true
+    }
+  }
+}
+```
+
+A full documentation of our custom autocomplete can be found [here](Autocomplete.md).
 
 ### Order Options
 

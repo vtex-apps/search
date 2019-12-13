@@ -1,0 +1,8 @@
+{
+    "store/topSearches": "Termos mais buscados",
+    "store/history": "Histórico de buscas",
+    "store/suggestions" : "Sugestões",
+    "store/emptySuggestion": "Sem Sugestões",
+    "store/seeMore": "Veja mais {count} produtos",
+    "store/suggestedProducts": "Produtos para {term}"
+}

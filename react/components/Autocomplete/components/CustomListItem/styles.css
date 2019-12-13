@@ -1,0 +1,33 @@
+
+.clearLink {}
+
+.element {
+    position: relative;
+}
+
+.imageContainer {
+    max-height: 80px;
+}
+
+.image {}
+
+.information {}
+
+.productNameContainer {}
+
+.productBrand {}
+
+.priceContainer {}
+
+.priceOld {}
+
+.priceNew {}
+
+.discount {
+    background: rgb(228, 1, 46);
+    color: #fff;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    font-size: 14px;
+}
