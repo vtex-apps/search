@@ -5,6 +5,7 @@ import suggestionProducts from "../graphql/suggestionProducts.gql";
 import suggestionSearches from "../graphql/suggestionSearches.gql";
 import topSearches from "../graphql/topSearches.gql";
 import searchResult from "../graphql/searchResult.gql";
+import { ISearchProduct } from "../models/search-product";
 
 export default class BiggyClient {
   private historyKey = "biggy-search-history";
@@ -121,25 +122,6 @@ interface IElasticProductText {
   value: string;
   labelKey: string;
   labelValue: string;
-}
-
-export interface ISearchProduct {
-  id: string;
-  name: string;
-  url: string;
-  images: IElasticProductImage[];
-  oldPrice: number;
-  price: number;
-  oldPriceText: string;
-  priceText: string;
-  installment: IElasticProductInstallment;
-  attributes: IElasticProductText[];
-  extraInfo: IExtraInfo[];
-}
-
-interface IElasticProductImage {
-  name: string;
-  value: string;
 }
 
 export interface IElasticProductInstallment {
