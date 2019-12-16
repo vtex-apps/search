@@ -234,7 +234,12 @@ class AutoComplete extends React.Component<
     const topSearchedItems = searches.slice(0, maxTopSearches).map(
       (query, index) =>
         ({
-          prefix: `${index + 1}º`,
+          prefix: (
+            <>
+              {`${index + 1}`}
+              <FormattedMessage id="store/ordinalNumber" />
+            </>
+          ),
           value: query.term,
           label: query.term,
           link: `/search?_query=${query.term}`,

@@ -4,7 +4,7 @@ export interface Item {
   link: string;
   attributes?: AttributeItem[];
   icon?: JSX.Element;
-  prefix?: string;
+  prefix?: string | JSX.Element;
 }
 
 export interface AttributeItem {
