@@ -5,7 +5,7 @@ import { Link } from "vtex.render-runtime";
 import Attribute from "./Attribute";
 
 interface ItemListProps {
-  title: string;
+  title: string | JSX.Element;
   items: Item[];
   showTitle: boolean;
   modifier?: string;
