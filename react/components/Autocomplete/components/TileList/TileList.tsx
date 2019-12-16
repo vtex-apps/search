@@ -6,16 +6,16 @@ import { CustomListItem } from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
 import { Spinner } from "vtex.styleguide";
 import ProductSummary from "vtex.product-summary/ProductSummaryCustom";
+import { FormattedMessage } from "react-intl";
 
 interface TileListProps {
   term: string;
-  title: string;
+  title: string | JSX.Element;
   products: Product[];
   showTitle: boolean;
   shelfProductCount: number;
   totalProducts: number;
   layout: ProductLayout;
-  intl: any;
   isLoading: boolean;
 }
 
@@ -78,10 +78,10 @@ export class TileList extends React.Component<TileListProps> {
                   className={styles.tileListSeeMore}
                   href={`/search?_query=${this.props.term}`}
                 >
-                  {this.props.intl.formatMessage(
-                    { id: "store/seeMore" },
-                    { count: unseenProductsCount },
-                  )}
+                  <FormattedMessage
+                    id="store/seeMore"
+                    values={{ count: unseenProductsCount }}
+                  />
                 </a>
               ) : null}
             </footer>

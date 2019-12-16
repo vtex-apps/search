@@ -11,7 +11,7 @@ import stylesCss from "./styles.css";
 import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
-import { injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
 import { withDevice } from "vtex.device-detector";
 
@@ -37,7 +37,6 @@ interface AutoCompleteProps {
   productLayout?: ProductLayout;
   hideTitles: boolean;
   historyFirst: boolean;
-  intl: any;
   isMobile: boolean;
 }
 
@@ -295,7 +294,7 @@ class AutoComplete extends React.Component<
 
     return (
       <ItemList
-        title={this.props.intl.formatMessage({ id: titleMessageId })}
+        title={<FormattedMessage id={titleMessageId} />}
         items={this.state.suggestionItems || []}
         modifier="suggestion"
         showTitle={!hasSuggestion || !this.props.hideTitles}
@@ -318,7 +317,7 @@ class AutoComplete extends React.Component<
         this.state.history.length === 0 ? (
           <ItemList
             modifier="top-search"
-            title={this.props.intl.formatMessage({ id: "store/topSearches" })}
+            title={<FormattedMessage id={"store/topSearches"} />}
             items={this.state.topSearchedItems || []}
             showTitle={!this.props.hideTitles}
           />
@@ -328,7 +327,7 @@ class AutoComplete extends React.Component<
         (this.props.isMobile && this.props.historyFirst) ? (
           <ItemList
             modifier="history"
-            title={this.props.intl.formatMessage({ id: "store/history" })}
+            title={<FormattedMessage id={"store/history"} />}
             items={this.state.history || []}
             showTitle={!this.props.hideTitles}
           />
@@ -346,15 +345,16 @@ class AutoComplete extends React.Component<
           shelfProductCount={
             this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
           }
-          title={this.props.intl.formatMessage(
-            { id: "store/suggestedProducts" },
-            { term: this.props.inputValue },
-          )}
+          title={
+            <FormattedMessage
+              id={"store/suggestedProducts"}
+              values={{ term: this.props.inputValue }}
+            />
+          }
           products={this.state.products || []}
           showTitle={!this.props.hideTitles}
           totalProducts={this.state.totalProducts || 0}
           layout={this.getProductLayout()}
-          intl={this.props.intl}
           isLoading={this.state.isProductsLoading}
         />
       </>
@@ -422,4 +422,4 @@ class AutoComplete extends React.Component<
 }
 
 // TO DO: usar compose
-export default withDevice(injectIntl(withApollo(withRuntime(AutoComplete))));
+export default withDevice(withApollo(withRuntime(AutoComplete)));
