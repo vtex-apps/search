@@ -1,5 +1,4 @@
 import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Item, AttributeItem } from "./types";
 import stylesCss from "./styles.css";
 import { Link } from "vtex.render-runtime";
@@ -100,9 +99,7 @@ export class ItemList extends React.Component<ItemListProps> {
               >
                 <Link to={item.link} query={`_query=${item.value}`}>
                   {item.icon ? (
-                    <span className={stylesCss.itemListIcon}>
-                      <FontAwesomeIcon icon={item.icon} />
-                    </span>
+                    <span className={stylesCss.itemListIcon}>{item.icon}</span>
                   ) : null}
 
                   {item.prefix ? (
