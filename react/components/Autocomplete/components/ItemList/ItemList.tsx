@@ -2,6 +2,7 @@ import * as React from "react";
 import { Item, AttributeItem } from "./types";
 import stylesCss from "./styles.css";
 import { Link } from "vtex.render-runtime";
+import Attribute from "./Attribute";
 
 interface ItemListProps {
   title: string;
@@ -45,33 +46,6 @@ export class ItemList extends React.Component<ItemListProps> {
     }
   }
 
-  renderAttributes(item: Item) {
-    if (!item.attributes || item.attributes.length === 0) {
-      return null;
-    }
-
-    return (
-      <ul className={stylesCss.itemListSubList}>
-        {item.attributes.map((attribute, index) => (
-          <li
-            key={index}
-            className={`${stylesCss.itemListSubItem} c-on-base pointer`}
-            onMouseOver={e => this.handleMouseOver(e, attribute)}
-            onMouseOut={() => this.handleMouseOut()}
-          >
-            <Link
-              className={`c-on-base`}
-              to={`/search/${attribute.value}`}
-              query={`_query=${item.value}&map=s,${attribute.key}`}
-            >
-              {attribute.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
   render() {
     if (this.props.items.length === 0 && !this.props.showTitleOnEmpty) {
       return null;
@@ -109,7 +83,11 @@ export class ItemList extends React.Component<ItemListProps> {
                   ) : null}
                   <span className="c-on-base">{item.label}</span>
                 </Link>
-                {this.renderAttributes(item)}
+                <Attribute
+                  item={item}
+                  handleMouseOver={this.handleMouseOver.bind(this)}
+                  handleMouseOut={this.handleMouseOut.bind(this)}
+                />
               </li>
             );
           })}
