@@ -1,4 +1,3 @@
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { withApollo, WithApolloClient } from "react-apollo";
 import { ItemList } from "./components/ItemList/ItemList";
@@ -13,7 +12,7 @@ import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
 import { injectIntl } from "react-intl";
-import { IconClose } from "vtex.styleguide";
+import { IconClose, IconClock } from "vtex.styleguide";
 import { withDevice } from "vtex.device-detector";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
@@ -255,7 +254,7 @@ class AutoComplete extends React.Component<
           label: item,
           value: item,
           link: `/search?_query=${item}`,
-          icon: faHistory,
+          icon: <IconClock />,
         };
       });
 
