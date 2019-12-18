@@ -5,5 +5,7 @@
     "store/emptySuggestion": "Sem Sugestões",
     "store/seeMore": "Veja mais {count} produtos",
     "store/suggestedProducts": "Produtos para {term}",
-    "store/ordinalNumber": "º"
+    "store/ordinalNumber": "º",
+    "store/didYouMean": "Você quis dizer",
+    "store/searchSuggestions": "Sugestões"
 }

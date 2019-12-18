@@ -139,5 +139,11 @@ query searchResult(
       misspelled
       correction
     }
+    banners {
+      id
+      name
+      area
+      html
+    }
   }
 }

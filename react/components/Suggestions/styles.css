@@ -1,0 +1,6 @@
+.suggestionsList li:not(:first-child):before {
+    content: "-";
+    margin: 0 15px;
+}
+
+.suggestionsListPrefix {}

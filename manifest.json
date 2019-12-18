@@ -10,7 +10,7 @@
   "builders": {
     "store": "0.x",
     "react": "3.x",
-    "styles": "1.x",
+    "styles": "2.x",
     "graphql": "1.x",
     "node": "4.x",
     "docs": "0.x",
@@ -33,7 +33,11 @@
     "vtex.product-summary": "2.x",
     "vtex.search-graphql": "0.x",
     "vtex.sae-analytics": "1.x",
-    "vtex.device-detector": "0.x"
+    "vtex.device-detector": "0.x",
+    "vtex.search-page-context": "0.x",
+    "vtex.breadcrumb": "1.x",
+    "vtex.rich-text": "0.x",
+    "vtex.css-handles": "0.x"
   },
   "policies": [
     {

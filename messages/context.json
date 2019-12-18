@@ -4,5 +4,7 @@
     "store/suggestions" : "suggestions",
     "store/emptySuggestion": "emptySuggestion",
     "store/seeMore": "seeMore",
-    "store/suggestedProducts": "suggestedProducts"
+    "store/suggestedProducts": "suggestedProducts",
+    "store/didYouMean": "didYouMean",
+    "store/searchSuggestions": "searchSuggestions"
 }
