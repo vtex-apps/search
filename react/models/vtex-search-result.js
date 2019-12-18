@@ -87,6 +87,9 @@ class VtexSearchResult {
       loading: isLoading,
       networkStatus: 7,
       recordsFiltered: !searchResult ? 0 : searchResult.total,
+      correction: searchResult ? searchResult.correction : undefined,
+      suggestion: searchResult ? searchResult.suggestion : undefined,
+      banners: searchResult ? searchResult.banners : undefined,
     };
 
     this.map = map;

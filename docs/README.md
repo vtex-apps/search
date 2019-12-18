@@ -11,6 +11,7 @@ a more complete search experience.
   - [Custom Search Page URL](#custom-search-page-url)
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
+  - [Enhanced Search Result](#enhanced-search-result)
   - [Catalog Integration](#catalog-integration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)
@@ -110,6 +111,48 @@ passing them to the `hiddenOptions` prop on the `order-by` component.
     }
   }
 }
+```
+
+### Enhanced Search Result
+
+This app has three new components to improve the search result experience. They are:
+
+-   [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query. 
+-   [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
+-   [`search-banner`](Banner.md). A banner that can be configured by query.
+
+To add these components to your search-result page, you need to use the `search-result-layout.desktop.enhanced` and `search-result-layout.mobile.enhanced` instead of `search-result-layout.desktop` and `search-result-layout.mobile`. Here is an implementation example:
+
+```json
+"search-result-layout.desktop.enhanced": {
+    "children": [
+      "flex-layout.row#didyoumean",
+      "flex-layout.row#suggestion",
+      "flex-layout.row#banner-one",
+      "flex-layout.row#result"
+    ],
+    "props": {
+      "pagination": "show-more",
+      "preventRouteChange": true,
+      "mobileLayout": {
+        "mode1": "small",
+        "mode2": "normal"
+      }
+    }
+  },
+  "flex-layout.row#didyoumean": {
+    "children": ["did-you-mean"]
+  },
+  "flex-layout.row#suggestion": {
+    "children": ["search-suggestions"]
+  },
+  "search-banner#one": {
+    "props": {
+      "area": "one",
+      "blockClass": "myBanner",
+      "horizontalAlignment": "center"
+    }
+  }
 ```
 
 ### Catalog Integration
