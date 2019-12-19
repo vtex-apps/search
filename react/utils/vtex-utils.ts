@@ -22,7 +22,7 @@ export function fromAttributeResponseKeyToVtexFilter(
         linkEncoded: value.proxyUrl,
         map: attribute.key,
         selected: false,
-        value: value.key,
+        value: `z${value.key}`,
       };
     }),
   };
