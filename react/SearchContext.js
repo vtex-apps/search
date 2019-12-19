@@ -19,7 +19,7 @@ const getUrlByAttributePath = (
     ? map
         .split(",")
         .slice(1)
-        .map((item, index) => `${item}/${facets[index]}`)
+        .map((item, index) => `${item}/${facets[index].replace(/^z/, "")}`)
     : [];
 
   const url = apiUrlTerms.join("/");
