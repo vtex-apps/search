@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.3.5] - 2019-12-19
+
 ### Added
 
 - Temporary workaround on facet values sorting.
