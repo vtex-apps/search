@@ -35,8 +35,6 @@
     "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
-    "vtex.breadcrumb": "1.x",
-    "vtex.rich-text": "0.x",
     "vtex.css-handles": "0.x"
   },
   "policies": [
