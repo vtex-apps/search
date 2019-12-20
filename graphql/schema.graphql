@@ -1,6 +1,4 @@
 type Query {
-  getConfig: GetConfigResponse @cacheControl(scope: PUBLIC, maxAge: MEDIUM)
-
   """
   Get top searches for a given store.
 
@@ -49,305 +47,77 @@ type Query {
     fuzzy: Int
     leap: Boolean
   ): ResultResponse
-}
-
-type GetConfigResponse {
-  apiKey: String
-  store: String
-}
-
-"""
-Attribute response key.
-"""
-type AttributeResponseKey {
-  key: String!
-  label: String!
 
   """
-  Attribute type, could be either 'text' or 'number'.
+  Returns products list filtered and ordered
   """
-  type: String
-  visible: Boolean
-  values: [AttributeResponseValue]
-  minValue: Float
-  maxValue: Float
-  active: Boolean
-  activeFrom: String
-  activeTo: String
-  templateUrl: String
-  proxyUrl: String
+  searchQuery(
+    """
+    Terms that is used in search e.g.: eletronics/samsung
+    """
+    query: String = ""
+    # """
+    # Defines terms types: Brand, Category, Department e.g.: c,b
+    # """
+    # map: String = ""
+    # """
+    # Filter by category. {a}/{b} - {a} and {b} are categoryIds
+    # """
+    # category: String = ""
+    # """
+    # Array of product specification. specificationFilter_{a}:{b} - {a} is the specificationId, {b} = specification value
+    # """
+    # specificationFilters: [String]
+    # """
+    # Filter by price range. e.g.: {a} TO {b} - {a} is the minimum price "from" and {b} is the highest price "to"
+    # """
+    # priceRange: String = ""
+    # """
+    # Filter by collection. where collection also know as productClusterId
+    # """
+    # collection: String = ""
+    # """
+    # Filter by availability at a specific sales channel. e.g.: salesChannel:4 if want filter by available products for the sales channel 4
+    # """
+    # salesChannel: String = ""
+    """
+    Order by a criteria. OrderByPriceDESC/OrderByPriceASC, OrderByTopSaleDESC, OrderByReviewRateDESC, OrderByNameASC/OrderByNameDESC, OrderByReleaseDateDESC, OrderByBestDiscountDESC
+    """
+    orderBy: String = "OrderByPriceDESC"
+    """
+    Pagination item start
+    """
+    from: Int = 0
+    """
+    Pagination item end
+    """
+    to: Int = 20
+    # """
+    # If true, uses isAvailablePerSalesChannel_ parameter on query with segment's sales channel. Will override any given salesChannel arg
+    # """
+    # hideUnavailableItems: Boolean = false
+
+    # Below are Biggy's search specific options
+    """
+    Query operator overload, should be maintained on subsequent queries
+    """
+    operator: String
+    """
+    Fuzzy level overload, should be maintained on subsequent queries
+    """
+    fuzzy: Int
+    """
+    Leap query string, avoid redirect loop.
+    """
+    leap: Boolean
+    """
+    Facets as URL path. e.g. /category/eletronics
+    """
+    attributePath: String
+  ): SearchQuery @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
 }
 
-"""
-Attribute response value.
-"""
-type AttributeResponseValue {
-  count: Int
-  active: Boolean
-  proxyUrl: String
-
-  """
-  Only for text attributes.
-  """
-  key: String
-
-  """
-  Only for text attributes.
-  """
-  label: String
-
-  """
-  Only for number attributes.
-  """
-  from: String
-
-  """
-  Only for number attributes.
-  """
-  to: String
-}
-
-enum CacheControlScope {
-  PUBLIC
-  PRIVATE
-}
-
-"""
-A Search product, contains all the info about the product. Used in SearchResult.
-"""
-type ElasticProduct {
-  name: String
-  id: String
-  product: String
-  url: String
-  oldPrice: Float
-  price: Float
-  oldPriceText: String
-  priceText: String
-  brand: String
-  stock: Float
-  customSort: Float
-  availableSpecsCount: Int
-  rating: ElasticProductRating
-  installment: ElasticProductInstallment
-  categories: [String]
-  textAttributes: [ElasticProductText]
-  numberAttributes: [ElasticProductNumber]
-  skus: [ElasticProductSku]
-  images: [ElasticProductImage]
-  stickers: [ElasticProductSticker]
-  extraInfo: [ExtraInfo]
-}
-
-"""
-A product's seller.
-"""
-type ElasticProductSeller {
-  id: String!
-  oldPrice: Float
-  price: Float
-  stock: Float
-  installment: ElasticProductInstallment
-}
-
-"""
-A product's image.
-"""
-type ElasticProductImage {
-  name: String
-  value: String!
-}
-
-"""
-A product's installment information.
-"""
-type ElasticProductInstallment {
-  count: Int!
-  value: Float!
-  interest: Boolean!
-  valueText: String
-}
-
-"""
-A key, value interface containing a label version for the key that is suited for UI, the value is a Number.
-"""
-type ElasticProductNumber {
-  key: String
-  value: Float
-  labelKey: String
-}
-
-"""
-A product's rating information.
-"""
-type ElasticProductRating {
-  value: Float
-  count: Int
-}
-
-type ElasticProductSku {
-  id: String
-  name: String
-  icon: String
-  image: String
-  url: String
-  stock: Float
-  oldPrice: Float
-  price: Float
-  oldPriceText: String
-  priceText: String
-  attributes: [ElasticProductSkuAttribute]
-  sellers: [ElasticProductSeller]
-}
-
-type ElasticProductSkuAttribute {
-  key: String
-  value: String
-}
-
-"""
-A product's sticker information.
-"""
-type ElasticProductSticker {
-  location: String
-  name: String
-  image: String
-  target: String
-}
-
-"""
-A key, value interface containing a label version for both that is better suited for UI.
-"""
-type ElasticProductText {
-  key: String!
-  value: String!
-  labelKey: String!
-  labelValue: String!
-}
-
-"""
-Extra information provided for a product.
-"""
-type ExtraInfo {
-  key: String!
-  value: String!
-}
-
-type PhraseSuggestion {
-  text: String
-  highlighted: String
-  misspelled: Boolean
-  correction: Boolean
-}
-
-"""
-Result Request Attribute Text.
-"""
-input ResultRequestAttributeText {
-  name: String!
-  value: String!
-}
-
-"""
-Search response, contains prouct information and attributes.
-"""
-type ResultResponse {
-  query: String
-  operator: String
-  total: Int
-  products: [ElasticProduct]
-  pagination: ResultResponsePagination
-  options: SearchOptions
-  attributes: [AttributeResponseKey]
-  suggestion: SuggestionSearchesOutput
-  correction: PhraseSuggestion
-  redirect: String
-}
-
-type ResultResponsePagination {
-  count: Int
-  current: ResultResponsePaginationItem
-  before: [ResultResponsePaginationItem]
-  after: [ResultResponsePaginationItem]
-  next: ResultResponsePaginationItem
-  previous: ResultResponsePaginationItem
-  first: ResultResponsePaginationItem
-  last: ResultResponsePaginationItem
-}
-
-type ResultResponsePaginationItem {
-  index: Int
-  proxyUrl: String
-}
-
-type SearchOptions {
-  sorts: [SearchSort]
-  counts: [SearchOptionsCount]
-}
-
-type SearchOptionsCount {
-  count: Int
-  active: Boolean
-  proxyUrl: String
-}
-
-"""
-A Search product, contains all the info about the product. Used in Autocomplete.
-"""
-type SearchProduct {
-  id: String!
-  name: String!
-  url: String!
-  images: [ElasticProductImage]
-  oldPrice: Float
-  price: Float
-  oldPriceText: String
-  priceText: String
-  installment: ElasticProductInstallment
-  attributes: [ElasticProductText]
-  extraInfo: [ExtraInfo]
-  brand: String
-  categories: [String]
-  product: String
-  skus: [ElasticProductSku]
-}
-
-type SearchSort {
-  field: String
-  order: String
-  active: Boolean
-  proxyUrl: String
-}
-
-"""
-Result of a SuggestionProducts query, a list of suggestion products.
-"""
-type SuggestionProductsOutput {
-  count: Int!
-  products: [SearchProduct]!
-}
-
-"""
-Suggestion query object, with the term, how many times it was searched and attributes for it.
-"""
-type SuggestionQueryResponseSearch {
-  term: String!
-  count: Int!
-  attributes: [ElasticProductText]
-}
-
-"""
-Result of a SuggestionSearches query, a list of suggestion searches.
-"""
-type SuggestionSearchesOutput {
-  searches: [SuggestionQueryResponseSearch]!
-}
-
-"""
-Result of a TopSearches query, a list of the top searches at a given time.
-
-The amount of queries returned is determined by the Store's search settings.
-"""
-type TopSearchesOutput {
-  searches: [SuggestionQueryResponseSearch]!
+type SearchQuery {
+  productSearch: ProductSearch
+  facets: Facets
 }

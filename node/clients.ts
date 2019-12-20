@@ -4,12 +4,7 @@ import {
   IOClients,
   IOContext,
 } from "@vtex/api";
-import {
-  SearchResultInput,
-  SuggestionProductsInput,
-  SuggestionSearchesInput,
-  TopSearchesInput,
-} from "./commons/inputs";
+import { path, or } from "ramda";
 
 // Extend the default IOClients implementation with our own custom clients.
 export class Clients extends IOClients {
@@ -67,18 +62,36 @@ export class BiggySearchClient extends ExternalClient {
     operator,
     fuzzy,
     leap,
-  }: SearchResultInput): Promise<any> {
-    return this.http.get<any>(`${store}/api/search/${attributePath || ""}`, {
-      params: {
-        query,
-        page,
-        count,
-        sort,
-        operator,
-        fuzzy,
-        bgy_leap: leap ? true : undefined,
-      },
-      metric: "search-result",
-    });
+  }: SearchResultInput): Promise<SearchResult> {
+    try {
+      const result = await this.http.get<SearchResult>(
+        `${store}/api/search/${attributePath || ""}`,
+        {
+          params: {
+            query,
+            page,
+            count,
+            sort,
+            operator,
+            fuzzy,
+            bgy_leap: leap ? true : undefined,
+          },
+          metric: "search-result",
+        },
+      );
+
+      console.log(result.total);
+
+      return or(result, { query, total: 0, products: [] });
+    } catch (err) {
+      // On redirect, return a redirect object.
+      if (path(["response", "status"], err) === 302) {
+        const redirect = path<string>(["response", "headers", "location"], err);
+
+        return { redirect, query, total: 0, products: [] };
+      }
+
+      throw err;
+    }
   }
 }

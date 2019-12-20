@@ -1,9 +1,4 @@
-import {
-  SuggestionProductsInput,
-  SuggestionSearchesInput,
-  TopSearchesInput,
-} from "../commons/inputs";
-import { IContext } from "..";
+import { IContext } from "../../context";
 
 export const autocomplete = {
   topSearches: async (_: any, args: TopSearchesInput, ctx: IContext) => {

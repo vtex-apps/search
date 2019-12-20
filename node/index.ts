@@ -1,7 +1,12 @@
-import { ClientsConfig, Service, IOContext } from "@vtex/api";
-import { Clients, BiggySearchClient } from "./clients";
-import { autocomplete } from "./resolvers/autocomplete";
-import { search } from "./resolvers/search";
+import { ClientsConfig, Service } from "@vtex/api";
+import { Clients } from "./clients";
+import { searchQuery } from "./resolvers/query/search-query";
+import { autocomplete } from "./resolvers/query/autocomplete";
+import { search } from "./resolvers/query/search";
+import { extraInfo } from "./resolvers/types/extra-info";
+import { productSearch } from "./resolvers/types/product-search";
+import { product } from "./resolvers/types/product";
+import { facets } from "./resolvers/types/facets";
 
 const FIFTEEN_SECOND_MS = 15 * 1000;
 
@@ -22,14 +27,18 @@ export default new Service({
       Query: {
         ...autocomplete,
         ...search,
+        ...searchQuery,
+      },
+      ElasticProduct: {
+        ...extraInfo,
+      },
+      SearchQuery: {
+        ...productSearch,
+        ...facets,
+      },
+      Product: {
+        ...product,
       },
     },
   },
 });
-
-export interface IContext {
-  vtex: IOContext;
-  clients: {
-    biggySearch: BiggySearchClient;
-  };
-}
