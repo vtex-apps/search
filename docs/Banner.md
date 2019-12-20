@@ -6,7 +6,7 @@
 
 ## Configuration
 
-1. Import the DidYouMean's app to your theme's dependencies in the `manifest.json`, for example:
+1. Import the Banners's app to your theme's dependencies in the `manifest.json`, for example:
 
 ```json
   dependencies: {
@@ -34,9 +34,9 @@
     ],
     "search-banner#one": {
         "props": {
-        "area": "one",
-        "blockClass": "myBanner",
-        "horizontalAlignment": "center"
+            "area": "one",
+            "blockClass": "myBanner",
+            "horizontalAlignment": "center"
         }
     },
     "flex-layout.row#banner-one": {
