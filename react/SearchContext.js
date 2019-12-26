@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import { prop } from "ramda";
-import { useRuntime } from "vtex.render-runtime";
+// import { useRuntime } from "vtex.render-runtime";
 import { SearchClickPixel } from "vtex.sae-analytics";
 
-import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
+import { convertOrderBy } from "./utils/compatibility-layer.ts";
 import useRedirect from "./useRedirect";
 import SearchQuery from "./components/SearchQuery";
 
@@ -32,7 +33,7 @@ const getUrlByAttributePath = (
 };
 
 const SearchContext = props => {
-  const { account } = useRuntime();
+  // const { account } = useRuntime();
   const { setRedirect } = useRedirect();
 
   const {
@@ -48,14 +49,14 @@ const SearchContext = props => {
     [attributePath, map, priceRange],
   );
 
-  const initialVariables = {
+  const variables = {
     operator,
     fuzzy,
     query: _query,
     page: 1,
     store: "exitocol", // TODO: remove
     attributePath: url,
-    sort: vtexOrderToBiggyOrder(order),
+    sort: convertOrderBy(order),
     count: maxItemsPerPage,
     leap: !!leap,
   };
@@ -67,7 +68,7 @@ const SearchContext = props => {
       priceRangeKey={priceRangeKey}
       attributePath={attributePath}
       map={map}
-      variables={initialVariables}
+      variables={variables}
     >
       {result => {
         const redirect = prop("redirect", result);
@@ -88,6 +89,20 @@ const SearchContext = props => {
       }}
     </SearchQuery>
   );
+};
+
+SearchContext.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  priceRangeKey: PropTypes.string,
+  maxItemsPerPage: PropTypes.number,
+  params: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  query: PropTypes.any.isRequired,
+};
+
+SearchContext.defaultProps = {
+  priceRangeKey: undefined,
+  maxItemsPerPage: 20,
 };
 
 export default SearchContext;
