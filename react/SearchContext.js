@@ -1,11 +1,10 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { prop } from "ramda";
-// import { useRuntime } from "vtex.render-runtime";
 import { SearchClickPixel } from "vtex.sae-analytics";
 
 import { convertOrderBy } from "./utils/compatibility-layer.ts";
-import useRedirect from "./useRedirect";
+import useRedirect from "./components/useRedirect";
 import SearchQuery from "./components/SearchQuery";
 
 const getUrlByAttributePath = (
@@ -33,7 +32,6 @@ const getUrlByAttributePath = (
 };
 
 const SearchContext = props => {
-  // const { account } = useRuntime();
   const { setRedirect } = useRedirect();
 
   const {
@@ -54,7 +52,6 @@ const SearchContext = props => {
     fuzzy,
     query: _query,
     page: 1,
-    store: "exitocol", // TODO: remove
     attributePath: url,
     sort: convertOrderBy(order),
     count: maxItemsPerPage,

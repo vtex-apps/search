@@ -112,7 +112,6 @@ SearchQuery.propTypes = {
     operator: PropTypes.string,
     query: PropTypes.string,
     page: PropTypes.number,
-    store: PropTypes.string,
     attributePath: PropTypes.string,
     sort: PropTypes.string,
     count: PropTypes.number,

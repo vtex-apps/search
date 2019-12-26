@@ -1,11 +1,9 @@
 query suggestionProducts(
-  $store: String!
   $term: String!
   $attributeKey: String
   $attributeValue: String
 ) {
   suggestionProducts(
-    store: $store
     term: $term
     attributeKey: $attributeKey
     attributeValue: $attributeValue

@@ -1,22 +1,18 @@
 type Query {
   """
   Get top searches for a given store.
-
-  Using paidNavigation filter you'll be able to filter out words that shouldn't be shown
-  when the user comes from a paid navigation (e.g. google ads, bing ads).
   """
-  topSearches(store: String!, paidNavigation: Boolean): TopSearchesOutput
+  topSearches: TopSearchesOutput
 
   """
   Get suggestion searches for a given search term.
   """
-  suggestionSearches(store: String!, term: String!): SuggestionSearchesOutput
+  suggestionSearches(term: String!): SuggestionSearchesOutput
 
   """
   Get suggestion products for a given search term.
   """
   suggestionProducts(
-    store: String!
     term: String!
     attributeKey: String
     attributeValue: String
@@ -25,19 +21,17 @@ type Query {
   """
   Get attribute keys for a store.
   """
-  attributeKeys(store: String!): [AttributeResponseKey]!
+  attributeKeys: [AttributeResponseKey]!
 
   """
   Get attribute values for a given attribute.
   """
   attributeValues(
-    store: String!
     attribute: String!
     filters: [ResultRequestAttributeText]
   ): [AttributeResponseValue]!
 
   searchResult(
-    store: String!
     attributePath: String
     query: String
     page: Int

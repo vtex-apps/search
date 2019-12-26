@@ -1,53 +1,84 @@
 import { path } from "ramda";
 import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
 import {
-  TopSearchesInput,
   SuggestionSearchesInput,
   SuggestionProductsInput,
   SearchResultInput,
 } from "../commons/inputs";
 
 export class BiggySearchClient extends ExternalClient {
+  private store: string;
+
   constructor(context: IOContext, options?: InstanceOptions) {
     super("http://search.biggylabs.com.br/search-api/v1/", context, options);
+
+    const { account } = context;
+    this.store = account;
   }
 
-  public async topSearches({ store }: TopSearchesInput): Promise<any> {
-    return this.http.get<any>(`${store}/api/top_searches`, {
-      metric: "top-searches",
-    });
+  public async topSearches(): Promise<any> {
+    try {
+      const result = await this.http.get<any>(
+        `${this.store}/api/top_searches`,
+        {
+          metric: "top-searches",
+        },
+      );
+
+      return result || { searches: [] };
+    } catch (err) {
+      // TODO: Add logging
+      return { searches: [] };
+    }
   }
 
   public async suggestionSearches({
-    store,
     term,
   }: SuggestionSearchesInput): Promise<any> {
-    return this.http.get<any>(`${store}/api/suggestion_searches`, {
-      params: {
-        term,
-      },
-      metric: "suggestion-searches",
-    });
+    try {
+      const result = await this.http.get<any>(
+        `${this.store}/api/suggestion_searches`,
+        {
+          params: {
+            term,
+          },
+          metric: "suggestion-searches",
+        },
+      );
+
+      return result || { searches: [] };
+    } catch (err) {
+      // TODO: Add logging
+      return { searches: [] };
+    }
   }
 
   public async suggestionProducts({
-    store,
     term,
     attributeKey,
     attributeValue,
   }: SuggestionProductsInput): Promise<any> {
-    return this.http.get<any>(`${store}/api/suggestion_products`, {
-      params: {
-        term,
-        key: attributeKey,
-        value: attributeValue,
-      },
-      metric: "suggestion-products",
-    });
+    try {
+      const result = await this.http.get<any>(
+        `${this.store}/api/suggestion_products`,
+        {
+          params: {
+            term,
+            key: attributeKey,
+            value: attributeValue,
+          },
+          metric: "suggestion-products",
+        },
+      );
+
+      return result || { count: 0, products: [] };
+    } catch (err) {
+      // TODO: Add logging
+      return { count: 0, products: [] };
+    }
   }
 
   public async searchResult({
-    store,
     attributePath,
     query,
     page,
@@ -59,7 +90,7 @@ export class BiggySearchClient extends ExternalClient {
   }: SearchResultInput): Promise<any> {
     try {
       const result = await this.http.get<any>(
-        `${store}/api/search/${attributePath || ""}`,
+        `${this.store}/api/search/${attributePath || ""}`,
         {
           params: {
             query,
@@ -81,7 +112,8 @@ export class BiggySearchClient extends ExternalClient {
         return { redirect, products: [] };
       }
 
-      throw err;
+      // TODO: Add logging
+      return { products: [] };
     }
   }
 }

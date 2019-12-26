@@ -1,30 +1,78 @@
 fragment Product on Product {
   cacheId
   productId
+  description
   productName
   productReference
-  description
-  categories
-  categoryTree {
-    name
-    href
-  }
-  link
   linkText
   brand
-  items {
+  brandId
+  link
+  categories
+  priceRange {
+    sellingPrice {
+      highPrice
+      lowPrice
+    }
+    listPrice {
+      highPrice
+      lowPrice
+    }
+  }
+  specificationGroups {
     name
+    specifications {
+      name
+      values
+    }
+  }
+  items {
     itemId
+    name
+    nameComplete
+    complementName
+    ean
+    variations {
+      name
+      values
+    }
     referenceId {
+      Key
       Value
     }
+    measurementUnit
+    unitMultiplier
     images {
-      imageUrl
+      cacheId
+      imageId
+      imageLabel
       imageTag
+      imageUrl
+      imageText
     }
     sellers {
       sellerId
+      sellerName
       commertialOffer {
+        discountHighlights {
+          name
+        }
+        teasers {
+          name
+          conditions {
+            minimumQuantity
+            parameters {
+              name
+              value
+            }
+          }
+          effects {
+            parameters {
+              name
+              value
+            }
+          }
+        }
         Installments {
           Value
           InterestRate
@@ -32,9 +80,12 @@ fragment Product on Product {
           NumberOfInstallments
           Name
         }
-        AvailableQuantity
         Price
         ListPrice
+        PriceWithoutDiscount
+        RewardValue
+        PriceValidUntil
+        AvailableQuantity
       }
     }
   }
@@ -42,10 +93,13 @@ fragment Product on Product {
     id
     name
   }
+  properties {
+    name
+    values
+  }
 }
 
 query searchResult(
-  $store: String!
   $attributePath: String
   $query: String
   $page: Int
@@ -57,7 +111,6 @@ query searchResult(
   $productOrigin: Origin
 ) {
   searchResult(
-    store: $store
     attributePath: $attributePath
     query: $query
     page: $page
@@ -74,50 +127,6 @@ query searchResult(
     operator
     total
     redirect
-    pagination {
-      count
-      current {
-        index
-        proxyUrl
-      }
-      before {
-        index
-        proxyUrl
-      }
-      after {
-        index
-        proxyUrl
-      }
-      next {
-        index
-        proxyUrl
-      }
-      previous {
-        index
-        proxyUrl
-      }
-      first {
-        index
-        proxyUrl
-      }
-      last {
-        index
-        proxyUrl
-      }
-    }
-    options {
-      sorts {
-        field
-        order
-        active
-        proxyUrl
-      }
-      counts {
-        count
-        active
-        proxyUrl
-      }
-    }
     attributes {
       key
       label

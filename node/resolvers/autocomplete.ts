@@ -1,18 +1,14 @@
 import {
   SuggestionProductsInput,
   SuggestionSearchesInput,
-  TopSearchesInput,
 } from "../commons/inputs";
 import { IContext } from "..";
 
 export const autocomplete = {
-  topSearches: async (_: any, args: TopSearchesInput, ctx: IContext) => {
+  topSearches: async (_: any, __: any, ctx: IContext) => {
     const { biggySearch } = ctx.clients;
 
-    const result = (await biggySearch.topSearches(args)) || {};
-    result.searches = result.searches || [];
-
-    return result;
+    return await biggySearch.topSearches();
   },
 
   suggestionSearches: async (
@@ -22,10 +18,7 @@ export const autocomplete = {
   ) => {
     const { biggySearch } = ctx.clients;
 
-    const result = (await biggySearch.suggestionSearches(args)) || {};
-    result.searches = result.searches || [];
-
-    return result;
+    return await biggySearch.suggestionSearches(args);
   },
 
   suggestionProducts: async (
@@ -35,9 +28,6 @@ export const autocomplete = {
   ) => {
     const { biggySearch } = ctx.clients;
 
-    const result = (await biggySearch.suggestionProducts(args)) || { count: 0 };
-    result.products = result.products || [];
-
-    return result;
+    return await biggySearch.suggestionProducts(args);
   },
 };

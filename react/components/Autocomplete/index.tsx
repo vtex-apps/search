@@ -8,7 +8,6 @@ import {
 } from "./components/ItemList/types";
 import { TileList } from "./components/TileList/TileList";
 import stylesCss from "./styles.css";
-import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
 import { Product } from "../../models/product";
 import { FormattedMessage } from "react-intl";
@@ -130,10 +129,7 @@ class AutoComplete extends React.Component<
   }
 
   async updateSuggestions() {
-    const result = await this.client.suggestionSearches(
-      this.props.runtime.account,
-      this.props.inputValue,
-    );
+    const result = await this.client.suggestionSearches(this.props.inputValue);
     const { searches } = result.data.suggestionSearches;
     const { maxSuggestedTerms = MAX_SUGGESTED_TERMS_DEFAULT } = this.props;
 
@@ -183,7 +179,6 @@ class AutoComplete extends React.Component<
     });
 
     const result = await this.client.suggestionProducts(
-      this.props.runtime.account,
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
@@ -227,7 +222,7 @@ class AutoComplete extends React.Component<
   }
 
   async updateTopSearches() {
-    const result = await this.client.topSearches(this.props.runtime.account);
+    const result = await this.client.topSearches();
     const { searches } = result.data.topSearches;
     const { maxTopSearches = MAX_TOP_SEARCHES_DEFAULT } = this.props;
 
@@ -426,5 +421,4 @@ class AutoComplete extends React.Component<
   }
 }
 
-// TO DO: usar compose
-export default withDevice(withApollo(withRuntime(AutoComplete)));
+export default withDevice(withApollo(AutoComplete));
