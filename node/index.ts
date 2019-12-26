@@ -30,6 +30,9 @@ export default new Service({
       ResultResponse: {
         ...products,
       },
+      SuggestionProductsOutput: {
+        ...products,
+      },
       SearchProduct: {
         ...extraInfo,
       },

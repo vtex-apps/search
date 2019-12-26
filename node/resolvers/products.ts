@@ -1,5 +1,5 @@
 import { convertBiggyProduct } from "../commons/compatibility-layer";
-import { map, propOr, isEmpty, sort, indexOf } from "ramda";
+import { map, prop, isEmpty, sort, indexOf } from "ramda";
 import { IContext } from "..";
 
 enum Origin {
@@ -18,11 +18,11 @@ export const products = {
     }
 
     const { searchGraphQL } = ctx.clients;
+
     let products: any[] = searchResult.products;
-    const productIds = map<any, string>(
-      propOr<string>("", "product"),
-      products,
-    );
+    const productIds = map<any, string>((product: any) => {
+      return prop("product", product) || prop("id", product) || "";
+    }, products);
 
     if (!isEmpty(productIds)) {
       // Get products' model from VTEX search API

@@ -9,7 +9,6 @@ import {
 import { TileList } from "./components/TileList/TileList";
 import stylesCss from "./styles.css";
 import BiggyClient from "../../utils/biggy-client";
-import { Product } from "../../models/product";
 import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
 import { withDevice } from "vtex.device-detector";
@@ -43,7 +42,7 @@ interface AutoCompleteState {
   topSearchedItems: Item[];
   suggestionItems: Item[];
   history: Item[];
-  products: Product[];
+  products: any[];
   totalProducts: number;
   queryFromHover: { key?: string; value?: string };
   dynamicTerm: string;
@@ -194,26 +193,7 @@ class AutoComplete extends React.Component<
       maxSuggestedProducts = MAX_SUGGESTED_PRODUCTS_DEFAULT,
     } = this.props;
 
-    const products = suggestionProducts.products
-      .slice(0, maxSuggestedProducts)
-      .map(currentProduct => {
-        return new Product(
-          currentProduct.id,
-          currentProduct.name,
-          currentProduct.brand,
-          currentProduct.url,
-          currentProduct.price,
-          currentProduct.priceText,
-          currentProduct.installment,
-          currentProduct.images && currentProduct.images.length > 0
-            ? currentProduct.images[0].value
-            : "",
-          currentProduct.oldPrice,
-          currentProduct.oldPriceText,
-          currentProduct.categories,
-          currentProduct.skus,
-        );
-      });
+    const products = suggestionProducts.products.slice(0, maxSuggestedProducts);
 
     this.setState({
       products,

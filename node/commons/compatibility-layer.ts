@@ -15,9 +15,9 @@ export const convertBiggyProduct = (product: any) => {
   return {
     categories,
     cacheId: product.name.replace(" ", "-"),
-    productId: product.product,
+    productId: product.product || product.id,
     productName: product.name,
-    productReference: product.product,
+    productReference: product.product || product.id,
     linkText: slugifyUrl(product.url),
     brand:
       product.brand ||
@@ -38,8 +38,8 @@ const slugifyUrl = (url: string) => {
 
 const convertSKU = (product: any) => (sku: any) => {
   const image = {
-    cacheId: product.product,
-    imageId: product.product,
+    cacheId: product.product || product.id,
+    imageId: product.product || product.id,
     imageLabel: "principal",
     imageUrl: product.images[0].value,
     imageText: "principal",
