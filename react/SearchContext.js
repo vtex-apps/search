@@ -7,6 +7,11 @@ import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
 import VtexSearchResult from "./models/vtex-search-result";
 import logError from "./api/log";
 import useRedirect from "./useRedirect";
+import BiggyClient from "./utils/biggy-client";
+
+const saveTermInHistory = term => {
+  new BiggyClient().prependSearchHistory(term);
+};
 
 const getUrlByAttributePath = (
   attributePath,
@@ -109,14 +114,17 @@ const SearchContext = props => {
       <Query
         query={searchResultQuery}
         variables={initialVariables}
-        onCompleted={onSearchResult}
+        onCompleted={data => {
+          saveTermInHistory(initialVariables.query);
+          onSearchResult(data);
+        }}
       >
         {({ loading, error, data, fetchMore }) => {
           if (error) {
             logError(account, workspace, route.path, error);
           }
 
-          if (data.searchResult && data.searchResult.redirect) {
+          if (data && data.searchResult && data.searchResult.redirect) {
             setRedirect(data.searchResult.redirect);
           }
 

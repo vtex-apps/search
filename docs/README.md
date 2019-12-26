@@ -9,7 +9,9 @@ a more complete search experience.
 
 - [Usage](#usage)
   - [Custom Search Page URL](#custom-search-page-url)
+  - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
+  - [Enhanced Search Result](#enhanced-search-result)
   - [Catalog Integration](#catalog-integration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)
@@ -63,6 +65,41 @@ the `customSearchPageUrl` prop on the `search-bar` component.
 }
 ```
 
+### Autocomplete
+
+We provide a customized autocomplete with new features. It includes:
+
+- Top searches list
+- Search history list
+- Product suggestion
+- Search term suggestion
+
+To use our autocomplete, first, you need to declare a block for it.
+
+```json
+{
+  "autocomplete-result-list.v2": {
+    "blocks": ["product-summary"]
+  }
+}
+```
+
+Finally, append this block in the search bar. To improve the client experience, we also recommend to add the `openAutocompleteOnFocus` prop.
+
+```json
+{
+  "search-bar": {
+    "blocks": ["autocomplete-result-list.v2"],
+    "props": {
+      "customSearchPageUrl": "/search?_query=${term}",
+      "openAutocompleteOnFocus": true
+    }
+  }
+}
+```
+
+A full documentation of our custom autocomplete can be found [here](Autocomplete.md).
+
 ### Order Options
 
 We don't yet support some of the ordering options that are supported by the current search implementation,
@@ -81,6 +118,48 @@ passing them to the `hiddenOptions` prop on the `order-by` component.
     }
   }
 }
+```
+
+### Enhanced Search Result
+
+This app has three new components to improve the search result experience. They are:
+
+-   [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query. 
+-   [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
+-   [`search-banner`](Banner.md). A banner that can be configured by query.
+
+To add these components to your search-result page, you need to use the `search-result-layout.desktop.enhanced` and `search-result-layout.mobile.enhanced` instead of `search-result-layout.desktop` and `search-result-layout.mobile`. Here is an implementation example:
+
+```json
+"search-result-layout.desktop.enhanced": {
+    "children": [
+      "flex-layout.row#didyoumean",
+      "flex-layout.row#suggestion",
+      "flex-layout.row#banner-one",
+      "flex-layout.row#result"
+    ],
+    "props": {
+      "pagination": "show-more",
+      "preventRouteChange": true,
+      "mobileLayout": {
+        "mode1": "small",
+        "mode2": "normal"
+      }
+    }
+  },
+  "flex-layout.row#didyoumean": {
+    "children": ["did-you-mean"]
+  },
+  "flex-layout.row#suggestion": {
+    "children": ["search-suggestions"]
+  },
+  "search-banner#one": {
+    "props": {
+      "area": "one",
+      "blockClass": "myBanner",
+      "horizontalAlignment": "center"
+    }
+  }
 ```
 
 ### Plug & Play
