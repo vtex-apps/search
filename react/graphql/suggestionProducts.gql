@@ -1,4 +1,4 @@
-fragment Product on SearchProduct {
+fragment Product on Product {
   cacheId
   productId
   description
@@ -103,6 +103,7 @@ query suggestionProducts(
   $term: String!
   $attributeKey: String
   $attributeValue: String
+  $productOrigin: Origin
 ) {
   suggestionProducts(
     term: $term

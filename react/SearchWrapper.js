@@ -1,19 +1,15 @@
 import React from "react";
 import { Helmet, useRuntime } from "vtex.render-runtime";
 import PropTypes from "prop-types";
-import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
-import { isEmpty, reject } from "ramda";
+import { isEmpty, reject, prop } from "ramda";
 
 const getCanonicalHost = () =>
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-underscore-dangle
   window.__hostname__ || prop("hostname", window.location);
 
-const SearchWrapper = ({ children }) => {
+const SearchWrapper = ({ children, searchResult: { query } }) => {
   const { route, getSettings } = useRuntime();
   const { storeName, metaTagKeywords } = getSettings("vtex.store") || {};
-  const {
-    searchQuery: { query },
-  } = useSearchPage();
 
   const title = reject(isEmpty, [query, storeName]).join(" - ");
 
@@ -48,6 +44,9 @@ SearchWrapper.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  searchResult: PropTypes.shape({
+    query: PropTypes.string,
+  }).isRequired,
 };
 
 export default SearchWrapper;

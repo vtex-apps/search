@@ -64,3 +64,11 @@ type ResultResponse {
   banners: [ElasticBanner]
   redirect: String
 }
+
+"""
+Result of a SuggestionProducts query, a list of suggestion products.
+"""
+type SuggestionProductsOutput {
+  count: Int!
+  products(origin: Origin = BIGGY): [Product]!
+}

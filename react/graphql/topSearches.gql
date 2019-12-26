@@ -1,5 +1,5 @@
-query topSearches($paidNavigation: Boolean) {
-  topSearches(paidNavigation: $paidNavigation) {
+query topSearches {
+  topSearches {
     searches {
       term
     }

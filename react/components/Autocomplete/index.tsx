@@ -36,6 +36,7 @@ interface AutoCompleteProps {
   hideTitles: boolean;
   historyFirst: boolean;
   isMobile: boolean;
+  __unstableProductOrigin: "BIGGY" | "VTEX";
 }
 
 interface AutoCompleteState {
@@ -163,6 +164,7 @@ class AutoComplete extends React.Component<
 
   async updateProducts() {
     const term = this.state.dynamicTerm;
+    const { __unstableProductOrigin = "BIGGY" } = this.props;
     const { queryFromHover } = this.state;
 
     if (!term) {
@@ -181,6 +183,7 @@ class AutoComplete extends React.Component<
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
+      __unstableProductOrigin,
     );
 
     this.setState({

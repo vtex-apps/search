@@ -248,14 +248,6 @@ type SearchSort {
 }
 
 """
-Result of a SuggestionProducts query, a list of suggestion products.
-"""
-type SuggestionProductsOutput {
-  count: Int!
-  products: [SearchProduct]!
-}
-
-"""
 Suggestion query object, with the term, how many times it was searched and attributes for it.
 """
 type SuggestionQueryResponseSearch {

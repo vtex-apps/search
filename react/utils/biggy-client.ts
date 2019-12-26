@@ -12,14 +12,11 @@ export default class BiggyClient {
 
   constructor(private client: ApolloClient<any>) {}
 
-  public async topSearches(
-    paidNavigation?: boolean,
-  ): Promise<ApolloQueryResult<{ topSearches: ISearchesOutput }>> {
+  public async topSearches(): Promise<
+    ApolloQueryResult<{ topSearches: ISearchesOutput }>
+  > {
     return this.client.query({
       query: topSearches,
-      variables: {
-        paidNavigation,
-      },
     });
   }
 
@@ -38,6 +35,7 @@ export default class BiggyClient {
     term: string,
     attributeKey?: string,
     attributeValue?: string,
+    productOrigin: "BIGGY" | "VTEX" = "BIGGY",
   ): Promise<ApolloQueryResult<{ suggestionProducts: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
@@ -45,6 +43,7 @@ export default class BiggyClient {
         term,
         attributeKey,
         attributeValue,
+        productOrigin,
       },
     });
   }
