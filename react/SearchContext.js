@@ -124,7 +124,7 @@ const SearchContext = props => {
             logError(account, workspace, route.path, error);
           }
 
-          if (data.searchResult && data.searchResult.redirect) {
+          if (data && data.searchResult && data.searchResult.redirect) {
             setRedirect(data.searchResult.redirect);
           }
 
