@@ -38,6 +38,7 @@ const SearchContext = props => {
     children,
     priceRangeKey,
     maxItemsPerPage,
+    __unstableProductOrigin: productOrigin,
     params: { path: attributePath },
     query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
   } = props;
@@ -50,13 +51,13 @@ const SearchContext = props => {
   const variables = {
     operator,
     fuzzy,
+    productOrigin,
     query: _query,
     page: 1,
     attributePath: url,
     sort: convertOrderBy(order),
     count: maxItemsPerPage,
     leap: !!leap,
-    productOrigin: "BIGGY",
   };
 
   if (!_query) throw new Error("Empty search is not allowed");
@@ -96,11 +97,13 @@ SearchContext.propTypes = {
   params: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   query: PropTypes.any.isRequired,
+  __unstableProductOrigin: PropTypes.oneOf(["BIGGY", "VTEX"]),
 };
 
 SearchContext.defaultProps = {
   priceRangeKey: undefined,
   maxItemsPerPage: 20,
+  __unstableProductOrigin: "BIGGY",
 };
 
 export default SearchContext;
