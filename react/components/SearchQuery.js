@@ -1,6 +1,6 @@
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
-import { path, prop, propOr, isEmpty, reject } from "ramda";
+import { path, pathOr, isEmpty, reject } from "ramda";
 import { onSearchResult } from "vtex.sae-analytics";
 import BiggyClient from "../utils/biggy-client.ts";
 import {
@@ -31,15 +31,23 @@ const SearchQuery = ({
     },
   });
 
-  const redirect = prop("redirect", searchResult);
+  const redirect = path(["data", "searchResult", "redirect"], searchResult);
   searchResult.loading = searchResult.loading || redirect;
 
-  const products = [];
+  const products = path(["data", "searchResult", "products"], searchResult);
 
   const fetchMore = makeFetchMore(searchResult.fetchMore, variables.count);
-  const recordsFiltered = propOr(0, "total", searchResult);
+  const recordsFiltered = pathOr(
+    [],
+    ["data", "searchResult", "total"],
+    searchResult,
+  );
 
-  const facets = propOr([], "attributes", searchResult)
+  const facets = pathOr(
+    [],
+    ["data", "searchResult", "attributes"],
+    searchResult,
+  )
     .filter(facet => facet.visible)
     .map(attr => fromAttributesToFacets(attr));
 

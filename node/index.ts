@@ -2,6 +2,8 @@ import { ClientsConfig, Service, IOContext } from "@vtex/api";
 import { Clients, BiggySearchClient } from "./clients";
 import { autocomplete } from "./resolvers/autocomplete";
 import { search } from "./resolvers/search";
+import { extraInfo } from "./resolvers/extra-info";
+import { products } from "./resolvers/products";
 
 const FIFTEEN_SECOND_MS = 15 * 1000;
 
@@ -22,6 +24,12 @@ export default new Service({
       Query: {
         ...autocomplete,
         ...search,
+      },
+      ResultResponse: {
+        ...products,
+      },
+      SearchProduct: {
+        ...extraInfo,
       },
     },
   },

@@ -1,3 +1,4 @@
+import { path } from "ramda";
 import {
   ExternalClient,
   InstanceOptions,
@@ -68,17 +69,31 @@ export class BiggySearchClient extends ExternalClient {
     fuzzy,
     leap,
   }: SearchResultInput): Promise<any> {
-    return this.http.get<any>(`${store}/api/search/${attributePath || ""}`, {
-      params: {
-        query,
-        page,
-        count,
-        sort,
-        operator,
-        fuzzy,
-        bgy_leap: leap ? true : undefined,
-      },
-      metric: "search-result",
-    });
+    try {
+      const result = await this.http.get<any>(
+        `${store}/api/search/${attributePath || ""}`,
+        {
+          params: {
+            query,
+            page,
+            count,
+            sort,
+            operator,
+            fuzzy,
+            bgy_leap: leap ? true : undefined,
+          },
+          metric: "search-result",
+        },
+      );
+
+      return result || { products: [] };
+    } catch (err) {
+      if (path(["response", "status"], err) === 302) {
+        const redirect = path(["response", "headers", "location"], err);
+        return { redirect, products: [] };
+      }
+
+      throw err;
+    }
   }
 }
