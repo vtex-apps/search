@@ -42,6 +42,9 @@
       "name": "vbase-read-write"
     },
     {
+      "name": "vtex.search-graphql:resolve-graphql"
+    },
+    {
       "name": "outbound-access",
       "attrs": {
         "host": "search.biggylabs.com.br",

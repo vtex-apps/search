@@ -1,48 +1,46 @@
-fragment Products on ResultResponse {
-  products {
-    cacheId
-    productId
-    productName
-    productReference
-    description
-    categories
-    categoryTree {
-      name
-      href
+fragment Product on Product {
+  cacheId
+  productId
+  productName
+  productReference
+  description
+  categories
+  categoryTree {
+    name
+    href
+  }
+  link
+  linkText
+  brand
+  items {
+    name
+    itemId
+    referenceId {
+      Value
     }
-    link
-    linkText
-    brand
-    items {
-      name
-      itemId
-      referenceId {
-        Value
-      }
-      images {
-        imageUrl
-        imageTag
-      }
-      sellers {
-        sellerId
-        commertialOffer {
-          Installments {
-            Value
-            InterestRate
-            TotalValuePlusInterestRate
-            NumberOfInstallments
-            Name
-          }
-          AvailableQuantity
-          Price
-          ListPrice
+    images {
+      imageUrl
+      imageTag
+    }
+    sellers {
+      sellerId
+      commertialOffer {
+        Installments {
+          Value
+          InterestRate
+          TotalValuePlusInterestRate
+          NumberOfInstallments
+          Name
         }
+        AvailableQuantity
+        Price
+        ListPrice
       }
     }
-    productClusters {
-      id
-      name
-    }
+  }
+  productClusters {
+    id
+    name
   }
 }
 
@@ -56,6 +54,7 @@ query searchResult(
   $operator: String
   $fuzzy: Int
   $leap: Boolean
+  $productOrigin: Origin
 ) {
   searchResult(
     store: $store
@@ -68,7 +67,9 @@ query searchResult(
     fuzzy: $fuzzy
     leap: $leap
   ) {
-    ...Products
+    products(origin: $productOrigin) {
+      ...Product
+    }
     query
     operator
     total

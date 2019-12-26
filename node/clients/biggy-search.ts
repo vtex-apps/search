@@ -1,23 +1,11 @@
 import { path } from "ramda";
+import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
 import {
-  ExternalClient,
-  InstanceOptions,
-  IOClients,
-  IOContext,
-} from "@vtex/api";
-import {
-  SearchResultInput,
-  SuggestionProductsInput,
-  SuggestionSearchesInput,
   TopSearchesInput,
-} from "./commons/inputs";
-
-// Extend the default IOClients implementation with our own custom clients.
-export class Clients extends IOClients {
-  public get biggySearch() {
-    return this.getOrSet("biggySearch", BiggySearchClient);
-  }
-}
+  SuggestionSearchesInput,
+  SuggestionProductsInput,
+  SearchResultInput,
+} from "../commons/inputs";
 
 export class BiggySearchClient extends ExternalClient {
   constructor(context: IOContext, options?: InstanceOptions) {

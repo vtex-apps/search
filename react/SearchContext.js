@@ -59,6 +59,7 @@ const SearchContext = props => {
     sort: convertOrderBy(order),
     count: maxItemsPerPage,
     leap: !!leap,
+    productOrigin: "BIGGY",
   };
 
   if (!_query) throw new Error("Empty search is not allowed");
