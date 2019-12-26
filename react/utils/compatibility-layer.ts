@@ -90,7 +90,7 @@ export function fromAttributesToFacets(attribute: any) {
         linkEncoded: value.proxyUrl,
         map: attribute.key,
         selected: false,
-        value: value.key,
+        value: `z${value.key}`,
       };
     }),
   };
