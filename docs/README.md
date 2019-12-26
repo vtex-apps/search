@@ -20,7 +20,14 @@ a more complete search experience.
 
 ## Usage
 
-This app uses our store builder with the blocks architecture. To know more about Store Builder [click here.](https://help.vtex.com/en/tutorial/understanding-storebuilder-and-stylesbuilder#structuring-and-configuring-our-store-with-object-object)
+The first step to start using this app is to install it in the desired workspace, using:
+
+```sh
+vtex install vtex.search@0.x
+```
+
+This app uses our store builder with the blocks architecture.
+To know more about Store Builder [click here.](https://help.vtex.com/en/tutorial/understanding-storebuilder-and-stylesbuilder#structuring-and-configuring-our-store-with-object-object)
 
 To use this app you need to import it in your dependencies on the `manifest.json`.
 
@@ -154,6 +161,20 @@ To add these components to your search-result page, you need to use the `search-
     }
   }
 ```
+
+### Plug & Play
+
+For our app to be as _Plug & Play_ as possible it's necessary to follow the good conventions for developing
+[`store-themes`](https://github.com/vtex-apps/store-theme) like using open-source components developed by
+the [`vtex-apps`](https://github.com/vtex-apps) organization.
+
+Our app is heavily dependent, as seen above, on two major components: [`search-bar`](https://github.com/vtex-apps/store-components/blob/master/docs/SearchBar.md)
+and [`search-result`](https://vtex.io/docs/app/vtex.search-result). Our components are developed with the default
+implementations in mind, so keep that in mind when using custom components. For custom or closed-source components
+to work perfectly with our own, it should resemble both these components as closely as possible.
+
+If you're using any type of custom components on your `store-theme` we can't guarantee the _Plug & Play_
+functionality of the components provided by this app.
 
 ### Catalog Integration
 

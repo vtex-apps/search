@@ -13,7 +13,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Suggestions
 - Banner
 
+## [0.3.5] - 2019-12-19
+
+### Added
+
+- Temporary workaround on facet values sorting.
+
+## [0.3.4] - 2019-12-16
+
+### Changed
+
+- Improve documentation.
+
 ## [0.3.3] - 2019-12-11
+
+### Changed
+
+- Improve documentation.
 
 ## [0.3.2] - 2019-12-09
 
