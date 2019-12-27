@@ -90,12 +90,15 @@ const SearchQuery = ({
   return children({
     ...searchQuery.variables,
     ...searchQuery,
+    redirect,
     searchResult: {
       ...searchResult,
       ...path(["data", "searchResult"], searchResult),
     },
-    redirect,
-    searchQuery,
+    searchQuery: {
+      ...path(["data", "searchResult"], searchResult), // Suggestions, banners, etc.
+      ...searchQuery,
+    },
     pagination: "show-more",
     params: { term: variables.query },
     query: variables.query,

@@ -3,33 +3,12 @@ import PropTypes from "prop-types";
 import { prop } from "ramda";
 import { SearchClickPixel } from "vtex.sae-analytics";
 
-import { convertOrderBy } from "./utils/compatibility-layer.ts";
+import {
+  convertOrderBy,
+  convertURLToAttributePath,
+} from "./utils/compatibility-layer.ts";
 import useRedirect from "./components/useRedirect";
 import SearchQuery from "./components/SearchQuery";
-
-const getUrlByAttributePath = (
-  attributePath,
-  map,
-  priceRange,
-  priceRangeKey,
-) => {
-  const facets = attributePath ? attributePath.split("/") : [];
-  const apiUrlTerms = map
-    ? map
-        .split(",")
-        .slice(1)
-        .map((item, index) => `${item}/${facets[index].replace(/^z/, "")}`)
-    : [];
-
-  const url = apiUrlTerms.join("/");
-
-  if (priceRange && priceRangeKey) {
-    const [from, to] = priceRange.split(" TO ");
-    return `${url}/${priceRangeKey}/${from}:${to}`;
-  }
-
-  return url;
-};
 
 const SearchContext = props => {
   const { setRedirect } = useRedirect();
@@ -44,7 +23,8 @@ const SearchContext = props => {
   } = props;
 
   const url = useMemo(
-    () => getUrlByAttributePath(attributePath, map, priceRange, priceRangeKey),
+    () =>
+      convertURLToAttributePath(attributePath, map, priceRange, priceRangeKey),
     [attributePath, map, priceRange],
   );
 

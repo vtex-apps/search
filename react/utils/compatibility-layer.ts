@@ -20,7 +20,7 @@ type FetchMore = (options: FetchMoreOptions) => Promise<any>;
 export const makeFetchMore = (
   fetchMore: FetchMore,
   maxItemsPerPage: number,
-): FetchMore => async ({ variables, updateQuery }) => {
+): FetchMore => async ({ variables, updateQuery = () => {} }) => {
   const { to } = variables;
   const page = variables.page
     ? variables.page
@@ -134,4 +134,26 @@ export function convertOrderBy(orderBy: OrderBy): string {
     default:
       return "";
   }
+}
+
+export function convertURLToAttributePath(
+  attributePath: string,
+  map: string,
+  priceRange: string,
+  priceRangeKey: string,
+) {
+  const facets = (attributePath || "").split("/");
+  const apiUrlTerms = (map || "")
+    .split(",")
+    .slice(1)
+    .map((item, index) => `${item}/${facets[index].replace(/^z/, "")}`);
+
+  const url = apiUrlTerms.join("/");
+
+  if (priceRange && priceRangeKey) {
+    const [from, to] = priceRange.split(" TO ");
+    return `${url}/${priceRangeKey}/${from}:${to}`;
+  }
+
+  return url;
 }
