@@ -12,6 +12,7 @@ a more complete search experience.
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
   - [Enhanced Search Result](#enhanced-search-result)
+  - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)

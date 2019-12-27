@@ -102,7 +102,6 @@ const SearchQuery = ({
     pagination: "show-more",
     params: { term: variables.query },
     query: variables.query,
-    showMore: false,
   });
 };
 

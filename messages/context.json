@@ -5,6 +5,7 @@
     "store/emptySuggestion": "emptySuggestion",
     "store/seeMore": "seeMore",
     "store/suggestedProducts": "suggestedProducts",
+    "store/ordinalNumber": "ordinalNumber",
     "store/didYouMean": "didYouMean",
     "store/searchSuggestions": "searchSuggestions"
 }
