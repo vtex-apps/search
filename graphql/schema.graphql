@@ -2,12 +2,13 @@ type Query {
   """
   Get top searches for a given store.
   """
-  topSearches: TopSearchesOutput
+  topSearches: TopSearchesOutput @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get suggestion searches for a given search term.
   """
   suggestionSearches(term: String!): SuggestionSearchesOutput
+    @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get suggestion products for a given search term.
@@ -16,12 +17,13 @@ type Query {
     term: String!
     attributeKey: String
     attributeValue: String
-  ): SuggestionProductsOutput
+  ): SuggestionProductsOutput @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get attribute keys for a store.
   """
   attributeKeys: [AttributeResponseKey]!
+    @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get attribute values for a given attribute.
@@ -29,7 +31,7 @@ type Query {
   attributeValues(
     attribute: String!
     filters: [ResultRequestAttributeText]
-  ): [AttributeResponseValue]!
+  ): [AttributeResponseValue]! @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   searchResult(
     attributePath: String
@@ -40,7 +42,7 @@ type Query {
     operator: String
     fuzzy: Int
     leap: Boolean
-  ): ResultResponse
+  ): ResultResponse @cacheControl(scope: PUBLIC, maxAge: SHORT)
 }
 
 enum Origin {
