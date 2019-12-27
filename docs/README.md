@@ -12,6 +12,7 @@ a more complete search experience.
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
   - [Enhanced Search Result](#enhanced-search-result)
+  - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)
@@ -124,9 +125,9 @@ passing them to the `hiddenOptions` prop on the `order-by` component.
 
 This app has three new components to improve the search result experience. They are:
 
--   [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query. 
--   [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
--   [`search-banner`](Banner.md). A banner that can be configured by query.
+- [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query.
+- [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
+- [`search-banner`](Banner.md). A banner that can be configured by query.
 
 To add these components to your search-result page, you need to use the `search-result-layout.desktop.enhanced` and `search-result-layout.mobile.enhanced` instead of `search-result-layout.desktop` and `search-result-layout.mobile`. Here is an implementation example:
 

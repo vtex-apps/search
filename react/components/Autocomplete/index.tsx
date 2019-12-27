@@ -8,9 +8,7 @@ import {
 } from "./components/ItemList/types";
 import { TileList } from "./components/TileList/TileList";
 import stylesCss from "./styles.css";
-import { withRuntime } from "../../utils/withRuntime";
 import BiggyClient from "../../utils/biggy-client";
-import { Product } from "../../models/product";
 import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
 import { withDevice } from "vtex.device-detector";
@@ -38,13 +36,14 @@ interface AutoCompleteProps {
   hideTitles: boolean;
   historyFirst: boolean;
   isMobile: boolean;
+  __unstableProductOrigin: "BIGGY" | "VTEX";
 }
 
 interface AutoCompleteState {
   topSearchedItems: Item[];
   suggestionItems: Item[];
   history: Item[];
-  products: Product[];
+  products: any[];
   totalProducts: number;
   queryFromHover: { key?: string; value?: string };
   dynamicTerm: string;
@@ -130,10 +129,7 @@ class AutoComplete extends React.Component<
   }
 
   async updateSuggestions() {
-    const result = await this.client.suggestionSearches(
-      this.props.runtime.account,
-      this.props.inputValue,
-    );
+    const result = await this.client.suggestionSearches(this.props.inputValue);
     const { searches } = result.data.suggestionSearches;
     const { maxSuggestedTerms = MAX_SUGGESTED_TERMS_DEFAULT } = this.props;
 
@@ -168,6 +164,7 @@ class AutoComplete extends React.Component<
 
   async updateProducts() {
     const term = this.state.dynamicTerm;
+    const { __unstableProductOrigin = "BIGGY" } = this.props;
     const { queryFromHover } = this.state;
 
     if (!term) {
@@ -183,10 +180,10 @@ class AutoComplete extends React.Component<
     });
 
     const result = await this.client.suggestionProducts(
-      this.props.runtime.account,
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
+      __unstableProductOrigin,
     );
 
     this.setState({
@@ -199,26 +196,7 @@ class AutoComplete extends React.Component<
       maxSuggestedProducts = MAX_SUGGESTED_PRODUCTS_DEFAULT,
     } = this.props;
 
-    const products = suggestionProducts.products
-      .slice(0, maxSuggestedProducts)
-      .map(currentProduct => {
-        return new Product(
-          currentProduct.id,
-          currentProduct.name,
-          currentProduct.brand,
-          currentProduct.url,
-          currentProduct.price,
-          currentProduct.priceText,
-          currentProduct.installment,
-          currentProduct.images && currentProduct.images.length > 0
-            ? currentProduct.images[0].value
-            : "",
-          currentProduct.oldPrice,
-          currentProduct.oldPriceText,
-          currentProduct.categories,
-          currentProduct.skus,
-        );
-      });
+    const products = suggestionProducts.products.slice(0, maxSuggestedProducts);
 
     this.setState({
       products,
@@ -227,7 +205,7 @@ class AutoComplete extends React.Component<
   }
 
   async updateTopSearches() {
-    const result = await this.client.topSearches(this.props.runtime.account);
+    const result = await this.client.topSearches();
     const { searches } = result.data.topSearches;
     const { maxTopSearches = MAX_TOP_SEARCHES_DEFAULT } = this.props;
 
@@ -426,5 +404,4 @@ class AutoComplete extends React.Component<
   }
 }
 
-// TO DO: usar compose
-export default withDevice(withApollo(withRuntime(AutoComplete)));
+export default withDevice(withApollo(AutoComplete));

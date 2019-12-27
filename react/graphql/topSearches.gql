@@ -1,5 +1,5 @@
-query topSearches($store: String!, $paidNavigation: Boolean) {
-  topSearches(store: $store, paidNavigation: $paidNavigation) {
+query topSearches {
+  topSearches {
     searches {
       term
     }

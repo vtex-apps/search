@@ -1,5 +1,5 @@
-query suggestionSearches($store: String!, $term: String!) {
-  suggestionSearches(store: $store, term: $term) {
+query suggestionSearches($term: String!) {
+  suggestionSearches(term: $term) {
     searches {
       term
       attributes {

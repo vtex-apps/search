@@ -1,35 +1,38 @@
 import React from "react";
 import { Helmet, useRuntime } from "vtex.render-runtime";
 import PropTypes from "prop-types";
+import { isEmpty, reject, prop } from "ramda";
 
-const SearchWrapper = props => {
-  const { getSettings } = useRuntime();
+const getCanonicalHost = () =>
+  // eslint-disable-next-line no-underscore-dangle
+  window.__hostname__ || prop("hostname", window.location);
+
+const SearchWrapper = ({ children, searchResult: { query } }) => {
+  const { route, getSettings } = useRuntime();
   const { storeName, metaTagKeywords } = getSettings("vtex.store") || {};
 
-  const { searchResult } = props;
+  const title = reject(isEmpty, [query, storeName]).join(" - ");
 
-  const title =
-    searchResult && searchResult.query
-      ? `${searchResult.query} - ${storeName}`
-      : storeName;
-
-  const { children } = props;
   return (
     <>
       <Helmet
         title={title}
         meta={[
-          searchResult &&
-            searchResult.query && {
-              name: "keywords",
-              content: `${searchResult.query}, ${metaTagKeywords}`,
-            },
-          searchResult &&
-            searchResult.query && {
-              name: "robots",
-              content: "noindex,follow",
-            },
+          query && {
+            name: "keywords",
+            content: `${query}, ${metaTagKeywords}`,
+          },
+          query && {
+            name: "robots",
+            content: "noindex,follow",
+          },
         ].filter(Boolean)}
+        link={[
+          {
+            rel: "canonical",
+            href: encodeURI(`https://${getCanonicalHost()}${route.path}`),
+          },
+        ]}
       />
       {children}
     </>
@@ -37,13 +40,13 @@ const SearchWrapper = props => {
 };
 
 SearchWrapper.propTypes = {
-  searchResult: PropTypes.shape({
-    query: PropTypes.string.isRequired,
-  }).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  searchResult: PropTypes.shape({
+    query: PropTypes.string,
+  }).isRequired,
 };
 
 export default SearchWrapper;

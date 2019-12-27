@@ -1,185 +1,89 @@
 import React, { useMemo } from "react";
-import { Query } from "react-apollo";
-import { useRuntime } from "vtex.render-runtime";
-import { onSearchResult, SearchClickPixel } from "vtex.sae-analytics";
-import searchResultQuery from "./graphql/searchResult.gql";
-import { vtexOrderToBiggyOrder } from "./utils/vtex-utils";
-import VtexSearchResult from "./models/vtex-search-result";
-import logError from "./api/log";
-import useRedirect from "./useRedirect";
-import BiggyClient from "./utils/biggy-client";
+import PropTypes from "prop-types";
+import { prop } from "ramda";
+import { SearchClickPixel } from "vtex.sae-analytics";
 
-const saveTermInHistory = term => {
-  new BiggyClient().prependSearchHistory(term);
-};
-
-const getUrlByAttributePath = (
-  attributePath,
-  map,
-  priceRange,
-  priceRangeKey,
-) => {
-  const facets = attributePath ? attributePath.split("/") : [];
-  const apiUrlTerms = map
-    ? map
-        .split(",")
-        .slice(1)
-        .map((item, index) => `${item}/${facets[index].replace(/^z/, "")}`)
-    : [];
-
-  const url = apiUrlTerms.join("/");
-
-  if (priceRange && priceRangeKey) {
-    const [from, to] = priceRange.split(" TO ");
-    return `${url}/${priceRangeKey}/${from}:${to}`;
-  }
-
-  return url;
-};
+import {
+  convertOrderBy,
+  convertURLToAttributePath,
+} from "./utils/compatibility-layer.ts";
+import useRedirect from "./components/useRedirect";
+import SearchQuery from "./components/SearchQuery";
 
 const SearchContext = props => {
-  const { account, workspace, route } = useRuntime();
   const { setRedirect } = useRedirect();
 
   const {
+    children,
+    priceRangeKey,
+    maxItemsPerPage,
+    __unstableProductOrigin: productOrigin,
     params: { path: attributePath },
     query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
   } = props;
 
   const url = useMemo(
     () =>
-      getUrlByAttributePath(
-        attributePath,
-        map,
-        priceRange,
-        props.priceRangeKey,
-      ),
+      convertURLToAttributePath(attributePath, map, priceRange, priceRangeKey),
     [attributePath, map, priceRange],
   );
 
-  const initialVariables = {
+  const variables = {
     operator,
     fuzzy,
+    productOrigin,
     query: _query,
     page: 1,
-    store: account,
     attributePath: url,
-    sort: vtexOrderToBiggyOrder(order),
-    count: props.maxItemsPerPage,
+    sort: convertOrderBy(order),
+    count: maxItemsPerPage,
     leap: !!leap,
   };
 
-  const onFetchMoreFunction = fetchMore => ({ variables, updateQuery }) => {
-    const { to } = variables;
-    const page = parseInt(to / props.maxItemsPerPage, 10) + 1;
+  if (!_query) throw new Error("Empty search is not allowed");
 
-    return (
-      fetchMore({
-        variables: { ...variables, page },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          if (!fetchMoreResult || page === 1) return prev;
+  return (
+    <SearchQuery
+      priceRangeKey={priceRangeKey}
+      attributePath={attributePath}
+      map={map}
+      variables={variables}
+    >
+      {result => {
+        const redirect = prop("redirect", result);
 
-          return {
-            ...fetchMoreResult,
-            searchResult: {
-              ...fetchMoreResult.searchResult,
-              products: [
-                ...prev.searchResult.products,
-                ...fetchMoreResult.searchResult.products,
-              ],
-            },
-          };
-        },
-      })
-        /* If the object from updateQuery is not returned, search-result gets an infinite loading.
-         * A PR to search-result project is required
-         */
-        .then(() =>
-          updateQuery(
-            { productSearch: { products: [] } },
-            {
-              fetchMoreResult: {
-                productSearch: { products: [] },
-              },
-            },
-          ),
-        )
-    );
-  };
+        if (redirect) {
+          setRedirect(redirect);
+        }
 
-  try {
-    if (!_query) throw new Error("Empty search is not allowed");
+        return (
+          <>
+            <SearchClickPixel query={_query} />
 
-    return (
-      <Query
-        query={searchResultQuery}
-        variables={initialVariables}
-        onCompleted={data => {
-          saveTermInHistory(initialVariables.query);
-          onSearchResult(data);
-        }}
-      >
-        {({ loading, error, data, fetchMore }) => {
-          if (error) {
-            logError(account, workspace, route.path, error);
-          }
+            {React.cloneElement(children, {
+              ...result,
+            })}
+          </>
+        );
+      }}
+    </SearchQuery>
+  );
+};
 
-          if (data && data.searchResult && data.searchResult.redirect) {
-            setRedirect(data.searchResult.redirect);
-          }
+SearchContext.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  priceRangeKey: PropTypes.string,
+  maxItemsPerPage: PropTypes.number,
+  params: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  query: PropTypes.any.isRequired,
+  __unstableProductOrigin: PropTypes.oneOf(["BIGGY", "VTEX"]),
+};
 
-          const vtexSearchResult =
-            error || !data
-              ? VtexSearchResult.emptySearch()
-              : new VtexSearchResult(
-                  _query,
-                  1,
-                  props.maxItemsPerPage,
-                  order,
-                  attributePath,
-                  map,
-                  priceRange,
-                  onFetchMoreFunction(fetchMore),
-                  data,
-                  loading,
-                  !!props.priceRangeKey,
-                );
-
-          return (
-            <>
-              <SearchClickPixel query={_query} />
-
-              {React.cloneElement(props.children, {
-                searchResult:
-                  error || !data
-                    ? {
-                        query: props.params.query,
-                      }
-                    : data.searchResult,
-                ...props,
-                ...vtexSearchResult,
-              })}
-            </>
-          );
-        }}
-      </Query>
-    );
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-
-    logError(account, workspace, route.path, error);
-
-    const vtexSearchResult = VtexSearchResult.emptySearch();
-
-    return React.cloneElement(props.children, {
-      searchResult: {
-        query: _query,
-      },
-      ...props,
-      ...vtexSearchResult,
-    });
-  }
+SearchContext.defaultProps = {
+  priceRangeKey: undefined,
+  maxItemsPerPage: 20,
+  __unstableProductOrigin: "BIGGY",
 };
 
 export default SearchContext;

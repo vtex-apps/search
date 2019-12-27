@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `__unstableProductOrigin` prop into generic app.
+
 ## [0.3.6] - 2019-12-26
 
 ### Added

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ExtensionPoint } from "vtex.render-runtime";
 import styles from "./styles";
-import { Product } from "../../../../models/product";
 import { CustomListItem } from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
 import { Spinner } from "vtex.styleguide";
@@ -11,7 +10,7 @@ import { FormattedMessage } from "react-intl";
 interface TileListProps {
   term: string;
   title: string | JSX.Element;
-  products: Product[];
+  products: any[];
   showTitle: boolean;
   shelfProductCount: number;
   totalProducts: number;
@@ -54,7 +53,7 @@ export class TileList extends React.Component<TileListProps> {
             >
               {this.props.products.map(product => {
                 const productSummary = ProductSummary.mapCatalogProductToProductSummary(
-                  product.toSummary(),
+                  product,
                 );
 
                 return (
