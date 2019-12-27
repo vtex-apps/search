@@ -38,7 +38,7 @@ const SearchQuery = ({
 
   const fetchMore = makeFetchMore(searchResult.fetchMore, variables.count);
   const recordsFiltered = pathOr(
-    [],
+    0,
     ["data", "searchResult", "total"],
     searchResult,
   );
@@ -90,6 +90,7 @@ const SearchQuery = ({
   return children({
     ...searchQuery.variables,
     ...searchQuery,
+    ...variables,
     redirect,
     searchResult: {
       ...searchResult,
@@ -99,6 +100,7 @@ const SearchQuery = ({
       ...path(["data", "searchResult"], searchResult), // Suggestions, banners, etc.
       ...searchQuery,
     },
+    maxItemsPerPage: variables.count,
     pagination: "show-more",
     params: { term: variables.query },
     query: variables.query,
