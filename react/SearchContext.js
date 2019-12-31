@@ -40,7 +40,7 @@ const SearchContext = props => {
     leap: !!leap,
   };
 
-  if (!_query) throw new Error("Empty search is not allowed");
+  //if (!_query) throw new Error("Empty search is not allowed");
 
   return (
     <SearchQuery
