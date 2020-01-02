@@ -14,6 +14,7 @@ a more complete search experience.
   - [Enhanced Search Result](#enhanced-search-result)
   - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
+  - [Google Analytics Configuration](#google-analytics-configuration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
@@ -195,6 +196,14 @@ http://api.biggylabs.com.br/track-api/v2/affiliate
 
 If you end up having any questions about this step, feel free to send an e-mail to `biggy@vtex.com.br`
 with the subject `[YOUR STORE] Search App - Catalog Integration`.
+
+### Google Analytics Configuration
+
+Our search engine uses `_query` as the querystring for the search term. If you want to track the search in GA you need to register it.
+
+Inside Google Analytics, go to Admin → View → View Settings.  Then, on the Site Search Settings block, add a new parameter called `_query` into Query Parameter input. Query Parameter field accepts up to 5 different parameters.
+
+![image](https://user-images.githubusercontent.com/40380674/71663408-de09fd00-2d33-11ea-96bb-f9c6e48312a8.png)
 
 ## Blocks API
 
