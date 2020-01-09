@@ -107,13 +107,19 @@ export class BiggySearchClient extends ExternalClient {
 
       return result || { products: [] };
     } catch (err) {
+      let redirect: string | undefined;
       if (path(["response", "status"], err) === 302) {
-        const redirect = path(["response", "headers", "location"], err);
-        return { redirect, products: [] };
+        redirect = path(["response", "headers", "location"], err);
       }
 
       // TODO: Add logging
-      return { products: [] };
+      return {
+        redirect,
+        query,
+        operator: operator || "and",
+        total: 0,
+        products: [],
+      };
     }
   }
 }

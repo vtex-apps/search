@@ -5,7 +5,7 @@
 
 type UpdateQuery = (prev: any, options: { fetchMoreResult: any }) => void;
 type FetchMoreOptions = {
-  variables: any;
+  variables: { to: number; page?: number };
   updateQuery: UpdateQuery;
 };
 type FetchMore = (options: FetchMoreOptions) => Promise<any>;
