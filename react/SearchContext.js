@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { prop } from "ramda";
 import { SearchClickPixel } from "vtex.sae-analytics";
@@ -11,6 +11,7 @@ import useRedirect from "./components/useRedirect";
 import SearchQuery from "./components/SearchQuery";
 
 const SearchContext = props => {
+  const [page, setPage] = useState(1);
   const { setRedirect } = useRedirect();
 
   const {
@@ -47,6 +48,8 @@ const SearchContext = props => {
       priceRangeKey={priceRangeKey}
       attributePath={attributePath}
       map={map}
+      page={page}
+      setPage={setPage}
       variables={variables}
     >
       {result => {

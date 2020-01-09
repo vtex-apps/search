@@ -5,7 +5,7 @@
 
 type UpdateQuery = (prev: any, options: { fetchMoreResult: any }) => void;
 type FetchMoreOptions = {
-  variables: { to: number; page?: number };
+  variables: any;
   updateQuery: UpdateQuery;
 };
 type FetchMore = (options: FetchMoreOptions) => Promise<any>;
@@ -19,12 +19,10 @@ type FetchMore = (options: FetchMoreOptions) => Promise<any>;
  */
 export const makeFetchMore = (
   fetchMore: FetchMore,
-  maxItemsPerPage: number,
+  page: number,
+  setPage: (page: number) => void,
 ): FetchMore => async ({ variables, updateQuery = () => {} }) => {
-  const { to } = variables;
-  const page = variables.page
-    ? variables.page
-    : Math.floor(to / maxItemsPerPage) + 1;
+  setPage(page + 1);
 
   await fetchMore({
     updateQuery: makeUpdateQuery(page),

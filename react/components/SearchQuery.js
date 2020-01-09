@@ -19,6 +19,8 @@ const SearchQuery = ({
   priceRangeKey,
   map,
   attributePath,
+  page,
+  setPage,
   variables,
 }) => {
   const searchResult = useQuery(searchResultQuery, {
@@ -36,7 +38,7 @@ const SearchQuery = ({
 
   const products = path(["data", "searchResult", "products"], searchResult);
 
-  const fetchMore = makeFetchMore(searchResult.fetchMore, variables.count);
+  const fetchMore = makeFetchMore(searchResult.fetchMore, page, setPage);
   const recordsFiltered = pathOr(
     0,
     ["data", "searchResult", "total"],
