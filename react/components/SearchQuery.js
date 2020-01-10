@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
 import { path, pathOr, isEmpty, reject } from "ramda";
@@ -19,10 +20,10 @@ const SearchQuery = ({
   priceRangeKey,
   map,
   attributePath,
-  page,
-  setPage,
   variables,
 }) => {
+  const [page, setPage] = useState(1);
+
   const searchResult = useQuery(searchResultQuery, {
     variables,
     ssr: false,
