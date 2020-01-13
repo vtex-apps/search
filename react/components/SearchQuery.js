@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
 import { path, pathOr, isEmpty, reject } from "ramda";
@@ -21,6 +22,8 @@ const SearchQuery = ({
   attributePath,
   variables,
 }) => {
+  const [page, setPage] = useState(1);
+
   const searchResult = useQuery(searchResultQuery, {
     variables,
     ssr: false,
@@ -36,7 +39,7 @@ const SearchQuery = ({
 
   const products = path(["data", "searchResult", "products"], searchResult);
 
-  const fetchMore = makeFetchMore(searchResult.fetchMore, variables.count);
+  const fetchMore = makeFetchMore(searchResult.fetchMore, page, setPage);
   const recordsFiltered = pathOr(
     0,
     ["data", "searchResult", "total"],
