@@ -28,7 +28,7 @@
 
 .biggy-js-container--hidden {
   opacity: 0;
-  max-height: 0;
+  max-height: 0 !important;
   padding: 0;
 }
 
