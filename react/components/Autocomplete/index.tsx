@@ -12,6 +12,7 @@ import BiggyClient from "../../utils/biggy-client";
 import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
 import { withDevice } from "vtex.device-detector";
+import debounce from "debounce";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
@@ -48,6 +49,7 @@ interface AutoCompleteState {
   queryFromHover: { key?: string; value?: string };
   dynamicTerm: string;
   isProductsLoading: boolean;
+  currentHeightWhenOpen: number;
 }
 
 class AutoComplete extends React.Component<
@@ -56,6 +58,7 @@ class AutoComplete extends React.Component<
 > {
   autocompleteRef: React.RefObject<any>;
   client: BiggyClient;
+  isIOS: boolean;
 
   public readonly state: AutoCompleteState = {
     topSearchedItems: [],
@@ -66,6 +69,7 @@ class AutoComplete extends React.Component<
     queryFromHover: {},
     dynamicTerm: "",
     isProductsLoading: false,
+    currentHeightWhenOpen: 0,
   };
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -73,11 +77,39 @@ class AutoComplete extends React.Component<
 
     this.client = new BiggyClient(this.props.client);
     this.autocompleteRef = React.createRef();
+    this.isIOS = navigator && !!navigator.userAgent.match(/(iPod|iPhone|iPad)/);
+  }
+
+  fitAutocompleteInWindow() {
+    if (
+      !window ||
+      !this.autocompleteRef.current ||
+      !this.props.isMobile ||
+      this.isIOS
+    ) {
+      return;
+    }
+
+    const windowHeight = window.innerHeight;
+    const autocompletePosition = this.autocompleteRef.current.offsetTop;
+    const autocompleteHeight = this.autocompleteRef.current.offsetHeight;
+    const autocompleteEnd = autocompletePosition + autocompleteHeight;
+
+    const currentHeight = autocompleteHeight - (autocompleteEnd - windowHeight);
+    this.autocompleteRef.current.style.maxHeight = `${currentHeight}px`;
+  }
+
+  addEvents() {
+    window.addEventListener(
+      "resize",
+      debounce(this.fitAutocompleteInWindow.bind(this), 100),
+    );
   }
 
   componentDidMount() {
     this.updateTopSearches();
     this.updateHistory();
+    this.addEvents();
   }
 
   shouldUpdate(prevProps: AutoCompleteProps) {
@@ -89,6 +121,8 @@ class AutoComplete extends React.Component<
 
   componentDidUpdate(prevProps: AutoCompleteProps) {
     if (this.shouldUpdate(prevProps)) {
+      this.fitAutocompleteInWindow();
+
       const { inputValue } = this.props;
 
       this.setState({
@@ -104,7 +138,12 @@ class AutoComplete extends React.Component<
           products: [],
         });
       } else {
-        this.updateSuggestions().then(() => this.updateProducts());
+        this.updateSuggestions()
+          .then(() => {
+            this.fitAutocompleteInWindow();
+            return this.updateProducts();
+          })
+          .then(() => this.fitAutocompleteInWindow());
       }
     }
   }
