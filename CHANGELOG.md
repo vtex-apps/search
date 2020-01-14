@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Fit autocomplete function in android devices.
+- Workspace demo documentation
 
 ## [0.5.0] - 2020-01-13
 

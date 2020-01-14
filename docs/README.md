@@ -216,6 +216,9 @@ When implementing this app as a block, various inner blocks may be available.
   }
 }
 ```
+### Workspace demo
+
+[`store-theme`](https://storesearchtheme--biggy.myvtex.com/) containing installed app with all search enhancements.
 
 ### Configuration
 
