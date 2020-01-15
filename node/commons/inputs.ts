@@ -17,4 +17,5 @@ export interface SearchResultInput {
   operator: string;
   fuzzy: number;
   leap: boolean;
+  tradePolicy?: string;
 }

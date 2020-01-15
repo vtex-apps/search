@@ -12,8 +12,8 @@ export class BiggySearchClient extends ExternalClient {
   constructor(context: IOContext, options?: InstanceOptions) {
     super("http://search.biggylabs.com.br/search-api/v1/", context, options);
 
-    const { account } = context;
-    this.store = account;
+    // const { account } = context;
+    this.store = "unimarc";
   }
 
   public async topSearches(): Promise<any> {
@@ -87,23 +87,25 @@ export class BiggySearchClient extends ExternalClient {
     operator,
     fuzzy,
     leap,
+    tradePolicy,
   }: SearchResultInput): Promise<any> {
     try {
-      const result = await this.http.get<any>(
-        `${this.store}/api/search/${attributePath || ""}`,
-        {
-          params: {
-            query,
-            page,
-            count,
-            sort,
-            operator,
-            fuzzy,
-            bgy_leap: leap ? true : undefined,
-          },
-          metric: "search-result",
+      const path = `${this.store}/api/search/${attributePath || ""}${
+        tradePolicy ? `/trade-policy/${tradePolicy}` : ""
+      }`;
+
+      const result = await this.http.get<any>(path, {
+        params: {
+          query,
+          page,
+          count,
+          sort,
+          operator,
+          fuzzy,
+          bgy_leap: leap ? true : undefined,
         },
-      );
+        metric: "search-result",
+      });
 
       return result || { products: [] };
     } catch (err) {
