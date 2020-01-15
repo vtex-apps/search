@@ -14,26 +14,21 @@ export const convertBiggyProduct = (product: any) => {
 
   return {
     categories,
-    cacheId: product.name.replace(" ", "-"),
+    cacheId: product.link,
     productId: product.product || product.id,
     productName: product.name,
     productReference: product.product || product.id,
-    linkText: slugifyUrl(product.url),
+    linkText: product.link,
     brand:
       product.brand ||
       product.extraInfo["marca"] ||
       product.extraInfo["brand"] ||
       "",
     link: product.url,
-    description: product.url,
+    description: product.link,
     items: skus,
     sku: skus.find(sku => sku.sellers && sku.sellers.length > 0),
   };
-};
-
-const slugifyUrl = (url: string) => {
-  const parts = url.replace(/\/p$/, "").split("/");
-  return parts[parts.length - 1];
 };
 
 const convertSKU = (product: any) => (sku: any) => {
