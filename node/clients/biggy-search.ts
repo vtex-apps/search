@@ -12,8 +12,8 @@ export class BiggySearchClient extends ExternalClient {
   constructor(context: IOContext, options?: InstanceOptions) {
     super("http://search.biggylabs.com.br/search-api/v1/", context, options);
 
-    // const { account } = context;
-    this.store = "unimarc";
+    const { account } = context;
+    this.store = account;
   }
 
   public async topSearches(): Promise<any> {
@@ -57,10 +57,31 @@ export class BiggySearchClient extends ExternalClient {
     term,
     attributeKey,
     attributeValue,
+    tradePolicy,
   }: SuggestionProductsInput): Promise<any> {
     try {
-      const result = await this.http.get<any>(
+      const attributes: { key: string; value: string }[] = [];
+
+      if (attributeKey && attributeValue) {
+        attributes.push({
+          key: attributeKey,
+          value: attributeValue,
+        });
+      }
+
+      if (tradePolicy) {
+        attributes.push({
+          key: "trade-policy",
+          value: tradePolicy,
+        });
+      }
+
+      const result = await this.http.post<any>(
         `${this.store}/api/suggestion_products`,
+        {
+          term,
+          attributes,
+        },
         {
           params: {
             term,

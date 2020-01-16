@@ -6,6 +6,7 @@ export interface SuggestionProductsInput {
   term: string;
   attributeKey?: string;
   attributeValue?: string;
+  tradePolicy?: string;
 }
 
 export interface SearchResultInput {

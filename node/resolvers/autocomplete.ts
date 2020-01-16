@@ -24,10 +24,11 @@ export const autocomplete = {
   suggestionProducts: async (
     _: any,
     args: SuggestionProductsInput,
-    ctx: IContext,
+    ctx: any,
   ) => {
     const { biggySearch } = ctx.clients;
-
+    const { segment } = ctx.vtex;
+    args.tradePolicy = segment && segment.channel;
     return await biggySearch.suggestionProducts(args);
   },
 };
