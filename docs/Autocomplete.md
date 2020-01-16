@@ -36,7 +36,7 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `maxHistory`           | `Number`                                  | Maximum number of terms in the search history list        | `5`           |
 | `maxSuggestedProducts` | `Number`                                  | Maximum number of suggested products                      | `3`           |
 | `maxSuggestedTerms`    | `Number`                                  | Maximum number of suggested terms                         | `3`           |
-| `autocompleteWidth`    | `Number`                                  | Autocomplete width. Number between `0` and `100`          | `50`          |
+| `autocompleteWidth`    | `Number`                                  | Autocomplete width. Number between `0` and `100`          | -             |
 | `productLayout`        | [`ProductLayoutEnum`](#productlayoutenum) | Defines the product layout in the suggested products list | -             |
 | `hideTitles`           | `Boolean`                                 | If true, all the titles will be hidden                    | `false`       |
 | `historyFirst`         | `Boolean`                                 | If true, the history list will be prioritized             | `false`       |

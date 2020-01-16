@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- add `biggy-autocomplete-wrapper` handle.
+
 ## [0.5.0] - 2020-01-13
 
 ### Changed
