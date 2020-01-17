@@ -9,15 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.5.2] - 2020-01-17
 
+### Fixed
+
+- Use `product.link` instead of `slugifyUrl`.
+
 ## [0.5.1] - 2020-01-16
 
 ### Added
 
 - add `biggy-autocomplete-wrapper` handle.
-
-### Fixed
-
-- Use `product.link` instead of `slugifyUrl`.
 
 ## [0.5.0] - 2020-01-13
 
