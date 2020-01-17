@@ -1,6 +1,6 @@
 import { ClientsConfig, Service, IOContext } from "@vtex/api";
 import { Clients } from "./clients";
-import { schemaDirectives } from "./directives";
+import { schemaDirectives } from './directives'
 import { autocomplete } from "./resolvers/autocomplete";
 import { search } from "./resolvers/search";
 import { extraInfo } from "./resolvers/extra-info";
@@ -42,12 +42,8 @@ export default new Service({
   },
 });
 
-interface Segment {
-  channel: string;
-}
-
 export interface IContext {
-  vtex: IOContext & { segment: Segment };
+  vtex: IOContext;
   clients: {
     biggySearch: BiggySearchClient;
     searchGraphQL: SearchGraphQL;

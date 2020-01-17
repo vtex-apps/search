@@ -1,6 +1,5 @@
 import { convertBiggyProduct } from "../commons/compatibility-layer";
 import { map, prop, isEmpty, sort, indexOf } from "ramda";
-import { IContext } from "..";
 
 enum Origin {
   BIGGY = "BIGGY",
@@ -11,7 +10,7 @@ export const products = {
   products: async (
     searchResult: any,
     { origin }: { origin: Origin },
-    ctx: IContext,
+    ctx: any,
   ) => {
     if (origin === Origin.BIGGY) {
       const { segment } = ctx.vtex;
