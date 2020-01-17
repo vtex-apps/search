@@ -419,7 +419,14 @@ class AutoComplete extends React.Component<
         : "";
 
     return (
-      <div style={{ width: `${this.props.autocompleteWidth || 50}vw` }}>
+      <div
+        className={stylesCss["biggy-autocomplete-wrapper"]}
+        style={{
+          width: this.props.autocompleteWidth
+            ? `${this.props.autocompleteWidth}vw`
+            : undefined,
+        }}
+      >
         <section
           ref={this.autocompleteRef}
           // tslint:disable-next-line: max-line-length

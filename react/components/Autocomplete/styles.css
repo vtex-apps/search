@@ -1,3 +1,7 @@
+.biggy-autocomplete-wrapper {
+  width: 50vw;
+}
+
 .biggy-autocomplete {
   position: absolute;
   transition: opacity 0.15s ease-in 0.05s, max-height 0.3s ease-out,
@@ -15,7 +19,7 @@
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 10px;;
+  right: 10px;
   background: none;
   border: none;
   outline: none;
@@ -23,7 +27,7 @@
 
 .history-and-top-wrapper {
   display: flex;
-  flex: 1;;
+  flex: 1;
 }
 
 .biggy-js-container--hidden {
@@ -31,4 +35,3 @@
   max-height: 0 !important;
   padding: 0;
 }
-
