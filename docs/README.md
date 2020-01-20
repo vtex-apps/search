@@ -23,10 +23,10 @@ a more complete search experience.
 
 ## Usage
 
-The first step to start using this app is to install it in the desired workspace, using:
+The first step to start using this app is to install the `vtex.search` and the `vtex.admin-search` in the desired workspace, using:
 
 ```sh
-vtex install vtex.search@0.x
+vtex install vtex.search vtex.admin-search
 ```
 
 This app uses our store builder with the blocks architecture.
