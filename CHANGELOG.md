@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Doc workspace demo
 
+## [0.5.3] - 2020-01-17
+
+### Added
+
+- Fit autocomplete function in android devices.
+
+## [0.5.2] - 2020-01-17
+
+### Fixed
+
+- Use `product.link` instead of `slugifyUrl`.
+
+## [0.5.1] - 2020-01-16
+
+### Added
+
 ## [0.5.0] - 2020-01-13
 
 ### Changed
