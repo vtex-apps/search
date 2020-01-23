@@ -218,7 +218,7 @@ When implementing this app as a block, various inner blocks may be available.
 ```
 ### Demo Store-Theme
 
-You can find our default story-theme with our search app already installed by following this [`repository`](https://github.com/vtex-apps/search-demo-theme).
+You can find our demo store-theme with our search app already installed and configured by following this [`repository`](https://github.com/vtex-apps/search-demo-theme).
 
 ### Configuration
 
