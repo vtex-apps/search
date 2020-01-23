@@ -1,20 +1,32 @@
 import { convertBiggyProduct } from "../commons/compatibility-layer";
 import { map, prop, isEmpty, sort, indexOf } from "ramda";
-import { IContext } from "..";
 
 enum Origin {
-  BIGGY,
-  VTEX,
+  BIGGY = "BIGGY",
+  VTEX = "VTEX",
 }
 
 export const products = {
   products: async (
     searchResult: any,
     { origin }: { origin: Origin },
-    ctx: IContext,
+    ctx: any,
   ) => {
     if (origin === Origin.BIGGY) {
-      return searchResult.products.map(convertBiggyProduct);
+      const { segment } = ctx.vtex;
+      const products: any[] = [];
+
+      searchResult.products.forEach((product: any) => {
+        try {
+          products.push(
+            convertBiggyProduct(product, segment && segment.channel),
+          );
+        } catch (e) {
+          // TODO: add logging
+        }
+      });
+
+      return products;
     }
 
     const { searchGraphQL } = ctx.clients;
