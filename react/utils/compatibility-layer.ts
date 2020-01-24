@@ -22,12 +22,12 @@ export const makeFetchMore = (
   page: number,
   setPage: (page: number) => void,
 ): FetchMore => async ({ variables, updateQuery = () => {} }) => {
-  setPage(page + 1);
-
   await fetchMore({
-    updateQuery: makeUpdateQuery(page),
+    updateQuery: makeUpdateQuery(page + 1),
     variables: { ...variables, page },
   });
+
+  setPage(page + 1);
 
   return updateQuery(
     { productSearch: { products: [] } },
