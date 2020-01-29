@@ -1,6 +1,6 @@
 import { propOr } from "ramda";
 
-export const convertBiggyProduct = (product: any) => {
+export const convertBiggyProduct = (product: any, tradePolicy: string) => {
   const categories: string[] = product.categories
     ? product.categories.map((_: any, index: number) => {
         const subArray = product.categories.slice(0, index);
@@ -9,7 +9,7 @@ export const convertBiggyProduct = (product: any) => {
     : [];
 
   const skus = propOr<any[], any[], any[]>([], "skus", product).map(
-    convertSKU(product),
+    convertSKU(product, tradePolicy),
   );
 
   return {
@@ -31,7 +31,7 @@ export const convertBiggyProduct = (product: any) => {
   };
 };
 
-const convertSKU = (product: any) => (sku: any) => {
+const convertSKU = (product: any, tradePolicy: string) => (sku: any) => {
   const image = {
     cacheId: product.product || product.id,
     imageId: product.product || product.id,
@@ -40,38 +40,40 @@ const convertSKU = (product: any) => (sku: any) => {
     imageText: "principal",
   };
 
-  const sellers = propOr<any[], any[], any[]>([], "sellers", sku).map(
-    (seller: any) => {
-      const price = seller.price || sku.price || product.price;
-      const oldPrice = seller.oldPrice || sku.oldPrice || product.oldPrice;
-      const installment =
-        seller.installment || sku.installment || product.installment;
+  const selectedPolicy = tradePolicy
+    ? sku.policies.find((policy: any) => policy.id === tradePolicy)
+    : sku.policies[0];
+  const biggySellers = (selectedPolicy && selectedPolicy.sellers) || [];
 
-      return {
-        sellerId: seller.id,
-        sellerName: "",
-        commertialOffer: {
-          AvailableQuantity: 10000,
-          discountHighlights: [],
-          teasers: [],
-          Installments: installment
-            ? [
-                {
-                  Value: installment.value,
-                  InterestRate: 0,
-                  TotalValuePlusInterestRate: price,
-                  NumberOfInstallments: installment.count,
-                  Name: "",
-                },
-              ]
-            : null,
-          Price: price,
-          ListPrice: oldPrice,
-          PriceWithoutDiscount: price,
-        },
-      };
-    },
-  );
+  const sellers = biggySellers.map((seller: any) => {
+    const price = seller.price || product.price;
+    const oldPrice = seller.oldPrice || product.oldPrice;
+    const installment = seller.installment || product.installment;
+
+    return {
+      sellerId: seller.id,
+      sellerName: "",
+      commertialOffer: {
+        AvailableQuantity: 10000,
+        discountHighlights: [],
+        teasers: [],
+        Installments: installment
+          ? [
+              {
+                Value: installment.value,
+                InterestRate: 0,
+                TotalValuePlusInterestRate: price,
+                NumberOfInstallments: installment.count,
+                Name: "",
+              },
+            ]
+          : null,
+        Price: price,
+        ListPrice: oldPrice,
+        PriceWithoutDiscount: price,
+      },
+    };
+  });
 
   return {
     sellers,

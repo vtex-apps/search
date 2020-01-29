@@ -57,10 +57,31 @@ export class BiggySearchClient extends ExternalClient {
     term,
     attributeKey,
     attributeValue,
+    tradePolicy,
   }: SuggestionProductsInput): Promise<any> {
     try {
-      const result = await this.http.get<any>(
+      const attributes: { key: string; value: string }[] = [];
+
+      if (attributeKey && attributeValue) {
+        attributes.push({
+          key: attributeKey,
+          value: attributeValue,
+        });
+      }
+
+      if (tradePolicy) {
+        attributes.push({
+          key: "trade-policy",
+          value: tradePolicy,
+        });
+      }
+
+      const result = await this.http.post<any>(
         `${this.store}/api/suggestion_products`,
+        {
+          term,
+          attributes,
+        },
         {
           params: {
             term,
@@ -87,23 +108,25 @@ export class BiggySearchClient extends ExternalClient {
     operator,
     fuzzy,
     leap,
+    tradePolicy,
   }: SearchResultInput): Promise<any> {
     try {
-      const result = await this.http.get<any>(
-        `${this.store}/api/search/${attributePath || ""}`,
-        {
-          params: {
-            query,
-            page,
-            count,
-            sort,
-            operator,
-            fuzzy,
-            bgy_leap: leap ? true : undefined,
-          },
-          metric: "search-result",
+      const path = `${this.store}/api/search/${attributePath || ""}${
+        tradePolicy ? `/trade-policy/${tradePolicy}` : ""
+      }`;
+
+      const result = await this.http.get<any>(path, {
+        params: {
+          query,
+          page,
+          count,
+          sort,
+          operator,
+          fuzzy,
+          bgy_leap: leap ? true : undefined,
         },
-      );
+        metric: "search-result",
+      });
 
       return result || { products: [] };
     } catch (err) {

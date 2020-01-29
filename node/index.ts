@@ -1,5 +1,6 @@
 import { ClientsConfig, Service, IOContext } from "@vtex/api";
 import { Clients } from "./clients";
+import { schemaDirectives } from './directives'
 import { autocomplete } from "./resolvers/autocomplete";
 import { search } from "./resolvers/search";
 import { extraInfo } from "./resolvers/extra-info";
@@ -22,6 +23,7 @@ const clients: ClientsConfig<Clients> = {
 export default new Service({
   clients,
   graphql: {
+    schemaDirectives: schemaDirectives as Record<string, any>,
     resolvers: {
       Query: {
         ...autocomplete,

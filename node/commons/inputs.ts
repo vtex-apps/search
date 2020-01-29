@@ -6,6 +6,7 @@ export interface SuggestionProductsInput {
   term: string;
   attributeKey?: string;
   attributeValue?: string;
+  tradePolicy?: string;
 }
 
 export interface SearchResultInput {
@@ -17,4 +18,5 @@ export interface SearchResultInput {
   operator: string;
   fuzzy: number;
   leap: boolean;
+  tradePolicy?: string;
 }

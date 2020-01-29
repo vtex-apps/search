@@ -20,14 +20,16 @@ type FetchMore = (options: FetchMoreOptions) => Promise<any>;
 export const makeFetchMore = (
   fetchMore: FetchMore,
   page: number,
-  setPage: (page: number) => void,
+  setPage: (func: (page: number) => number) => number,
 ): FetchMore => async ({ variables, updateQuery = () => {} }) => {
-  setPage(page + 1);
+  const newPage = page + 1;
 
   await fetchMore({
-    updateQuery: makeUpdateQuery(page),
-    variables: { ...variables, page },
+    updateQuery: makeUpdateQuery(newPage),
+    variables: { ...variables, page: newPage },
   });
+
+  setPage((page: number) => page + 1);
 
   return updateQuery(
     { productSearch: { products: [] } },

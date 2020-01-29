@@ -17,7 +17,9 @@ type Query {
     term: String!
     attributeKey: String
     attributeValue: String
-  ): SuggestionProductsOutput @cacheControl(scope: PUBLIC, maxAge: SHORT)
+  ): SuggestionProductsOutput
+    @cacheControl(scope: PUBLIC, maxAge: SHORT)
+    @withSegment
 
   """
   Get attribute keys for a store.
@@ -42,7 +44,7 @@ type Query {
     operator: String
     fuzzy: Int
     leap: Boolean
-  ): ResultResponse @cacheControl(scope: PUBLIC, maxAge: SHORT)
+  ): ResultResponse @cacheControl(scope: PUBLIC, maxAge: SHORT) @withSegment
 }
 
 enum Origin {
