@@ -14,6 +14,7 @@ a more complete search experience.
   - [Enhanced Search Result](#enhanced-search-result)
   - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
+  - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
 - [Blocks API](#blocks-api)
   - [Configuration](#configuration)
@@ -22,10 +23,10 @@ a more complete search experience.
 
 ## Usage
 
-The first step to start using this app is to install it in the desired workspace, using:
+The first step to start using this app is to install the `vtex.search` and the `vtex.admin-search` in the desired workspace, using:
 
 ```sh
-vtex install vtex.search@0.x
+vtex install vtex.search vtex.admin-search
 ```
 
 This app uses our store builder with the blocks architecture.
@@ -180,10 +181,9 @@ functionality of the components provided by this app.
 
 ### Catalog Integration
 
-For this new search experience to work properly a Token and App Key need to be generated and sent
-to `biggy@vtex.com.br`. We will continue our case-by-case conversation via this e-mail once this
-step is done. You can follow an in-depth tutorial on how to create both the Token and the App Key
+For this new search experience to work properly a Token and App Key need to be generated. You can follow an in-depth tutorial on how to create both the Token and the App Key
 [here](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes).
+Finally, in the admin's sidebar, click on **Search** and then on **Integration Settings**. Inform the generated keys and click on **Save**
 
 You'll also need to set up the affiliate API endpoint, you can follow [this tutorial](https://help.vtex.com/tutorial/configuring-affiliates--tutorials_187)
 on how to properly set up this step.
@@ -197,11 +197,21 @@ http://api.biggylabs.com.br/track-api/v2/affiliate
 If you end up having any questions about this step, feel free to send an e-mail to `biggy@vtex.com.br`
 with the subject `[YOUR STORE] Search App - Catalog Integration`.
 
+### Admin Permission
+
+If you are facing the following error message:
+
+```
+User indicated by VtexIdclientAutCookie is not authorized to access the indicated resource
+```
+
+your user doesn't have permission to change the search configurations. Ask an admin to give you the `Search Settings - General Settings` permission.
+
 ### Google Analytics Configuration
 
 Our search engine uses `_query` as the querystring for the search term. If you want to track the search in GA you need to register it.
 
-Inside Google Analytics, go to Admin → View → View Settings.  Then, on the Site Search Settings block, add a new parameter called `_query` into Query Parameter input. Query Parameter field accepts up to 5 different parameters.
+Inside Google Analytics, go to Admin → View → View Settings. Then, on the Site Search Settings block, add a new parameter called `_query` into Query Parameter input. Query Parameter field accepts up to 5 different parameters.
 
 ![image](https://user-images.githubusercontent.com/40380674/71663408-de09fd00-2d33-11ea-96bb-f9c6e48312a8.png)
 
@@ -216,6 +226,7 @@ When implementing this app as a block, various inner blocks may be available.
   }
 }
 ```
+
 ### Workspace demo
 
 [`store-theme`](https://storesearchtheme--biggy.myvtex.com/) containing installed app with all search enhancements.
