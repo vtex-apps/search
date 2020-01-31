@@ -48,6 +48,7 @@ const SearchContext = props => {
       attributePath={attributePath}
       map={map}
       variables={variables}
+      order={order}
     >
       {result => {
         const redirect = prop("redirect", result);

@@ -2,7 +2,6 @@
   flex: 1;
   vertical-align: top;
   font-family: Open Sans, Roboto, sans-serif;
-  overflow: hidden;
 }
 
 .itemListList {
@@ -10,7 +9,7 @@
   margin: 0;
 }
 
-.itemListList li{
+.itemListList li {
   padding: 0;
   margin: 0;
 }
@@ -73,4 +72,10 @@
 
 .itemList--top-search {
   width: 100%;
+}
+
+@media only screen and (min-width: 1025px) {
+  .itemList {
+    overflow: hidden;
+  }
 }
