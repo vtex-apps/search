@@ -91,7 +91,8 @@ class AutoComplete extends React.Component<
     }
 
     const windowHeight = window.innerHeight;
-    const autocompletePosition = this.autocompleteRef.current.offsetTop;
+    const autocompletePosition = this.autocompleteRef.current.getBoundingClientRect()
+      .y;
     const autocompleteHeight = this.autocompleteRef.current.offsetHeight;
     const autocompleteEnd = autocompletePosition + autocompleteHeight;
 

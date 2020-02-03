@@ -21,6 +21,7 @@ const SearchQuery = ({
   map,
   attributePath,
   variables,
+  order,
 }) => {
   const [page, setPage] = useState(1);
 
@@ -107,6 +108,7 @@ const SearchQuery = ({
     pagination: "show-more",
     params: { term: variables.query },
     query: variables.query,
+    orderBy: order || "OrderByScoreDESC",
   });
 };
 
