@@ -17,7 +17,7 @@ a more complete search experience.
   - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
 - [Blocks API](#blocks-api)
-  - [Demo Store-Theme](#demo-sthore-theme)
+  - [Demo Store-Theme](#demo-store-theme)
   - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
