@@ -44,7 +44,7 @@ type Query {
     operator: String
     fuzzy: Int
     leap: Boolean
-  ): ResultResponse @cacheControl(scope: PUBLIC, maxAge: SHORT) @withSegment
+  ): ResultResponse @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
 }
 
 enum Origin {
