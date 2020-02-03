@@ -17,6 +17,7 @@ a more complete search experience.
   - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
 - [Blocks API](#blocks-api)
+  - [Demo Store-Theme](#demo-store-theme)
   - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -227,9 +228,9 @@ When implementing this app as a block, various inner blocks may be available.
 }
 ```
 
-### Workspace demo
+### Demo Store-Theme
 
-[`store-theme`](https://storesearchtheme--biggy.myvtex.com/) containing installed app with all search enhancements.
+You can find our demo store-theme with our search app already installed and configured by following this [`repository`](https://github.com/vtex-apps/search-demo-theme).
 
 ### Configuration
 
