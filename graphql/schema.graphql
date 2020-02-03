@@ -18,7 +18,7 @@ type Query {
     attributeKey: String
     attributeValue: String
   ): SuggestionProductsOutput
-    @cacheControl(scope: PUBLIC, maxAge: SHORT)
+    @cacheControl(scope: SEGMENT, maxAge: SHORT)
     @withSegment
 
   """

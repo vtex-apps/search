@@ -13,7 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.6.6] - 2020-02-01
 
+### Changed
+
+- Change to segment scope on searchResult
+
 ## [0.6.5] - 2020-01-31
+
+### Fixed
+
+- `setPage` was not synchronized
 
 ## [0.6.0] - 2020-01-23
 
