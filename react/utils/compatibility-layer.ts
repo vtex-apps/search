@@ -130,7 +130,7 @@ export function convertOrderBy(orderBy: OrderBy): string {
     case "OrderByReleaseDateDESC":
       return "fields.release:desc";
     case "OrderByBestDiscountDESC":
-      return ""; // TODO: Not Supported
+      return "discount:desc";
     default:
       return "";
   }
