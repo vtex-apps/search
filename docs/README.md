@@ -12,6 +12,7 @@ a more complete search experience.
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
   - [Enhanced Search Result](#enhanced-search-result)
+  - [PriceRange](#pricerange)
   - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
   - [Admin Permission](#admin-permission)
@@ -164,6 +165,24 @@ To add these components to your search-result page, you need to use the `search-
       "horizontalAlignment": "center"
     }
   }
+```
+
+### PriceRange
+
+![pricerange](https://user-images.githubusercontent.com/40380674/74041833-28bb0c80-49a5-11ea-8e20-7720ac63548f.gif)
+
+
+In order to add the PriceRange feature in the filter navigator, add `priceRangeKey` in the `context` prop of `store.search.v2`. The value is the price filter key (usually `price`, `precio` or `preco`).
+
+```json
+"store.search.v2": {
+  "blocks": ["search-result-layout"],
+  "props": {
+    "context": {
+      "priceRangeKey": "price",
+    }
+  }
+},
 ```
 
 ### Plug & Play
