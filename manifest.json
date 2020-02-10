@@ -4,9 +4,6 @@
   "version": "0.6.9",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
-  "scripts": {
-    "prereleasy": "bash pre.sh"
-  },
   "builders": {
     "store": "0.x",
     "react": "3.x",
