@@ -1,7 +1,7 @@
 {
   "name": "search",
   "vendor": "vtex",
-  "version": "0.6.9",
+  "version": "0.6.10-hkignore.0",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "builders": {
