@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.6.12] - 2020-02-13
+
+### Added
+
+- Add attributes in autcomplete with `z` in the url
+
+## [0.6.11] - 2020-02-13
+
+### Fixed
+
+- Remove attributes from autcomplete temporarily
+
+## [0.6.10] - 2020-02-13
+
+### Fixed
+
+- Remove attributes from autcomplete temporarily
+
 ## [0.6.9] - 2020-02-07
 
 ### Added
