@@ -174,11 +174,17 @@ class AutoComplete extends React.Component<
     const { maxSuggestedTerms = MAX_SUGGESTED_TERMS_DEFAULT } = this.props;
 
     const items = searches.slice(0, maxSuggestedTerms).map(query => {
-      // const attributes = query.attributes || [];
+      const attributes = query.attributes || [];
 
       return {
         term: query.term,
-        attributes: [],
+        attributes: attributes.map(att => ({
+          label: att.labelValue,
+          value: att.value,
+          link: `/search/${att.key}/${att.value}?_query=${query.term}`,
+          groupValue: query.term,
+          key: att.key,
+        })),
       };
     });
 
