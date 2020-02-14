@@ -27,7 +27,7 @@ export class BiggySearchClient extends ExternalClient {
 
       return result || { searches: [] };
     } catch (err) {
-      // TODO: Add logging
+      this.context.logger.error(err);
       return { searches: [] };
     }
   }
@@ -48,7 +48,7 @@ export class BiggySearchClient extends ExternalClient {
 
       return result || { searches: [] };
     } catch (err) {
-      // TODO: Add logging
+      this.context.logger.error(err);
       return { searches: [] };
     }
   }
@@ -94,7 +94,7 @@ export class BiggySearchClient extends ExternalClient {
 
       return result || { count: 0, products: [] };
     } catch (err) {
-      // TODO: Add logging
+      this.context.logger.error(err);
       return { count: 0, products: [] };
     }
   }
@@ -135,7 +135,7 @@ export class BiggySearchClient extends ExternalClient {
         redirect = path(["response", "headers", "location"], err);
       }
 
-      // TODO: Add logging
+      this.context.logger.error(err);
       return {
         redirect,
         query,
