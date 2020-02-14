@@ -25,10 +25,10 @@
 - `Period`. The period that this banner will be active.
 - `Attributes`. List of selected attributes for this banner.
 
-3. Add the `search-banner` block to the `search-result-layout.desktop.enhanced` or `search-result-layout.mobile.enhanced`. For example:
+3. Add the `search-banner` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
 
 ```json
-"search-result-layout.desktop.enhanced": {
+"search-result-layout.desktop": {
     "children": [
         "flex-layout.row#banner-one",
     ],
