@@ -11,7 +11,7 @@ a more complete search experience.
   - [Custom Search Page URL](#custom-search-page-url)
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
-  - [Search Result Complements](#search-result-complements)
+  - [Enhanced Search Result](#enhanced-search-result)
   - [PriceRange](#pricerange)
   - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
@@ -125,7 +125,7 @@ passing them to the `hiddenOptions` prop on the `order-by` component.
 }
 ```
 
-### Search Result Complements
+### Enhanced Search Result
 
 This app has three new components to improve the search result experience. They are:
 
@@ -133,10 +133,10 @@ This app has three new components to improve the search result experience. They 
 - [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
 - [`search-banner`](Banner.md). A banner that can be configured by query.
 
-Add any of these components into the `search-result-layout.desktop` or the `search-result-layout.mobile` block.
+To add these components to your search-result page, you need to use the `search-result-layout.desktop.enhanced` and `search-result-layout.mobile.enhanced` instead of `search-result-layout.desktop` and `search-result-layout.mobile`. Here is an implementation example:
 
 ```json
-"search-result-layout.desktop": {
+"search-result-layout.desktop.enhanced": {
     "children": [
       "flex-layout.row#didyoumean",
       "flex-layout.row#suggestion",

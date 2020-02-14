@@ -14,10 +14,10 @@
   }
 ```
 
-2. Add the `search-suggestions` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
+2. Add the `search-suggestions` block to the `search-result-layout.desktop.enhanced` or `search-result-layout.mobile.enhanced`. For example:
 
 ```json
-"search-result-layout.desktop": {
+"search-result-layout.desktop.enhanced": {
     "children": [
         "flex-layout.row#suggestion",
     ],
