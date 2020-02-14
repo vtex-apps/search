@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.6.15] - 2020-02-14
+
 ### Added
 
 - Logging in `node` builder.
