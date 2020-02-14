@@ -13,7 +13,10 @@
     }
   },
   "autocomplete-result-list.v2": {
-    "component": "Autocomplete"
+    "component": "Autocomplete",
+    "required": [
+      "product-summary"
+    ]
   },
   "did-you-mean": {
     "component": "DidYouMean"
