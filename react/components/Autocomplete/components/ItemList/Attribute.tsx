@@ -21,7 +21,7 @@ const Attribute = (props: IAttributeProps) =>
         >
           <Link
             className={`c-on-base`}
-            to={`/search/${attribute.value}`}
+            to={`/search/z${attribute.value}`}
             query={`_query=${props.item.value}&map=s,${attribute.key}`}
           >
             {attribute.label}

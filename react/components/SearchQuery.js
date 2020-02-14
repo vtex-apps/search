@@ -72,6 +72,10 @@ const SearchQuery = ({
       priceRanges: priceRangeKey
         ? facets.filter(facet => facet.map === "priceRange")
         : [],
+      queryArgs: {
+        query: reject(isEmpty, ["search", attributePath]).join("/"),
+        map: map || "s",
+      },
     },
     recordsFiltered,
   };

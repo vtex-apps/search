@@ -3,6 +3,10 @@
  * and store-components components.
  */
 
+function textOverflow(text: string, maxWidth: number) {
+  return text.length > maxWidth ? `${text.substr(0, maxWidth - 3)}...` : text;
+}
+
 type UpdateQuery = (prev: any, options: { fetchMoreResult: any }) => void;
 type FetchMoreOptions = {
   variables: { to: number; page?: number };
@@ -85,7 +89,7 @@ export function fromAttributesToFacets(attribute: any) {
     facets: attribute.values.map((value: any) => {
       return {
         quantity: value.count,
-        name: unescape(value.label),
+        name: unescape(textOverflow(value.label, 40)),
         link: value.proxyUrl,
         linkEncoded: value.proxyUrl,
         map: attribute.key,

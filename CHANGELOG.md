@@ -11,6 +11,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Removes allowed from interface
 
+## [0.6.13] - 2020-02-13
+
+### Added
+
+- Include text overflow to facet label
+
+## [0.6.12] - 2020-02-13
+
+### Added
+
+- Add attributes in autcomplete with `z` in the url
+
+## [0.6.11] - 2020-02-13
+
+### Fixed
+
+- Remove attributes from autcomplete temporarily
+
+## [0.6.10] - 2020-02-13
+
+### Fixed
+
+- Remove attributes from autcomplete temporarily
+
+## [0.6.9] - 2020-02-07
+
+### Added
+
+- Query Args to facets.
+
 ## [0.6.8] - 2020-02-06
 
 ### Added
