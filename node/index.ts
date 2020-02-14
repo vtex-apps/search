@@ -1,6 +1,6 @@
 import { ClientsConfig, Service, IOContext } from "@vtex/api";
 import { Clients } from "./clients";
-import { schemaDirectives } from './directives'
+import { schemaDirectives } from "./directives";
 import { autocomplete } from "./resolvers/autocomplete";
 import { search } from "./resolvers/search";
 import { extraInfo } from "./resolvers/extra-info";

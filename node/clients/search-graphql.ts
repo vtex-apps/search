@@ -16,6 +16,7 @@ export class SearchGraphQL extends AppGraphQLClient {
 
       return pathOr<any[]>([], ["data", "productsByIdentifier"], result);
     } catch (err) {
+      this.context.logger.error(err);
       return [];
     }
   };
