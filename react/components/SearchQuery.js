@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
 import { path, pathOr, isEmpty, reject } from "ramda";
+import { useRuntime } from "vtex.render-runtime";
 import { onSearchResult } from "vtex.sae-analytics";
 import BiggyClient from "../utils/biggy-client.ts";
 import {
   makeFetchMore,
   fromAttributesToFacets,
 } from "../utils/compatibility-layer.ts";
+import logError from "../utils/log";
 
 import searchResultQuery from "../graphql/searchResult.gql";
 
@@ -23,6 +25,7 @@ const SearchQuery = ({
   variables,
   order,
 }) => {
+  const { account, workspace } = useRuntime();
   const [page, setPage] = useState(1);
 
   const searchResult = useQuery(searchResultQuery, {
@@ -34,6 +37,10 @@ const SearchQuery = ({
       onSearchResult(data);
     },
   });
+
+  if (searchResult.error) {
+    logError(account, workspace, attributePath, searchResult.error);
+  }
 
   const redirect = path(["data", "searchResult", "redirect"], searchResult);
   searchResult.loading = searchResult.loading || redirect;
