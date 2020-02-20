@@ -1,6 +1,6 @@
 import { propOr } from "ramda";
 
-export const convertBiggyProduct = (product: any, tradePolicy: string) => {
+export const convertBiggyProduct = (product: any, tradePolicy?: string) => {
   const categories: string[] = product.categories
     ? product.categories.map((_: any, index: number) => {
         const subArray = product.categories.slice(0, index);
@@ -8,7 +8,7 @@ export const convertBiggyProduct = (product: any, tradePolicy: string) => {
       })
     : [];
 
-  const skus = propOr<any[], any[], any[]>([], "skus", product).map(
+  const skus: any[] = propOr([], "skus", product).map(
     convertSKU(product, tradePolicy),
   );
 
@@ -31,7 +31,7 @@ export const convertBiggyProduct = (product: any, tradePolicy: string) => {
   };
 };
 
-const convertSKU = (product: any, tradePolicy: string) => (sku: any) => {
+const convertSKU = (product: any, tradePolicy?: string) => (sku: any) => {
   const image = {
     cacheId: product.product || product.id,
     imageId: product.product || product.id,
