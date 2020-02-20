@@ -1,4 +1,4 @@
-import { path } from "ramda";
+import { path, prop } from "ramda";
 import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
 import { SearchResultArgs } from "../resolvers/search";
 import {
@@ -58,7 +58,6 @@ export class BiggySearchClient extends ExternalClient {
       });
     }
 
-    console.log(term);
     const result = await this.http.post<any>(
       `${this.store}/api/suggestion_products`,
       {
@@ -102,13 +101,13 @@ export class BiggySearchClient extends ExternalClient {
       metric: "search-result",
       validateStatus: (status: number) => {
         // Search Redirect usese 302 when a query should be redirected.
-        return (status >= 200 && status < 300) || status !== 302;
+        return (status >= 200 && status < 300) || status === 302;
       },
     });
 
     let redirect: string | undefined;
-    if (path(["response", "status"], result) === 302) {
-      redirect = path(["response", "headers", "location"], result);
+    if (prop("status", result) === 302) {
+      redirect = path(["headers", "location"], result);
     }
 
     const data = result.data;

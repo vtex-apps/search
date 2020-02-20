@@ -1,6 +1,6 @@
 import { convertBiggyProduct } from "../commons/compatibility-layer";
 import { SegmentData } from "@vtex/api";
-import { path, map, prop, isEmpty, sort, indexOf } from "ramda";
+import { path, map, prop, isEmpty, sort, indexOf, propOr } from "ramda";
 
 enum Origin {
   BIGGY = "BIGGY",
@@ -15,12 +15,13 @@ interface ProductArgs {
 export const products = {
   products: async (searchResult: any, args: ProductArgs, ctx: Context) => {
     const { origin } = args;
+    const products = propOr([], "products", searchResult);
 
     if (origin === Origin.BIGGY) {
-      return productsOriginBiggy(searchResult, args);
+      return productsOriginBiggy(products, args);
     }
 
-    return productsOriginVTEX(searchResult, ctx);
+    return productsOriginVTEX(products, ctx);
   },
 };
 
@@ -28,15 +29,15 @@ export const products = {
  * Get Products from Biggy's API and convert the values to a format
  * that is usable for the client-side components.
  *
- * @param {*} searchResult Search Result.
+ * @param {any[]} originalProducts Products.
  * @param {ProductArgs} args Query args.
  * @returns
  */
-async function productsOriginBiggy(searchResult: any, args: ProductArgs) {
+async function productsOriginBiggy(originalProducts: any[], args: ProductArgs) {
   const products: any[] = [];
   const tradePolicy = path<string | undefined>(["segment", "channel"], args);
 
-  searchResult.products.forEach((product: any) => {
+  originalProducts.forEach((product: any) => {
     products.push(convertBiggyProduct(product, tradePolicy));
   });
 
@@ -47,19 +48,20 @@ async function productsOriginBiggy(searchResult: any, args: ProductArgs) {
  * Get Product's IDs returned by Biggy's API and then query the VTEX Catalog
  * API for those products. (This considerably slows down the search experience)
  *
- * @param {*} searchResult Search Result.
+ * @param {any[]} originalProducts Products.
  * @param {Context} ctx Context.
  * @returns
  */
-async function productsOriginVTEX(searchResult: any, ctx: Context) {
-  const { searchGraphQL } = ctx.clients;
+async function productsOriginVTEX(originalProducts: any[], ctx: Context) {
+  let products: any[] = [];
 
-  let products: any[] = searchResult.products;
   const productIds = map<any, string>((product: any) => {
     return prop("product", product) || prop("id", product) || "";
-  }, products);
+  }, originalProducts);
 
   if (!isEmpty(productIds)) {
+    const { searchGraphQL } = ctx.clients;
+
     // Get products' model from VTEX search API
     products = await searchGraphQL.productsById(productIds);
 
