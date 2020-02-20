@@ -58,9 +58,9 @@ export class ItemList extends React.Component<ItemListProps> {
     return (
       <article className={`${stylesCss.itemList} ${modifier}`}>
         {this.props.showTitle ? (
-          <h1 className={`${stylesCss.itemListTitle} c-on-base`}>
+          <p className={`${stylesCss.itemListTitle} c-on-base`}>
             {this.props.title}
-          </h1>
+          </p>
         ) : null}
         <ol className={stylesCss.itemListList}>
           {this.props.items.map(item => {

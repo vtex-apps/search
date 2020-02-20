@@ -32,9 +32,9 @@ export class TileList extends React.Component<TileListProps> {
     return (
       <section className={styles.tileList}>
         {this.props.showTitle ? (
-          <h1 className={`${styles.tileListTitle} c-on-base`}>
+          <p className={`${styles.tileListTitle} c-on-base`}>
             {this.props.title}
-          </h1>
+          </p>
         ) : null}
         {this.props.isLoading ? (
           <div className={styles.tileListSpinner}>
