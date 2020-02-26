@@ -24,7 +24,7 @@ export const convertBiggyProduct = (product: any, tradePolicy: string) => {
       product.extraInfo["marca"] ||
       product.extraInfo["brand"] ||
       "",
-    brandId: 0,
+    brandId: 1,
     link: product.url,
     description: product.link,
     items: skus,
