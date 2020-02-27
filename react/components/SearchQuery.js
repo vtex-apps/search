@@ -91,7 +91,7 @@ const SearchQuery = ({
     withFacets: true,
     query: reject(isEmpty, ["search", attributePath]).join("/"),
     map: map || "s",
-    orderBy: "",
+    orderBy: order,
     from: 0,
     to: variables.count * variables.page - 1,
     facetQuery: "search",
