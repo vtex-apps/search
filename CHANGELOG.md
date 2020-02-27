@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Pass the ordering type to the client-side, so that it activates the side effect in the `useFetchMore` hook
+- Side effect on change props to reset current page
 
 ## [0.6.17] - 2020-02-20
 
