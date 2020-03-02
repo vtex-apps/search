@@ -60,7 +60,6 @@ export const makeFetchMore = (
  * @param refetch Apollo's refetch function for our query.
  */
 export const makeRefetch = (refetch: Refetch): Refetch => async variables => {
-  console.log("refetched");
   const { from, to } = variables;
   const hasPagination =
     typeof from !== "undefined" && typeof to !== "undefined";
