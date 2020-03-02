@@ -19,7 +19,16 @@ const SearchContext = props => {
     maxItemsPerPage,
     __unstableProductOrigin: productOrigin,
     params: { path: attributePath },
-    query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
+    query: {
+      _query,
+      map,
+      order,
+      operator,
+      fuzzy,
+      priceRange,
+      bgy_leap: leap,
+      page,
+    },
   } = props;
 
   const url = useMemo(
@@ -28,17 +37,30 @@ const SearchContext = props => {
     [attributePath, map, priceRange],
   );
 
-  const variables = {
+  const currentPage = parseInt(page) || 1;
+
+  const variables = useMemo(() => {
+    return {
+      operator,
+      fuzzy,
+      productOrigin,
+      page: currentPage,
+      query: _query,
+      attributePath: url,
+      sort: convertOrderBy(order),
+      count: maxItemsPerPage,
+      leap: !!leap,
+    };
+  }, [
     operator,
     fuzzy,
     productOrigin,
-    query: _query,
-    page: 1,
-    attributePath: url,
-    sort: convertOrderBy(order),
-    count: maxItemsPerPage,
-    leap: !!leap,
-  };
+    _query,
+    attributePath,
+    order,
+    maxItemsPerPage,
+    leap,
+  ]);
 
   return (
     <SearchQuery
@@ -47,6 +69,7 @@ const SearchContext = props => {
       map={map}
       variables={variables}
       order={order}
+      currentPage={currentPage}
     >
       {result => {
         const redirect = prop("redirect", result);

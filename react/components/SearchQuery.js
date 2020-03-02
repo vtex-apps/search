@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
 import { path, pathOr, isEmpty, reject } from "ramda";
@@ -7,11 +6,13 @@ import { onSearchResult } from "vtex.sae-analytics";
 import BiggyClient from "../utils/biggy-client.ts";
 import {
   makeFetchMore,
+  makeRefetch,
   fromAttributesToFacets,
 } from "../utils/compatibility-layer.ts";
 import logError from "../utils/log";
 
 import searchResultQuery from "../graphql/searchResult.gql";
+import { useEffect } from "react";
 
 const saveTermInHistory = term => {
   new BiggyClient().prependSearchHistory(term);
@@ -24,19 +25,20 @@ const SearchQuery = ({
   attributePath,
   variables,
   order,
+  currentPage,
 }) => {
   const { account, workspace } = useRuntime();
-  const [page, setPage] = useState(1);
 
   const searchResult = useQuery(searchResultQuery, {
     variables,
     ssr: false,
     fetchPolicy: "network-only",
-    onCompleted: data => {
-      saveTermInHistory(variables.query);
-      onSearchResult(data);
-    },
   });
+
+  useEffect(() => saveTermInHistory(variables.query), [variables.query]);
+  useEffect(() => searchResult.data && onSearchResult(searchResult.data), [
+    searchResult.data,
+  ]);
 
   if (searchResult.error) {
     logError(account, workspace, attributePath, searchResult.error);
@@ -47,7 +49,12 @@ const SearchQuery = ({
 
   const products = path(["data", "searchResult", "products"], searchResult);
 
-  const fetchMore = makeFetchMore(searchResult.fetchMore, page, setPage);
+  const fetchMore = makeFetchMore(
+    searchResult.fetchMore,
+    variables.count,
+    variables.page,
+  );
+  const refetch = makeRefetch(searchResult.refetch);
   const recordsFiltered = pathOr(
     0,
     ["data", "searchResult", "total"],
@@ -92,15 +99,15 @@ const SearchQuery = ({
     query: reject(isEmpty, ["search", attributePath]).join("/"),
     map: map || "s",
     orderBy: "",
-    from: 0,
-    to: variables.count * variables.page - 1,
+    from: variables.count * (currentPage - 1),
+    to: variables.count * currentPage - 1,
     facetQuery: "search",
     facetMap: "b",
   };
 
   searchQuery.loading = searchResult.loading;
   searchQuery.fetchMore = fetchMore;
-  searchQuery.refetch = () => searchResult.refetch();
+  searchQuery.refetch = refetch;
 
   return children({
     ...searchQuery.variables,

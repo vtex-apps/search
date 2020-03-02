@@ -1,4 +1,4 @@
-import { propOr } from "ramda";
+import { propOr, pathOr } from "ramda";
 
 export const convertBiggyProduct = (product: any, tradePolicy: string) => {
   const categories: string[] = product.categories
@@ -36,7 +36,7 @@ const convertSKU = (product: any, tradePolicy: string) => (sku: any) => {
     cacheId: product.product || product.id,
     imageId: product.product || product.id,
     imageLabel: "principal",
-    imageUrl: product.images[0].value,
+    imageUrl:  pathOr("", ["images", 0, "value"], product),
     imageText: "principal",
   };
 
