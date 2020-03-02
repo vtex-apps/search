@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Stop caching price sensitive requests locally.
+- Use `ft` in map instead of `s`.
+
+## [0.6.17] - 2020-02-20
+
 ## [0.6.16] - 2020-02-19
 
 ### Added
