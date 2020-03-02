@@ -7,18 +7,17 @@ export class SearchGraphQL extends AppGraphQLClient {
   }
 
   public productsById = async (ids: string[]) => {
-    try {
-      const result = await this.graphql.query<any, { ids: string[] }>({
-        inflight: true,
-        variables: { ids },
-        query: PRODUCTS_BY_ID_QUERY,
-      });
+    const result = await this.graphql.query<any, { ids: string[] }>({
+      inflight: true,
+      variables: { ids },
+      query: PRODUCTS_BY_ID_QUERY,
+    });
 
-      return pathOr<any[]>([], ["data", "productsByIdentifier"], result);
-    } catch (err) {
-      this.context.logger.error(err);
-      return [];
-    }
+    return pathOr<any[], string[]>(
+      [],
+      ["data", "productsByIdentifier"],
+      result,
+    );
   };
 }
 
