@@ -13,6 +13,13 @@ type FetchMoreOptions = {
   updateQuery: UpdateQuery;
 };
 type FetchMore = (options: FetchMoreOptions) => Promise<any>;
+type RefetchVariables = {
+  from: number;
+  to: number;
+  count: number;
+  page: number;
+};
+type Refetch = (options: Partial<RefetchVariables>) => Promise<any>;
 
 /**
  * Our Query depends on a `page` variable, but store-components' SearchContext
@@ -43,6 +50,27 @@ export const makeFetchMore = (
       },
     },
   );
+};
+
+/**
+ * Our Query depends on a `page` variable, but store-components' SearchContext
+ * works with `from` and `to` variables. This methods provides a layer when
+ * refetch is called to transform `from` and `to` into `page` and `count`.
+ *
+ * @param refetch Apollo's refetch function for our query.
+ */
+export const makeRefetch = (refetch: Refetch): Refetch => async variables => {
+  console.log("refetched");
+  const { from, to } = variables;
+  const hasPagination =
+    typeof from !== "undefined" && typeof to !== "undefined";
+
+  const count = hasPagination ? to! - from! + 1 : undefined;
+  const page = hasPagination
+    ? Math.round((to! + 1) / (to! - from!))
+    : undefined;
+
+  return await refetch({ ...variables, page, count });
 };
 
 /**
