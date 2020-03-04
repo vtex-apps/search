@@ -1,11 +1,20 @@
-import {
-  SuggestionProductsInput,
-  SuggestionSearchesInput,
-} from "../commons/inputs";
-import { IContext } from "..";
+import { SegmentData } from "@vtex/api";
+import { path } from "ramda";
+
+export interface SuggestionSearchesArgs {
+  term: string;
+}
+
+export interface SuggestionProductsArgs {
+  term: string;
+  attributeKey?: string;
+  attributeValue?: string;
+  tradePolicy?: string;
+  segment?: SegmentData;
+}
 
 export const autocomplete = {
-  topSearches: async (_: any, __: any, ctx: IContext) => {
+  topSearches: async (_: any, __: any, ctx: Context) => {
     const { biggySearch } = ctx.clients;
 
     return await biggySearch.topSearches();
@@ -13,8 +22,8 @@ export const autocomplete = {
 
   suggestionSearches: async (
     _: any,
-    args: SuggestionSearchesInput,
-    ctx: IContext,
+    args: SuggestionSearchesArgs,
+    ctx: Context,
   ) => {
     const { biggySearch } = ctx.clients;
 
@@ -23,12 +32,18 @@ export const autocomplete = {
 
   suggestionProducts: async (
     _: any,
-    args: SuggestionProductsInput,
-    ctx: any,
+    args: SuggestionProductsArgs,
+    ctx: Context,
   ) => {
     const { biggySearch } = ctx.clients;
-    const { segment } = ctx.vtex;
-    args.tradePolicy = segment && segment.channel;
-    return await biggySearch.suggestionProducts(args);
+
+    const tradePolicy = path<string | undefined>(["segment", "channel"], args);
+
+    const result = await biggySearch.suggestionProducts({
+      ...args,
+      tradePolicy,
+    });
+
+    return result;
   },
 };
