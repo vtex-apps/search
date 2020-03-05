@@ -46,8 +46,8 @@ const convertSKU = (product: any, tradePolicy?: string) => (sku: any) => {
   const biggySellers = (selectedPolicy && selectedPolicy.sellers) || [];
 
   const sellers = biggySellers.map((seller: any) => {
-    const price = seller.price || product.price;
-    const oldPrice = seller.oldPrice || product.oldPrice;
+    const price = seller.price || sku.price || product.price;
+    const oldPrice = seller.oldPrice || sku.oldPrice || product.oldPrice;
     const installment = seller.installment || product.installment;
 
     return {
