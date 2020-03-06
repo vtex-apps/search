@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Hardcoded addition of the attribute brandId, only stores with product origin=biggy
+
 ## [0.7.0] - 2020-03-02
 
 ### Changed
