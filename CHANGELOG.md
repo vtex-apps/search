@@ -12,7 +12,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Pass the ordering type to the client-side, so that it activates the side effect in the `useFetchMore` hook
 - Side effect on change props to reset current page
 
+## [0.7.0] - 2020-03-02
+
+### Changed
+
+- Stop caching price sensitive requests locally.
+- Use `ft` in map instead of `s`.
+- Removed undesired error supression.
+
+### Fixed
+
+- `react` builder dependency vulnerability warning.
+
 ## [0.6.17] - 2020-02-20
+
+### Changed
+
+- Autocomplete title tag.
 
 ## [0.6.16] - 2020-02-19
 

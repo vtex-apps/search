@@ -9,7 +9,7 @@ import {
   makeFetchMore,
   fromAttributesToFacets,
 } from "../utils/compatibility-layer.ts";
-import logError from "../utils/log";
+import logError from "../utils/log.ts";
 
 import searchResultQuery from "../graphql/searchResult.gql";
 
@@ -84,7 +84,7 @@ const SearchQuery = ({
         : [],
       queryArgs: {
         query: reject(isEmpty, ["search", attributePath]).join("/"),
-        map: map || "s",
+        map: map || "ft",
       },
     },
     recordsFiltered,
@@ -93,12 +93,12 @@ const SearchQuery = ({
   searchQuery.variables = {
     withFacets: true,
     query: reject(isEmpty, ["search", attributePath]).join("/"),
-    map: map || "s",
+    map: map || "ft",
     orderBy: order,
     from: 0,
     to: variables.count * variables.page - 1,
     facetQuery: "search",
-    facetMap: "b",
+    facetMap: "ft",
   };
 
   searchQuery.loading = searchResult.loading;

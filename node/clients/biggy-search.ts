@@ -1,10 +1,10 @@
-import { path } from "ramda";
+import { path, prop } from "ramda";
 import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
+import { SearchResultArgs } from "../resolvers/search";
 import {
-  SuggestionSearchesInput,
-  SuggestionProductsInput,
-  SearchResultInput,
-} from "../commons/inputs";
+  SuggestionProductsArgs,
+  SuggestionSearchesArgs,
+} from "../resolvers/autocomplete";
 
 export class BiggySearchClient extends ExternalClient {
   private store: string;
@@ -17,132 +17,100 @@ export class BiggySearchClient extends ExternalClient {
   }
 
   public async topSearches(): Promise<any> {
-    try {
-      const result = await this.http.get<any>(
-        `${this.store}/api/top_searches`,
-        {
-          metric: "top-searches",
-        },
-      );
+    const result = await this.http.get<any>(`${this.store}/api/top_searches`, {
+      metric: "top-searches",
+    });
 
-      return result || { searches: [] };
-    } catch (err) {
-      this.context.logger.error(err);
-      return { searches: [] };
-    }
+    return result;
   }
 
-  public async suggestionSearches({
-    term,
-  }: SuggestionSearchesInput): Promise<any> {
-    try {
-      const result = await this.http.get<any>(
-        `${this.store}/api/suggestion_searches`,
-        {
-          params: {
-            term,
-          },
-          metric: "suggestion-searches",
-        },
-      );
+  public async suggestionSearches(args: SuggestionSearchesArgs): Promise<any> {
+    const { term } = args;
 
-      return result || { searches: [] };
-    } catch (err) {
-      this.context.logger.error(err);
-      return { searches: [] };
-    }
-  }
-
-  public async suggestionProducts({
-    term,
-    attributeKey,
-    attributeValue,
-    tradePolicy,
-  }: SuggestionProductsInput): Promise<any> {
-    try {
-      const attributes: { key: string; value: string }[] = [];
-
-      if (attributeKey && attributeValue) {
-        attributes.push({
-          key: attributeKey,
-          value: attributeValue,
-        });
-      }
-
-      if (tradePolicy) {
-        attributes.push({
-          key: "trade-policy",
-          value: tradePolicy,
-        });
-      }
-
-      const result = await this.http.post<any>(
-        `${this.store}/api/suggestion_products`,
-        {
-          term,
-          attributes,
-        },
-        {
-          params: {
-            term,
-            key: attributeKey,
-            value: attributeValue,
-          },
-          metric: "suggestion-products",
-        },
-      );
-
-      return result || { count: 0, products: [] };
-    } catch (err) {
-      this.context.logger.error(err);
-      return { count: 0, products: [] };
-    }
-  }
-
-  public async searchResult({
-    attributePath,
-    query,
-    page,
-    count,
-    sort,
-    operator,
-    fuzzy,
-    leap,
-    tradePolicy,
-  }: SearchResultInput): Promise<any> {
-    try {
-      const path = `${this.store}/api/search/${attributePath || ""}${
-        tradePolicy ? `/trade-policy/${tradePolicy}` : ""
-      }`;
-
-      const result = await this.http.get<any>(path, {
+    const result = await this.http.get<any>(
+      `${this.store}/api/suggestion_searches`,
+      {
         params: {
-          query,
-          page,
-          count,
-          sort,
-          operator,
-          fuzzy,
-          bgy_leap: leap ? true : undefined,
+          term,
         },
-        metric: "search-result",
+        metric: "suggestion-searches",
+      },
+    );
+
+    return result;
+  }
+
+  public async suggestionProducts(args: SuggestionProductsArgs): Promise<any> {
+    const { term, attributeKey, attributeValue, tradePolicy } = args;
+    const attributes: { key: string; value: string }[] = [];
+
+    if (attributeKey && attributeValue) {
+      attributes.push({
+        key: attributeKey,
+        value: attributeValue,
       });
-
-      return result || { products: [] };
-    } catch (err) {
-      let redirect: string | undefined;
-      if (path(["response", "status"], err) === 302) {
-        redirect = path(["response", "headers", "location"], err);
-      }
-
-      this.context.logger.error(err);
-      return {
-        redirect,
-        query,
-        operator: operator || "and",
-        total: 0,
-        products: [],
-      };
     }
+
+    if (tradePolicy) {
+      attributes.push({
+        key: "trade-policy",
+        value: tradePolicy,
+      });
+    }
+
+    const result = await this.http.post<any>(
+      `${this.store}/api/suggestion_products`,
+      {
+        term,
+        attributes,
+      },
+      {
+        metric: "suggestion-products",
+      },
+    );
+
+    return result;
+  }
+
+  public async searchResult(args: SearchResultArgs): Promise<any> {
+    const {
+      attributePath = "",
+      query,
+      page,
+      count,
+      sort,
+      operator,
+      fuzzy,
+      leap,
+      tradePolicy,
+    } = args;
+
+    const policyAttr = tradePolicy ? `/trade-policy/${tradePolicy}` : "";
+    const url = `${this.store}/api/search/${attributePath}${policyAttr}`;
+
+    const result = await this.http.getRaw(url, {
+      params: {
+        query,
+        page,
+        count,
+        sort,
+        operator,
+        fuzzy,
+        bgy_leap: leap ? true : undefined,
+      },
+      metric: "search-result",
+      validateStatus: (status: number) => {
+        // Search Redirect usese 302 when a query should be redirected.
+        return (status >= 200 && status < 300) || status === 302;
+      },
+    });
+
+    let redirect: string | undefined;
+    if (prop("status", result) === 302) {
+      redirect = path(["headers", "location"], result);
+    }
+
+    const data = result.data;
+    return { ...data, redirect };
   }
 }

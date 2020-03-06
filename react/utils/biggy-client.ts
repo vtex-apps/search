@@ -45,6 +45,7 @@ export default class BiggyClient {
         attributeValue,
         productOrigin,
       },
+      fetchPolicy: "network-only",
     });
   }
 
