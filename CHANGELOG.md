@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- check if the sku has any price
+- Check if the SKU has any price.
 
 ## [0.7.1] - 2020-03-06
 
