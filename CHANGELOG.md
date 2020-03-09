@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Custom maximum suggested products in autocomplete based on breakpoints.
+
 ## [0.7.2] - 2020-03-09
 
 ### Fixed
