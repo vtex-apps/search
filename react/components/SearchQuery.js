@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
 import { path, pathOr, isEmpty, reject } from "ramda";
@@ -27,6 +27,9 @@ const SearchQuery = ({
 }) => {
   const { account, workspace } = useRuntime();
   const [page, setPage] = useState(1);
+  useEffect(() => {
+    setPage(1);
+  }, [map, order, attributePath]);
 
   const searchResult = useQuery(searchResultQuery, {
     variables,
@@ -91,7 +94,7 @@ const SearchQuery = ({
     withFacets: true,
     query: reject(isEmpty, ["search", attributePath]).join("/"),
     map: map || "ft",
-    orderBy: "",
+    orderBy: order,
     from: 0,
     to: variables.count * variables.page - 1,
     facetQuery: "search",
