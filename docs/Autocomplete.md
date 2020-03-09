@@ -57,7 +57,7 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `lg`            | [`BreakpointProp`](#breakpointprop) | Defines the options for the `lg` breakpoint  | -             |
 | `xlg`           | [`BreakpointProp`](#breakpointprop) | Defines the options for the `xlg` breakpoint | -             |
 
-#### BreakpointProps
+#### BreakpointProp
 
 | Prop name              | Type                                | Description                                             | Default value |
 | ---------------------- | ----------------------------------- | ------------------------------------                    | ------------- |
