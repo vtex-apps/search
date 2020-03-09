@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Pass the ordering type to the client-side, so that it activates the side effect in the `useFetchMore` hook
 - Side effect on change props to reset current page
 
+## [0.7.1] - 2020-03-06
+
+### Added
+
+- Hardcoded addition of the attribute brandId, only stores with product origin=biggy
+
 ## [0.7.0] - 2020-03-02
 
 ### Changed
