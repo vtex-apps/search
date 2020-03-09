@@ -16,7 +16,7 @@ import debounce from "debounce";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
-const MAX_SUGGESTED_PRODUCTS_DEFAULT = 5;
+const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3;
 const MAX_HISTORY_DEFAULT = 5;
 
 export enum ProductLayout {
