@@ -442,18 +442,12 @@ class AutoComplete extends React.Component<
         !customBreakpoints.xlg
       ) {
         return maxSuggestedProducts;
-      } else if (
-        windowWidth >= customBreakpoints.md.width &&
-        windowWidth < customBreakpoints.lg.width
-      ) {
-        return customBreakpoints.md.maxSuggestedProducts;
-      } else if (
-        windowWidth >= customBreakpoints.lg.width &&
-        windowWidth < customBreakpoints.xlg.width
-      ) {
-        return customBreakpoints.lg.maxSuggestedProducts;
       } else if (windowWidth >= customBreakpoints.xlg.width) {
         return customBreakpoints.xlg.maxSuggestedProducts;
+      } else if (windowWidth >= customBreakpoints.lg.width) {
+        return customBreakpoints.lg.maxSuggestedProducts;
+      } else if (windowWidth >= customBreakpoints.md.width) {
+        return customBreakpoints.md.maxSuggestedProducts;
       } else {
         return maxSuggestedProducts;
       }
