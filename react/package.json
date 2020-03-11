@@ -23,7 +23,8 @@
     "react-dom": "^16.8.6",
     "react-intl": "^3.9.2",
     "typescript": "3.8.3",
-    "unescape": "^1.0.1"
+    "unescape": "^1.0.1",
+    "vtex": "^2.77.11"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
