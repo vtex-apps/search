@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `context` directive to the autocomplete queries.
+
+### Changed
+
+- `DidYouMean`, `Suggestions` and `Banner` data path.
+
+### Fixed
+
+- Bug where the suggestion's label appears even when there is no suggestion.
+
 ## [0.8.0]
 
 ### Added
