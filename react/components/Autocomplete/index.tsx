@@ -37,6 +37,20 @@ interface AutoCompleteProps {
   hideTitles: boolean;
   historyFirst: boolean;
   isMobile: boolean;
+  customBreakpoints?: {
+    md: {
+      width: number;
+      maxSuggestedProducts: number;
+    };
+    lg: {
+      width: number;
+      maxSuggestedProducts: number;
+    };
+    xlg: {
+      width: number;
+      maxSuggestedProducts: number;
+    };
+  };
   __unstableProductOrigin: "BIGGY" | "VTEX";
 }
 
@@ -232,11 +246,10 @@ class AutoComplete extends React.Component<
 
     const { suggestionProducts } = result.data;
 
-    const {
-      maxSuggestedProducts = MAX_SUGGESTED_PRODUCTS_DEFAULT,
-    } = this.props;
-
-    const products = suggestionProducts.products.slice(0, maxSuggestedProducts);
+    const products = suggestionProducts.products.slice(
+      0,
+      this.getProductCount(),
+    );
 
     this.setState({
       products,
@@ -365,9 +378,7 @@ class AutoComplete extends React.Component<
         {this.renderSuggestions()}
         <TileList
           term={this.props.inputValue || ""}
-          shelfProductCount={
-            this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
-          }
+          shelfProductCount={this.getProductCount()}
           title={
             <FormattedMessage
               id={"store/suggestedProducts"}
@@ -412,6 +423,36 @@ class AutoComplete extends React.Component<
 
     return isMobile ? ProductLayout.Horizontal : ProductLayout.Vertical;
   };
+
+  getProductCount() {
+    const {
+      customBreakpoints,
+      isMobile,
+      maxSuggestedProducts = MAX_SUGGESTED_PRODUCTS_DEFAULT,
+    } = this.props;
+
+    if (!window || isMobile || !customBreakpoints) {
+      return maxSuggestedProducts;
+    } else {
+      const windowWidth = window.innerWidth;
+
+      if (
+        !customBreakpoints.md ||
+        !customBreakpoints.lg ||
+        !customBreakpoints.xlg
+      ) {
+        return maxSuggestedProducts;
+      } else if (windowWidth >= customBreakpoints.xlg.width) {
+        return customBreakpoints.xlg.maxSuggestedProducts;
+      } else if (windowWidth >= customBreakpoints.lg.width) {
+        return customBreakpoints.lg.maxSuggestedProducts;
+      } else if (windowWidth >= customBreakpoints.md.width) {
+        return customBreakpoints.md.maxSuggestedProducts;
+      } else {
+        return maxSuggestedProducts;
+      }
+    }
+  }
 
   render() {
     const hiddenClass =
