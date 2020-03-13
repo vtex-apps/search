@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Custom maximum suggested products in autocomplete based on breakpoints.
 
+## [0.7.3] - 2020-03-09
+
+### Added
+
+- Check if the SKU has any price.
+
 ## [0.7.2] - 2020-03-09
 
 ### Fixed
