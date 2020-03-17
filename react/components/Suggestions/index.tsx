@@ -31,7 +31,7 @@ const Suggestions = (props: SuggestionsProps) => {
         {suggestion.searches.map(search => (
           <li className={styles.suggestionsListItem} key={search.term}>
             <Link
-              className="link f7"
+              className={`${styles.suggestionsListLink} link f7`}
               to={"/search"}
               query={`_query=${search.term}`}
             >
