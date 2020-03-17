@@ -15,7 +15,7 @@ interface SuggestionsProps {
 const Suggestions = (props: SuggestionsProps) => {
   const { suggestion } = props;
 
-  if (!suggestion) {
+  if (!suggestion || suggestion.searches.length === 0) {
     return null;
   }
 
