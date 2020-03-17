@@ -1,5 +1,6 @@
 import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
 import Banner from "./components/Banner";
+import { path } from "ramda";
 
 const withBanners = Component => props => {
   const { searchQuery } = useSearchPage();
