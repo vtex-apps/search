@@ -1,5 +1,6 @@
 import { SegmentData } from "@vtex/api";
 import { path } from "ramda";
+import { IndexingType } from "./products";
 
 export interface SearchResultArgs {
   attributePath: string;
@@ -12,6 +13,7 @@ export interface SearchResultArgs {
   leap: boolean;
   tradePolicy?: string;
   segment?: SegmentData;
+  indexingType?: IndexingType;
 }
 
 export const search = {

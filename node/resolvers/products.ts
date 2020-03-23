@@ -7,9 +7,15 @@ enum Origin {
   VTEX = "VTEX",
 }
 
+export enum IndexingType {
+  API = "API",
+  XML = "XML",
+}
+
 interface ProductArgs {
   origin: Origin;
   segment?: SegmentData;
+  indexingType: IndexingType
 }
 
 export const products = {
@@ -38,7 +44,7 @@ async function productsOriginBiggy(originalProducts: any[], args: ProductArgs) {
   const tradePolicy = path<string | undefined>(["segment", "channel"], args);
 
   originalProducts.forEach((product: any) => {
-    products.push(convertBiggyProduct(product, tradePolicy));
+    products.push(convertBiggyProduct(product, tradePolicy, args.indexingType));
   });
 
   return products;

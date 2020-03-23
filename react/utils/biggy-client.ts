@@ -36,6 +36,7 @@ export default class BiggyClient {
     attributeKey?: string,
     attributeValue?: string,
     productOrigin: "BIGGY" | "VTEX" = "BIGGY",
+    indexingType: "XML" | "API" = "API",
   ): Promise<ApolloQueryResult<{ suggestionProducts: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
@@ -44,6 +45,7 @@ export default class BiggyClient {
         attributeKey,
         attributeValue,
         productOrigin,
+        indexingType,
       },
       fetchPolicy: "network-only",
     });

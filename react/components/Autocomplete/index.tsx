@@ -52,6 +52,7 @@ interface AutoCompleteProps {
     };
   };
   __unstableProductOrigin: "BIGGY" | "VTEX";
+  __unstableIndexingType: "XML" | "API";
 }
 
 interface AutoCompleteState {
@@ -218,7 +219,10 @@ class AutoComplete extends React.Component<
 
   async updateProducts() {
     const term = this.state.dynamicTerm;
-    const { __unstableProductOrigin = "BIGGY" } = this.props;
+    const {
+      __unstableProductOrigin = "BIGGY",
+      __unstableIndexingType,
+    } = this.props;
     const { queryFromHover } = this.state;
 
     if (!term) {
@@ -238,6 +242,7 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin,
+      __unstableIndexingType,
     );
 
     this.setState({
