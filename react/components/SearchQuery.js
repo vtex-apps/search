@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import PropTypes from "prop-types";
-import { path, pathOr, isEmpty, reject } from "ramda";
+import { path, pathOr, reject, isEmpty } from "ramda";
 import { useRuntime } from "vtex.render-runtime";
 import { onSearchResult } from "vtex.sae-analytics";
 import BiggyClient from "../utils/biggy-client.ts";
@@ -25,12 +25,9 @@ const SearchQuery = ({
   attributePath,
   variables,
   order,
+  currentPage,
 }) => {
   const { account, workspace } = useRuntime();
-  const [page, setPage] = useState(1);
-  useEffect(() => {
-    setPage(1);
-  }, [map, order, attributePath]);
 
   const searchResult = useQuery(searchResultQuery, {
     variables,
@@ -52,7 +49,11 @@ const SearchQuery = ({
 
   const products = path(["data", "searchResult", "products"], searchResult);
 
-  const fetchMore = makeFetchMore(searchResult.fetchMore, page, setPage);
+  const fetchMore = makeFetchMore(
+    searchResult.fetchMore,
+    variables.count,
+    variables.page,
+  );
   const refetch = makeRefetch(searchResult.refetch);
   const recordsFiltered = pathOr(
     0,
@@ -95,11 +96,11 @@ const SearchQuery = ({
 
   searchQuery.variables = {
     withFacets: true,
-    query: reject(isEmpty, ["search", attributePath]).join("/"),
+    query: variables.query,
     map: map || "ft",
     orderBy: order,
-    from: 0,
-    to: variables.count * variables.page - 1,
+    from: variables.count * (currentPage - 1),
+    to: variables.count * currentPage - 1,
     facetQuery: "search",
     facetMap: "ft",
   };

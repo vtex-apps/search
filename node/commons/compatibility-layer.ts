@@ -1,6 +1,11 @@
-import { propOr } from "ramda";
+import { propOr, pathOr } from "ramda";
 import VtexSeller from "./models/VtexSeller";
 import { IndexingType } from "../resolvers/products";
+
+const slugifyUrl = (url: string) => {
+  const parts = url.replace(/\/p$/, "").split("/");
+  return parts[parts.length - 1];
+};
 
 export const convertBiggyProduct = (
   product: any,
@@ -20,11 +25,11 @@ export const convertBiggyProduct = (
 
   return {
     categories,
-    cacheId: product.link,
-    productId: product.product || product.id,
+    cacheId: product.id,
+    productId: product.id,
     productName: product.name,
     productReference: product.product || product.id,
-    linkText: product.link,
+    linkText: product.link || slugifyUrl(product.url),
     brand:
       product.brand ||
       product.extraInfo["marca"] ||
@@ -69,10 +74,10 @@ const convertSKU = (
   tradePolicy?: string,
 ) => (sku: any) => {
   const image = {
-    cacheId: product.product || product.id,
-    imageId: product.product || product.id,
+    cacheId: product.id,
+    imageId: product.id,
     imageLabel: "principal",
-    imageUrl: product.images[0].value,
+    imageUrl: pathOr("", ["images", 0, "value"], product),
     imageText: "principal",
   };
 
