@@ -69,7 +69,7 @@ export const makeRefetch = (refetch: Refetch): Refetch => async variables => {
     ? Math.round((to! + 1) / (to! - from!))
     : undefined;
 
-  return await refetch({ ...variables, page, count });
+  return await refetch({ from, to, page, count });
 };
 
 /**

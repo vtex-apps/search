@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `__unstableIndexingType` props.
+
+### Fixed
+
+- Bug where the pagination component was not being reset.
+- Refetch using `attributePath` instead of `_query`
+
 ## [0.9.0] - 2020-03-19
 
 ### Added

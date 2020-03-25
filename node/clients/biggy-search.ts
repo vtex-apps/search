@@ -5,6 +5,7 @@ import {
   SuggestionProductsArgs,
   SuggestionSearchesArgs,
 } from "../resolvers/autocomplete";
+import { IndexingType } from "../resolvers/products";
 
 export class BiggySearchClient extends ExternalClient {
   private store: string;
@@ -41,7 +42,13 @@ export class BiggySearchClient extends ExternalClient {
   }
 
   public async suggestionProducts(args: SuggestionProductsArgs): Promise<any> {
-    const { term, attributeKey, attributeValue, tradePolicy } = args;
+    const {
+      term,
+      attributeKey,
+      attributeValue,
+      tradePolicy,
+      indexingType,
+    } = args;
     const attributes: { key: string; value: string }[] = [];
 
     if (attributeKey && attributeValue) {
@@ -51,7 +58,7 @@ export class BiggySearchClient extends ExternalClient {
       });
     }
 
-    if (tradePolicy) {
+    if (indexingType !== IndexingType.XML && tradePolicy) {
       attributes.push({
         key: "trade-policy",
         value: tradePolicy,
@@ -83,9 +90,13 @@ export class BiggySearchClient extends ExternalClient {
       fuzzy,
       leap,
       tradePolicy,
+      indexingType,
     } = args;
 
-    const policyAttr = tradePolicy ? `/trade-policy/${tradePolicy}` : "";
+    const policyAttr =
+      tradePolicy && indexingType !== IndexingType.XML
+        ? `/trade-policy/${tradePolicy}`
+        : "";
     const url = `${this.store}/api/search/${attributePath}${policyAttr}`;
 
     const result = await this.http.getRaw(url, {

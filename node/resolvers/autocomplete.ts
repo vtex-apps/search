@@ -1,5 +1,6 @@
 import { SegmentData } from "@vtex/api";
 import { path } from "ramda";
+import { IndexingType } from "./products";
 
 export interface SuggestionSearchesArgs {
   term: string;
@@ -11,6 +12,7 @@ export interface SuggestionProductsArgs {
   attributeValue?: string;
   tradePolicy?: string;
   segment?: SegmentData;
+  indexingType?: IndexingType;
 }
 
 export const autocomplete = {

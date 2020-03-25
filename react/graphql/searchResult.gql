@@ -109,6 +109,7 @@ query searchResult(
   $fuzzy: Int
   $leap: Boolean
   $productOrigin: Origin
+  $indexingType: IndexingType
 ) {
   searchResult(
     attributePath: $attributePath
@@ -119,8 +120,9 @@ query searchResult(
     operator: $operator
     fuzzy: $fuzzy
     leap: $leap
+    indexingType: $indexingType
   ) {
-    products(origin: $productOrigin) {
+    products(origin: $productOrigin, indexingType: $indexingType) {
       ...Product
     }
     query

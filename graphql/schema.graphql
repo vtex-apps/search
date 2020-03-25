@@ -17,6 +17,7 @@ type Query {
     term: String!
     attributeKey: String
     attributeValue: String
+    indexingType: IndexingType
   ): SuggestionProductsOutput
     @cacheControl(scope: SEGMENT, maxAge: SHORT)
     @withSegment
@@ -43,13 +44,19 @@ type Query {
     sort: String
     operator: String
     fuzzy: Int
-    leap: Boolean
+    leap: Boolean,
+    indexingType: IndexingType = "API"
   ): ResultResponse @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
 }
 
 enum Origin {
   BIGGY
   VTEX
+}
+
+enum IndexingType {
+  API
+  XML
 }
 
 """
@@ -59,7 +66,7 @@ type ResultResponse {
   query: String
   operator: String
   total: Int
-  products(origin: Origin = BIGGY): [Product]
+  products(origin: Origin = BIGGY, indexingType: IndexingType = API): [Product]
   pagination: ResultResponsePagination
   options: SearchOptions
   attributes: [AttributeResponseKey]
@@ -74,5 +81,5 @@ Result of a SuggestionProducts query, a list of suggestion products.
 """
 type SuggestionProductsOutput {
   count: Int!
-  products(origin: Origin = BIGGY): [Product]!
+  products(origin: Origin = BIGGY, indexingType: IndexingType = "API"): [Product]!
 }

@@ -18,6 +18,7 @@ const SearchContext = props => {
     priceRangeKey,
     maxItemsPerPage,
     __unstableProductOrigin: productOrigin,
+    __unstableIndexingType: indexingType,
     params: { path: attributePath },
     query: { _query, map, order, operator, fuzzy, priceRange, bgy_leap: leap },
   } = props;
@@ -32,6 +33,7 @@ const SearchContext = props => {
     operator,
     fuzzy,
     productOrigin,
+    indexingType,
     query: _query,
     page: 1,
     attributePath: url,
