@@ -32,7 +32,7 @@ export const convertBiggyProduct = (
       "",
     brandId: -1,
     link: product.url,
-    description: product.link,
+    description: product.description,
     items: skus,
     sku: skus.find(sku => sku.sellers && sku.sellers.length > 0),
   };
@@ -90,5 +90,11 @@ const convertSKU = (
     nameComplete: product.name,
     complementName: product.name,
     images: [image],
+    referenceId: [
+      {
+        Key: "RefId",
+        Value: sku.reference,
+      },
+    ],
   };
 };
