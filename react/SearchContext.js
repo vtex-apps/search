@@ -62,6 +62,7 @@ const SearchContext = props => {
     order,
     maxItemsPerPage,
     leap,
+    url,
   ]);
 
   return (

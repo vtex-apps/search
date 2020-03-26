@@ -73,11 +73,16 @@ const convertSKU = (
   indexingType?: IndexingType,
   tradePolicy?: string,
 ) => (sku: any) => {
+  const imageUrl: string = pathOr("", ["images", 0, "value"], product);
+
+  // If imageUrl doesn't match this regex, it will raise an error in VTEX UI component
+  const baseUrlRegex = new RegExp(/.+ids\/(\d+)/);
+
   const image = {
     cacheId: product.id,
     imageId: product.id,
     imageLabel: "principal",
-    imageUrl: pathOr("", ["images", 0, "value"], product),
+    imageUrl: baseUrlRegex.test(imageUrl) ? imageUrl : "",
     imageText: "principal",
   };
 
