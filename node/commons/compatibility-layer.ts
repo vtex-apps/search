@@ -1,6 +1,8 @@
 import { propOr } from "ramda";
 import VtexSeller from "./models/VtexSeller";
 import { IndexingType } from "../resolvers/products";
+import { ElasticImage } from "../typings/elasticProduct";
+import { VtexImage } from "../typings/vtexProduct";
 
 export const convertBiggyProduct = (
   product: any,
@@ -14,9 +16,9 @@ export const convertBiggyProduct = (
       })
     : [];
 
-  const skus: any[] = propOr([], "skus", product).map(
-    convertSKU(product, indexingType, tradePolicy),
-  );
+  const skus: any[] = propOr([], "skus", product)
+    .filter((sku: any) => propOr(product.stock, "stock", sku) > 0)
+    .map(convertSKU(product, indexingType, tradePolicy));
 
   return {
     categories,
@@ -63,18 +65,47 @@ const getSellersIndexedByXML = (product: any) => {
   return [new VtexSeller("1", price, oldPrice, installment)];
 };
 
+const getImageId = (imageUrl: string) => {
+  const baseUrlRegex = new RegExp(/.+ids\/(\d+)/);
+  return baseUrlRegex.test(imageUrl)
+    ? baseUrlRegex.exec(imageUrl)![1]
+    : undefined;
+};
+
+const elasticImageToVtexImage = (image: ElasticImage, imageId: string) => {
+  return {
+    imageId,
+    cacheId: imageId,
+    imageLabel: image.name,
+    imageText: image.name,
+    imageUrl: image.value,
+  };
+};
+
+const convertImages = (images: ElasticImage[], indexingType?: IndexingType) => {
+  const vtexImages: VtexImage[] = [];
+
+  if (indexingType && indexingType === IndexingType.XML) {
+    const selectedImage: ElasticImage = images[0];
+    const imageId = getImageId(selectedImage.value);
+
+    return imageId ? [elasticImageToVtexImage(selectedImage, imageId)] : [];
+  }
+
+  images.forEach(image => {
+    const imageId = getImageId(image.value);
+    imageId ? vtexImages.unshift(elasticImageToVtexImage(image, imageId)) : [];
+  });
+
+  return vtexImages;
+};
+
 const convertSKU = (
   product: any,
   indexingType?: IndexingType,
   tradePolicy?: string,
 ) => (sku: any) => {
-  const image = {
-    cacheId: product.product || product.id,
-    imageId: product.product || product.id,
-    imageLabel: "principal",
-    imageUrl: product.images[0].value,
-    imageText: "principal",
-  };
+  const images = convertImages(product.images, indexingType);
 
   const sellers =
     indexingType === IndexingType.XML
@@ -83,13 +114,12 @@ const convertSKU = (
 
   return {
     sellers,
-    image,
+    images,
     seller: sellers[0],
     itemId: sku.id,
     name: product.name,
     nameComplete: product.name,
     complementName: product.name,
-    images: [image],
     referenceId: [
       {
         Key: "RefId",
