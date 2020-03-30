@@ -1,5 +1,6 @@
 import { defaultFieldResolver, GraphQLField } from "graphql";
 import { SchemaDirectiveVisitor } from "graphql-tools";
+import atob from "atob";
 
 export class WithSegment extends SchemaDirectiveVisitor {
   /**
@@ -13,8 +14,14 @@ export class WithSegment extends SchemaDirectiveVisitor {
     const { resolve = defaultFieldResolver } = field;
 
     field.resolve = async (root, args, ctx: Context, info) => {
-      const { segment } = ctx.clients;
-      const segmentData = await segment.getSegment();
+      const {
+        vtex: { segmentToken },
+        clients: { segment },
+      } = ctx;
+
+      const segmentData = segmentToken
+        ? JSON.parse(atob(segmentToken))
+        : await segment.getSegment();
 
       return resolve(root, { ...args, segment: segmentData }, ctx, info);
     };

@@ -1,17 +1,19 @@
 {
   "name": "node",
-  "version": "0.11.0",
+  "version": "0.11.2",
   "description": "",
   "main": "index.ts",
   "dependencies": {
     "@vtex/api": "^3.55.0",
+    "atob": "^2.1.2",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
-    "@types/ramda": "types/npm-ramda#dist",
+    "@types/atob": "^2.1.2",
     "@types/graphql": "^14.5.0",
+    "@types/ramda": "types/npm-ramda#dist",
     "prettier": "^1.18.2",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.2",

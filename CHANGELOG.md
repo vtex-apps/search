@@ -12,6 +12,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - API sends all images instead of only the first one.
 - API send only SKUs with `stock` higher than `0`.
 
+## [0.11.2] - 2020-03-30
+
+### Fixed
+
+- `suggestionsListItem` handle.
+
+### Changed
+
+- Use `segmentToken` instead of `getSegment`.
+
+## [0.11.1] - 2020-03-27
+
+### Fixed
+
+- Reference being set in compatibility layer incorrectly.
+
 ## [0.11.0] - 2020-03-26
 
 ### Added
