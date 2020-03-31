@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.11.3] - 2020-03-31
+
 ### Fixed
 
 - API sends all images instead of only the first one.
