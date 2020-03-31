@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- API sends all images instead of only the first one.
+- API send only SKUs with `stock` higher than `0`.
+
 ## [0.11.2] - 2020-03-30
 
 ### Fixed
