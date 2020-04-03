@@ -66,10 +66,10 @@ async function productsOriginVTEX(originalProducts: any[], ctx: Context) {
   }, originalProducts);
 
   if (!isEmpty(productIds)) {
-    const { searchGraphQL } = ctx.clients;
+    const { searchResolver } = ctx.clients;
 
     // Get products' model from VTEX search API
-    products = await searchGraphQL.productsById(productIds);
+    products = await searchResolver.productsById(productIds);
 
     // Maintain biggySearch's order.
     products = sort(

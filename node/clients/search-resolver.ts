@@ -1,9 +1,9 @@
 import { AppGraphQLClient, IOContext, InstanceOptions } from "@vtex/api";
 import { pathOr } from "ramda";
 
-export class SearchGraphQL extends AppGraphQLClient {
+export class SearchResolver extends AppGraphQLClient {
   constructor(context: IOContext, options?: InstanceOptions) {
-    super("vtex.search-graphql", context, options);
+    super("vtex.search-resolver", context, options);
   }
 
   public productsById = async (ids: string[]) => {
