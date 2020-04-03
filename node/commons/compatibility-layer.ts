@@ -94,7 +94,7 @@ const convertImages = (images: ElasticImage[], indexingType?: IndexingType) => {
 
   images.forEach(image => {
     const imageId = getImageId(image.value);
-    imageId ? vtexImages.unshift(elasticImageToVtexImage(image, imageId)) : [];
+    imageId ? vtexImages.push(elasticImageToVtexImage(image, imageId)) : [];
   });
 
   return vtexImages;

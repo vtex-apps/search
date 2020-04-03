@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.11.14] - 2020-04-03
+
+### Changed
+
+- Change from `unshift` to `push`.
+
 ## [0.11.3] - 2020-03-31
 
 ### Fixed

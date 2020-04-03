@@ -15,7 +15,7 @@ export enum IndexingType {
 interface ProductArgs {
   origin: Origin;
   segment?: SegmentData;
-  indexingType: IndexingType
+  indexingType: IndexingType;
 }
 
 export const products = {
