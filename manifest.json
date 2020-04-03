@@ -31,7 +31,7 @@
     "vtex.search-result": "3.x",
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
-    "vtex.search-graphql": "0.x",
+    "vtex.search-resolver": "0.x",
     "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
@@ -42,7 +42,7 @@
       "name": "vbase-read-write"
     },
     {
-      "name": "vtex.search-graphql:resolve-graphql"
+      "name": "vtex.search-resolver:resolve-graphql"
     },
     {
       "name": "outbound-access",
