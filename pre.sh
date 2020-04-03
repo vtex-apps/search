@@ -11,6 +11,3 @@ function lint()
   yarn check
   cd ..
 }
-
-lint node
-lint react
