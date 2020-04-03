@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.11.14] - 2020-04-03
+## [0.11.5] - 2020-04-03
+
+### Fixed
+
+- Missing `unescape` import.
+
+## [0.11.4] - 2020-04-03
 
 ### Changed
 

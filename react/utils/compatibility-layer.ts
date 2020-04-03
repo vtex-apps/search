@@ -1,3 +1,5 @@
+import unescape from "unescape";
+
 /*
  * Functions designed to provide compatibility between our search components
  * and store-components components.
