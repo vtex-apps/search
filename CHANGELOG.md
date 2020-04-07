@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Some queries intermittently failing due to having ambiguous providers.
+
 ## [0.11.5] - 2020-04-03
 
 ### Fixed

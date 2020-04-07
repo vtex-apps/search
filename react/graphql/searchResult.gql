@@ -1,4 +1,4 @@
-fragment Product on Product {
+fragment Product on Product @context(provider: "vtex.search") {
   cacheId
   productId
   description
@@ -121,7 +121,7 @@ query searchResult(
     fuzzy: $fuzzy
     leap: $leap
     indexingType: $indexingType
-  ) {
+  ) @context(provider: "vtex.search") {
     products(origin: $productOrigin, indexingType: $indexingType) {
       ...Product
     }

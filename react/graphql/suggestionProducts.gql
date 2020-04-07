@@ -1,4 +1,4 @@
-fragment Product on Product {
+fragment Product on Product @context(provider: "vtex.search") {
   cacheId
   productId
   description
