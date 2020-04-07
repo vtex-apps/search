@@ -4,7 +4,6 @@ import { getCookie, setCookie } from "./dom-utils";
 import suggestionProducts from "../graphql/suggestionProducts.gql";
 import suggestionSearches from "../graphql/suggestionSearches.gql";
 import topSearches from "../graphql/topSearches.gql";
-import searchResult from "../graphql/searchResult.gql";
 import { ISearchProduct } from "../models/search-product";
 
 export default class BiggyClient {
@@ -70,29 +69,6 @@ export default class BiggyClient {
     }
 
     setCookie(this.historyKey, history.join(","));
-  }
-
-  async searchResult(
-    attributePath: string,
-    query: string,
-    page: number,
-    sort?: string,
-    count?: number,
-    operator?: string,
-    fuzzy?: string,
-  ) {
-    return this.client.query({
-      query: searchResult,
-      variables: {
-        attributePath,
-        query,
-        page,
-        sort,
-        count,
-        operator,
-        fuzzy,
-      },
-    });
   }
 }
 

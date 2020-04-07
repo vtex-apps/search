@@ -1,17 +1,4 @@
 {
-  "searchWrapper.v2": {
-    "component": "SearchWrapper"
-  },
-  "store.search.v2": {
-    "around": [
-      "searchWrapper.v2"
-    ],
-    "context": "SearchContext",
-    "preview": {
-      "type": "grid",
-      "height": 1400
-    }
-  },
   "autocomplete-result-list.v2": {
     "component": "Autocomplete",
     "required": [
@@ -26,7 +13,5 @@
   },
   "search-banner": {
     "component": "Banner"
-  },
-  "search-result-layout.desktop.enhanced": {},
-  "search-result-layout.mobile.enhanced": {}
+  }
 }
