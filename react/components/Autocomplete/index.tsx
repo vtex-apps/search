@@ -196,7 +196,7 @@ class AutoComplete extends React.Component<
         attributes: attributes.map(att => ({
           label: att.labelValue,
           value: att.value,
-          link: `/search/${att.key}/${att.value}?_query=${query.term}`,
+          link: `/${query.term}/${att.value}/?map=ft,${att.key}`,
           groupValue: query.term,
           key: att.key,
         })),
@@ -210,7 +210,7 @@ class AutoComplete extends React.Component<
       ),
       value: suggestion.term,
       groupValue: suggestion.term,
-      link: `/search?_query=${suggestion.term}`,
+      link: `/${suggestion.term}?map=ft`,
       attributes: suggestion.attributes,
     }));
 
@@ -278,7 +278,7 @@ class AutoComplete extends React.Component<
           ),
           value: query.term,
           label: query.term,
-          link: `/search?_query=${query.term}`,
+          link: `/${query.term}?map=ft`,
         } as Item),
     );
 
@@ -293,7 +293,7 @@ class AutoComplete extends React.Component<
         return {
           label: item,
           value: item,
-          link: `/search?_query=${item}`,
+          link: `/${item}?map=ft`,
           icon: <IconClock />,
         };
       });

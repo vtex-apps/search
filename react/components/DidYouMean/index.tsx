@@ -23,11 +23,7 @@ const DidYouMean = (props: DidYouMeanProps) => {
         {": "}
       </span>
       <span className={handles.didYouMeanTerm}>
-        <Link
-          className="link"
-          to={"/search"}
-          query={`_query=${props.correction.text}`}
-        >
+        <Link className="link" to={`/${props.correction.text}?map=ft`}>
           {props.correction.text}
         </Link>
       </span>

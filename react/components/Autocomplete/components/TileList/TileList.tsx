@@ -75,7 +75,7 @@ export class TileList extends React.Component<TileListProps> {
               {unseenProductsCount > 0 ? (
                 <a
                   className={styles.tileListSeeMore}
-                  href={`/search?_query=${this.props.term}`}
+                  href={`/${this.props.term}?map=ft`}
                 >
                   <FormattedMessage
                     id="store/seeMore"
