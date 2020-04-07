@@ -79,12 +79,14 @@ SearchContext.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   query: PropTypes.any.isRequired,
   __unstableProductOrigin: PropTypes.oneOf(["BIGGY", "VTEX"]),
+  __unstableIndexingType: PropTypes.oneOf(["API", "XML"]),
 };
 
 SearchContext.defaultProps = {
   priceRangeKey: undefined,
   maxItemsPerPage: 20,
   __unstableProductOrigin: "BIGGY",
+  __unstableIndexingType: "API",
 };
 
 export default SearchContext;
