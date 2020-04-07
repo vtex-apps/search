@@ -23,7 +23,7 @@ export class SearchGraphQL extends AppGraphQLClient {
 
 const PRODUCTS_BY_ID_QUERY = `
   query ProductsByReference($ids: [ID!]) {
-    productsByIdentifier(field: id, values: $ids) @context(provider: "vtex.search") {
+    productsByIdentifier(field: id, values: $ids) {
       cacheId
       productId
       description
