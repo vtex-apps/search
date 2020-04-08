@@ -1,6 +1,6 @@
 import { IOClients } from "@vtex/api";
 import { BiggySearchClient } from "./biggy-search";
-import { SearchGraphQL } from "./search-graphql";
+import { SearchResolver } from "./search-resolver";
 
 // Extend the default IOClients implementation with our own custom clients.
 export class Clients extends IOClients {
@@ -8,7 +8,7 @@ export class Clients extends IOClients {
     return this.getOrSet("biggySearch", BiggySearchClient);
   }
 
-  public get searchGraphQL() {
-    return this.getOrSet("searchGraphQL", SearchGraphQL);
+  public get searchResolver() {
+    return this.getOrSet("searchResolver", SearchResolver);
   }
 }
