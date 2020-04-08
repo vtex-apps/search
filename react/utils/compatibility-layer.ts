@@ -122,7 +122,7 @@ export function fromAttributesToFacets(attribute: any) {
         link: value.proxyUrl,
         linkEncoded: value.proxyUrl,
         map: attribute.key,
-        selected: false,
+        selected: value.active,
         value: `z${value.key}`,
       };
     }),
