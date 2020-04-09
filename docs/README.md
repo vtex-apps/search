@@ -1,3 +1,5 @@
+You’re reading the documentation for `vtex.search@1.x`, some major architectural changes happened, if you want to read about version `0.x` go to [0.x](https://github.com/vtex-apps/search/tree/0.x), and consider talking with the Search & Personalization team about a upgrade to the latest version.
+
 # VTEX Search
 
 The VTEX Search is an app that handles the result of our Search and Engagement API, used to provide
