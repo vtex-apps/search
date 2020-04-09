@@ -35,7 +35,7 @@ If you want to use our UI components you need import this app in your dependenci
 ```json
 {
   "dependencies": {
-    "vtex.search": "0.x"
+    "vtex.search": "1.x"
   }
 }
 ```
