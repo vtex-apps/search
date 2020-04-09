@@ -1,7 +1,7 @@
 {
   "name": "search",
   "vendor": "vtex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "scripts": {
@@ -31,7 +31,7 @@
     "vtex.search-result": "3.x",
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
-    "vtex.search-resolver": "0.x",
+    "vtex.search-resolver": "1.x",
     "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
