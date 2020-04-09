@@ -8,33 +8,27 @@ a more complete search experience.
 ## Table of Contents
 
 - [Usage](#usage)
-  - [Custom Search Page URL](#custom-search-page-url)
-  - [Autocomplete](#autocomplete)
-  - [Order Options](#order-options)
-  - [Search Result Complements](#search-result-complements)
-  - [PriceRange](#pricerange)
-  - [Plug & Play](#plug--play)
   - [Catalog Integration](#catalog-integration)
+  - [UI Components](#ui-components)
+    - [Autocomplete](#autocomplete)
+    - [Search Result Complements](#search-result-complements)
   - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
-- [Blocks API](#blocks-api)
-  - [Demo Store-Theme](#demo-store-theme)
-  - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 
 ## Usage
 
-The first step to start using this app is to install the `vtex.search` and the `vtex.admin-search` in the desired workspace, using:
+The first step to start using this app is to install the `vtex.admin-search` and the `vtex.search-resolver@1.x` in the desired workspace, using:
 
 ```sh
-vtex install vtex.search vtex.admin-search
+vtex install vtex.admin-search vtex.search-resolver@1.x
 ```
 
-This app uses our store builder with the blocks architecture.
-To know more about Store Builder [click here.](https://help.vtex.com/en/tutorial/understanding-storebuilder-and-stylesbuilder#structuring-and-configuring-our-store-with-object-object)
+### Catalog Integration
 
-To use this app you need to import it in your dependencies on the `manifest.json`.
+### UI Components
+If you want to use our UI components you need import this app in your dependencies on the `manifest.json`.
 
 ```json
 {
@@ -44,33 +38,7 @@ To use this app you need to import it in your dependencies on the `manifest.json
 }
 ```
 
-Then, add the `store.search.v2` block into your app theme.
-
-```json
-{
-  "store.search.v2": {
-    "blocks": ["search-result-layout"]
-  }
-}
-```
-
-### Custom Search Page URL
-
-This will provide your store with a new route `/search` that will handle all search navigation
-from now on, but first, you need to redirect the `search-bar` requests to this new route, using
-the `customSearchPageUrl` prop on the `search-bar` component.
-
-```json
-{
-  "search-bar": {
-    "props": {
-      "customSearchPageUrl": "/search?_query=${term}"
-    }
-  }
-}
-```
-
-### Autocomplete
+#### Autocomplete
 
 We provide a customized autocomplete with new features. It includes:
 
@@ -96,7 +64,6 @@ Finally, append this block in the search bar. To improve the client experience, 
   "search-bar": {
     "blocks": ["autocomplete-result-list.v2"],
     "props": {
-      "customSearchPageUrl": "/search?_query=${term}",
       "openAutocompleteOnFocus": true
     }
   }
@@ -105,27 +72,7 @@ Finally, append this block in the search bar. To improve the client experience, 
 
 A full documentation of our custom autocomplete can be found [here](Autocomplete.md).
 
-### Order Options
-
-We don't yet support some of the ordering options that are supported by the current search implementation,
-so they should be hidden so that it doesn't confuse your customers. You can hide ordering options by
-passing them to the `hiddenOptions` prop on the `order-by` component.
-
-```json
-{
-  "order-by": {
-    "props": {
-      "hiddenOptions": [
-        "OrderByReleaseDateDESC",
-        "OrderByNameASC",
-        "OrderByNameDESC"
-      ]
-    }
-  }
-}
-```
-
-### Search Result Complements
+#### Search Result Complements
 
 This app has three new components to improve the search result experience. They are:
 
@@ -158,6 +105,9 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
   "flex-layout.row#suggestion": {
     "children": ["search-suggestions"]
   },
+  "flex-layout.row#suggestion": {
+    "children": ["search-banner#one"]
+  },
   "search-banner#one": {
     "props": {
       "area": "one",
@@ -166,56 +116,6 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
     }
   }
 ```
-
-### PriceRange
-
-![pricerange](https://user-images.githubusercontent.com/40380674/74041833-28bb0c80-49a5-11ea-8e20-7720ac63548f.gif)
-
-
-In order to add the PriceRange feature in the filter navigator, add `priceRangeKey` in the `context` prop of `store.search.v2`. The value is the price filter key (usually `price`, `precio` or `preco`).
-
-```json
-"store.search.v2": {
-  "blocks": ["search-result-layout"],
-  "props": {
-    "context": {
-      "priceRangeKey": "price",
-    }
-  }
-},
-```
-
-### Plug & Play
-
-For our app to be as _Plug & Play_ as possible it's necessary to follow the good conventions for developing
-[`store-themes`](https://github.com/vtex-apps/store-theme) like using open-source components developed by
-the [`vtex-apps`](https://github.com/vtex-apps) organization.
-
-Our app is heavily dependent, as seen above, on two major components: [`search-bar`](https://github.com/vtex-apps/store-components/blob/master/docs/SearchBar.md)
-and [`search-result`](https://vtex.io/docs/app/vtex.search-result). Our components are developed with the default
-implementations in mind, so keep that in mind when using custom components. For custom or closed-source components
-to work perfectly with our own, it should resemble both these components as closely as possible.
-
-If you're using any type of custom components on your `store-theme` we can't guarantee the _Plug & Play_
-functionality of the components provided by this app.
-
-### Catalog Integration
-
-For this new search experience to work properly a Token and App Key need to be generated. You can follow an in-depth tutorial on how to create both the Token and the App Key
-[here](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes).
-Finally, in the admin's sidebar, click on **Search** and then on **Integration Settings**. Inform the generated keys and click on **Save**
-
-You'll also need to set up the affiliate API endpoint, you can follow [this tutorial](https://help.vtex.com/tutorial/configuring-affiliates--tutorials_187)
-on how to properly set up this step.
-
-The Search endpoint used for the affiliate API should be:
-
-```
-http://api.biggylabs.com.br/track-api/v2/affiliate
-```
-
-If you end up having any questions about this step, feel free to send an e-mail to `biggy@vtex.com.br`
-with the subject `[YOUR STORE] Search App - Catalog Integration`.
 
 ### Admin Permission
 
@@ -226,34 +126,6 @@ User indicated by VtexIdclientAutCookie is not authorized to access the indicate
 ```
 
 your user doesn't have permission to change the search configurations. Ask an admin to give you the `Search Settings - General Settings` permission.
-
-### Google Analytics Configuration
-
-Our search engine uses `_query` as the querystring for the search term. If you want to track the search in GA you need to register it.
-
-Inside Google Analytics, go to Admin → View → View Settings. Then, on the Site Search Settings block, add a new parameter called `_query` into Query Parameter input. Query Parameter field accepts up to 5 different parameters.
-
-![image](https://user-images.githubusercontent.com/40380674/71663408-de09fd00-2d33-11ea-96bb-f9c6e48312a8.png)
-
-## Blocks API
-
-When implementing this app as a block, various inner blocks may be available.
-
-```json
-{
-  "store.search.v2": {
-    "allowed": ["search-result", "search-result-layout"]
-  }
-}
-```
-
-### Demo Store-Theme
-
-You can find our demo store-theme with our search app already installed and configured by following this [`repository`](https://github.com/vtex-apps/search-demo-theme).
-
-### Configuration
-
-:hammer: Work in Progress...
 
 ## Troubleshooting
 

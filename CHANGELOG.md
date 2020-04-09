@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Change URLs and keep only `Autocomplete`, `Didyoumean`, `Suggestion` and `Banner` components.
+
 ## [0.11.10] - 2020-04-08
 ### Changed 
 - Bump version.
