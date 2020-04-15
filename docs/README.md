@@ -30,6 +30,7 @@ vtex install vtex.admin-search vtex.search-resolver@1.x
 ### Catalog Integration
 
 ### UI Components
+
 If you want to use our UI components you need import this app in your dependencies on the `manifest.json`.
 
 ```json
