@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-- Upgrade node builder to `6.x`
+- Upgrade node builder to `6.x`.
+- Make `search-graphql` client call `graphql-server`.
 
 ## [1.0.3] - 2020-04-15
 
