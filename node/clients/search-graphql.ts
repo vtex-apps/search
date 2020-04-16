@@ -1,18 +1,22 @@
-import { AppGraphQLClient, IOContext, InstanceOptions } from "@vtex/api";
+import { IOContext, InstanceOptions } from "@vtex/api";
+import { GraphQLServer } from './graphql-server';
+
 import { pathOr } from "ramda";
 
-export class SearchResolver extends AppGraphQLClient {
+const extensions = {
+  persistedQuery: {
+    provider: 'vtex.search-graphql@0.x',
+    sender: 'vtex.search@0.x',
+  },
+}
+
+export class SearchGraphql extends GraphQLServer {
   constructor(context: IOContext, options?: InstanceOptions) {
-    super("vtex.search-resolver", context, options);
+    super(context, options);
   }
 
   public productsById = async (ids: string[]) => {
-    const result = await this.graphql.query<any, { ids: string[] }>({
-      inflight: true,
-      variables: { ids },
-      query: PRODUCTS_BY_ID_QUERY,
-    });
-
+    const result = await this.query(PRODUCTS_BY_ID_QUERY, { ids }, extensions, {})
     return pathOr<any[], string[]>(
       [],
       ["data", "productsByIdentifier"],
