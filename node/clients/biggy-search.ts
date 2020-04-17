@@ -1,5 +1,6 @@
-import { path, prop } from "ramda";
+import { path as ramdaPath, prop } from "ramda";
 import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
+import path from "path";
 import { SearchResultArgs } from "../resolvers/search";
 import {
   SuggestionProductsArgs,
@@ -97,7 +98,13 @@ export class BiggySearchClient extends ExternalClient {
       tradePolicy && indexingType !== IndexingType.XML
         ? `/trade-policy/${tradePolicy}`
         : "";
-    const url = `${this.store}/api/search/${attributePath}${policyAttr}`;
+    const url = path.join(
+      this.store,
+      "api",
+      "search",
+      attributePath,
+      policyAttr,
+    );
 
     const result = await this.http.getRaw(url, {
       params: {
@@ -118,7 +125,7 @@ export class BiggySearchClient extends ExternalClient {
 
     let redirect: string | undefined;
     if (prop("status", result) === 302) {
-      redirect = path(["headers", "location"], result);
+      redirect = ramdaPath(["headers", "location"], result);
     }
 
     const data = result.data;
