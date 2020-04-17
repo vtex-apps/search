@@ -3,19 +3,13 @@ import { GraphQLServer } from './graphql-server';
 
 import { pathOr } from "ramda";
 
-const extensions = {
-  persistedQuery: {
-    provider: 'vtex.search-graphql@0.x',
-    sender: 'vtex.search@0.x',
-  },
-}
-
 export class SearchGraphql extends GraphQLServer {
   constructor(context: IOContext, options?: InstanceOptions) {
     super(context, options);
   }
 
   public productsById = async (ids: string[]) => {
+    const extensions = this.getExtensions('vtex.search-graphql@0.x')
     const result = await this.query(PRODUCTS_BY_ID_QUERY, { ids }, extensions, {})
     return pathOr<any[], string[]>(
       [],

@@ -9,6 +9,13 @@ export class GraphQLServer extends AppClient {
     this.graphql = new GraphQLClient(this.http)
   }
 
+  public getExtensions = (provider: string) => ({
+    persistedQuery: {
+      provider,
+      sender: 'vtex.search@0.x',
+    },
+  })
+
   public query = async (query: string, variables: any, extensions: any, config: RequestConfig) => {
     return this.graphql.query(
       {
