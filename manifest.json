@@ -12,7 +12,7 @@
     "react": "3.x",
     "styles": "2.x",
     "graphql": "1.x",
-    "node": "4.x",
+    "node": "6.x",
     "docs": "0.x",
     "messages": "1.x"
   },
@@ -35,14 +35,15 @@
     "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
-    "vtex.css-handles": "0.x"
+    "vtex.css-handles": "0.x",
+    "vtex.graphql-server": "1.x"
   },
   "policies": [
     {
       "name": "vbase-read-write"
     },
     {
-      "name": "vtex.search-resolver:resolve-graphql"
+      "name": "vtex.graphql-server:resolve-graphql"
     },
     {
       "name": "outbound-access",
