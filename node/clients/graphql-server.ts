@@ -12,7 +12,7 @@ export class GraphQLServer extends AppClient {
   public getExtensions = (provider: string) => ({
     persistedQuery: {
       provider,
-      sender: 'vtex.search@0.x',
+      sender: 'vtex.search@1.x',
     },
   })
 
