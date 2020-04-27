@@ -145,7 +145,7 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
     ],
     "props": {
       "pagination": "show-more",
-      "preventRouteChange": true,
+      "preventRouteChange": false,
       "mobileLayout": {
         "mode1": "small",
         "mode2": "normal"
@@ -170,7 +170,6 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
 ### PriceRange
 
 ![pricerange](https://user-images.githubusercontent.com/40380674/74041833-28bb0c80-49a5-11ea-8e20-7720ac63548f.gif)
-
 
 In order to add the PriceRange feature in the filter navigator, add `priceRangeKey` in the `context` prop of `store.search.v2`. The value is the price filter key (usually `price`, `precio` or `preco`).
 
