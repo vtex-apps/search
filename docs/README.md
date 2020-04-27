@@ -2,7 +2,7 @@ You’re reading the documentation for `vtex.search@1.x`, some major architectur
 
 # VTEX Search
 
-The VTEX Search is an app that handles the result of the new [VTEX Intellinget Search] (https://help.vtex.com/tracks/search--19wrbB7nEQcmwzDPl1l4Cb/3qgT47zY08biLP3d5os3DG), used to provide a more complete search experience. 
+The VTEX Search is an app that handles the result of the new [VTEX Intellinget Search](https://help.vtex.com/tracks/search--19wrbB7nEQcmwzDPl1l4Cb/3qgT47zY08biLP3d5os3DG), used to provide a more complete search experience.
 
 :loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
 
@@ -25,11 +25,12 @@ The first step to start using this app is to install the `vtex.admin-search` and
 ```sh
 vtex install vtex.admin-search vtex.search-resolver@1.x
 ```
+
 :loudspeaker: **Important:** After installation, all navigation and search pages will be delivered by the new VTEX Search. Confirm that the [Indexing Process step](#indexing-process) has been completed successfully before promoting the app to the master.
 
 ### Indexing Process
 
-To second step is to start the Indexing Process (a.k.a. catalog integration) go to your admin and click on the menu [Search - Integration Settings] (https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V) and start the indexing process. 
+The second step is to start the Indexing Process (a.k.a. catalog integration) go to your admin and click on the menu [Search - Integration Settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V) and start the indexing process.
 
 ### UI Components
 
