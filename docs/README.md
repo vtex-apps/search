@@ -126,7 +126,7 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
 {
   "search-result-layout.desktop": {
     "children": [
-      "flex-layout.row#didyoumean",
+      "flex-layout.row#did-you-mean",
       "flex-layout.row#suggestion",
       "flex-layout.row#banner-one",
       "flex-layout.row#result"
@@ -140,15 +140,17 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
       }
     }
   },
-  "flex-layout.row#didyoumean": {
+
+  "flex-layout.row#did-you-mean": {
     "children": ["did-you-mean"]
   },
   "flex-layout.row#suggestion": {
     "children": ["search-suggestions"]
   },
-  "flex-layout.row#suggestion": {
+  "flex-layout.row#banner-one": {
     "children": ["search-banner#one"]
   },
+
   "search-banner#one": {
     "props": {
       "area": "one",
