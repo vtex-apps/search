@@ -1,4 +1,12 @@
-# VTEX Search
+> :warning:
+>
+> **Warning:** You’re reading the documentation for `vtex.search@0.x`.
+>
+> Consider chatting with Search & Personalization team about a migration.
+>
+> You can read about [latest version](https://github.com/vtex-apps/search/).
+
+# VTEX Intelligent Search
 
 The VTEX Search is an app that handles the result of our Search and Engagement API, used to provide
 a more complete search experience.
@@ -8,27 +16,25 @@ a more complete search experience.
 ## Table of Contents
 
 - [Usage](#usage)
+  - [Indexing Process](#indexing-process)
   - [Custom Search Page URL](#custom-search-page-url)
   - [Autocomplete](#autocomplete)
   - [Order Options](#order-options)
   - [Search Result Complements](#search-result-complements)
   - [PriceRange](#pricerange)
   - [Plug & Play](#plug--play)
-  - [Catalog Integration](#catalog-integration)
-  - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
 - [Blocks API](#blocks-api)
   - [Demo Store-Theme](#demo-store-theme)
-  - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 
 ## Usage
 
-The first step to start using this app is to install the `vtex.search` and the `vtex.admin-search` in the desired workspace, using:
+The first step to start using this app is to install the `vtex.search@0.x` and the `vtex.admin-search` in the desired workspace, using:
 
 ```sh
-vtex install vtex.search vtex.admin-search
+vtex install vtex.search@0.x vtex.admin-search
 ```
 
 This app uses our store builder with the blocks architecture.
@@ -53,6 +59,16 @@ Then, add the `store.search.v2` block into your app theme.
   }
 }
 ```
+
+### Indexing Process
+
+After installing our suite of apps, your workspace is ready to begin it's Search journey, but first we need to index your
+account's catalog in our Search Engine.
+
+Go to your Admin page and click on the menu [Search > Integration Settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V)
+and start the Indexing Process.
+
+![](https://images.ctfassets.net/alneenqid6w5/6Dhh6x6Roi1vRePJDtbOFY/d642a9f13d421ef3f3062a5ff261ff39/config-int-EN.png)
 
 ### Custom Search Page URL
 
@@ -198,34 +214,6 @@ to work perfectly with our own, it should resemble both these components as clos
 If you're using any type of custom components on your `store-theme` we can't guarantee the _Plug & Play_
 functionality of the components provided by this app.
 
-### Catalog Integration
-
-For this new search experience to work properly a Token and App Key need to be generated. You can follow an in-depth tutorial on how to create both the Token and the App Key
-[here](https://help.vtex.com/tutorial/criar-appkey-e-apptoken-para-autenticar-integracoes).
-Finally, in the admin's sidebar, click on **Search** and then on **Integration Settings**. Inform the generated keys and click on **Save**
-
-You'll also need to set up the affiliate API endpoint, you can follow [this tutorial](https://help.vtex.com/tutorial/configuring-affiliates--tutorials_187)
-on how to properly set up this step.
-
-The Search endpoint used for the affiliate API should be:
-
-```
-http://api.biggylabs.com.br/track-api/v2/affiliate
-```
-
-If you end up having any questions about this step, feel free to send an e-mail to `biggy@vtex.com.br`
-with the subject `[YOUR STORE] Search App - Catalog Integration`.
-
-### Admin Permission
-
-If you are facing the following error message:
-
-```
-User indicated by VtexIdclientAutCookie is not authorized to access the indicated resource
-```
-
-your user doesn't have permission to change the search configurations. Ask an admin to give you the `Search Settings - General Settings` permission.
-
 ### Google Analytics Configuration
 
 Our search engine uses `_query` as the querystring for the search term. If you want to track the search in GA you need to register it.
@@ -249,10 +237,6 @@ When implementing this app as a block, various inner blocks may be available.
 ### Demo Store-Theme
 
 You can find our demo store-theme with our search app already installed and configured by following this [`repository`](https://github.com/vtex-apps/search-demo-theme).
-
-### Configuration
-
-:hammer: Work in Progress...
 
 ## Troubleshooting
 
