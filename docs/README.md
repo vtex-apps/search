@@ -1,8 +1,13 @@
-You’re reading the documentation for `vtex.search@1.x`, some major architectural changes happened, if you want to read about version `0.x` go to [0.x](https://github.com/vtex-apps/search/tree/0.x), and consider talking with the Search & Personalization team about a upgrade to the latest version.
+> :warning:
+>
+> **Warning:** You’re reading the documentation for `vtex.search@1.x`.
+>
+> You can read about [version 0.x here](https://github.com/vtex-apps/search/tree/0.x).
 
-# VTEX Search
+# VTEX Intelligent Search
 
-The VTEX Search is an app that handles the result of the new [VTEX Intellinget Search](https://help.vtex.com/tracks/search--19wrbB7nEQcmwzDPl1l4Cb/3qgT47zY08biLP3d5os3DG), used to provide a more complete search experience.
+The VTEX Search is an app that handles the result of the new [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search),
+used to provide a more complete search experience, by providing new functionality, components and a centralized hub for everything related to Search!
 
 :loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
 
@@ -20,17 +25,34 @@ The VTEX Search is an app that handles the result of the new [VTEX Intellinget S
 
 ## Usage
 
-The first step to start using this app is to install the `vtex.admin-search` and the `vtex.search-resolver@1.x` in the desired workspace, using:
+The first step to start using [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search) is to install
+our suite of apps, that includes:
+
+- `vtex.admin-search`, responsible for the VTEX Admin experience for [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search). :computer:
+- `vtex.search-resolver`, the underlying implementation of our search engine. :nerd_face:
+
+You can do this easily by running:
 
 ```sh
 vtex install vtex.admin-search vtex.search-resolver@1.x
 ```
 
-:loudspeaker: **Important:** After installation, all navigation and search pages will be delivered by the new VTEX Search. Confirm that the [Indexing Process step](#indexing-process) has been completed successfully before promoting the app to the master.
+The app you're reading the documentation right now, `vtex.search`, became the house of new UI components closely
+related to the Search experience, it's not necessary to install it in your workspace and will be covered in [UI Components](#ui-components).
+
+> :loudspeaker: **Important:** After installation, all navigation and search pages will be delivered by the new VTEX Search.
+>
+> Confirm that the [Indexing Process step](#indexing-process) has been completed successfully before promoting the app to `master`.
 
 ### Indexing Process
 
-The second step is to start the Indexing Process (a.k.a. catalog integration) go to your admin and click on the menu [Search - Integration Settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V) and start the indexing process.
+After installing our suite of apps, your workspace is ready to begin it's Search journey, but first we need to index your
+account's catalog in our Search Engine.
+
+Go to your Admin page and click on the menu [Search > Integration Settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V)
+and start the Indexing Process.
+
+![](https://images.ctfassets.net/alneenqid6w5/6Dhh6x6Roi1vRePJDtbOFY/d642a9f13d421ef3f3062a5ff261ff39/config-int-EN.png)
 
 ### UI Components
 
@@ -44,16 +66,25 @@ If you want to use our UI components you need import this app in your dependenci
 }
 ```
 
+This app provides the following blocks:
+
+- [Autocomplete](#autocomplete)
+- [Banner](#search-result-complements)
+- [DidYouMean](#search-result-complements)
+- [Suggestions](#search-result-complements)
+
 #### Autocomplete
 
 We provide a customized autocomplete with new features. It includes:
 
-- Top searches list
-- Search history list
-- Product suggestion
-- Search term suggestion
+- Top Searches.
+- Search History.
+- Product Suggestions.
+- Term Suggestions.
 
-To use our autocomplete, first, you need to declare a block for it.
+You can read a detailed explanation of Autocomplete and it's features [here](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4gXFsEWjF7QF7UtI2GAvhL).
+
+To use our autocomplete, first, you need to declare a block for it in your `store/blocks.json`.
 
 ```json
 {
@@ -63,7 +94,7 @@ To use our autocomplete, first, you need to declare a block for it.
 }
 ```
 
-Finally, append this block in the search bar. To improve the client experience, we also recommend to add the `openAutocompleteOnFocus` prop.
+Finally, append this block to your Search Bar. To improve the client experience, we also recommend to add the `openAutocompleteOnFocus` prop.
 
 ```json
 {
@@ -80,9 +111,10 @@ A full documentation of our custom autocomplete can be found [here](Autocomplete
 
 #### Search Result Complements
 
-:loudspeaker: **Important:** these improvements work only in version 3.x of [search-result](https://vtex.io/docs/components/search/vtex.search-result@3.x/)
+> :loudspeaker: **Important:** These improvements work only in version 3.x of
+> [search-result](https://vtex.io/docs/components/search/vtex.search-result@3.x/)
 
-This app has three new components to improve the search result experience. They are:
+This app provides three new components to improve the search result experience. They are:
 
 - [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query.
 - [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
@@ -91,7 +123,8 @@ This app has three new components to improve the search result experience. They 
 Add any of these components into the `search-result-layout.desktop` or the `search-result-layout.mobile` block.
 
 ```json
-"search-result-layout.desktop": {
+{
+  "search-result-layout.desktop": {
     "children": [
       "flex-layout.row#didyoumean",
       "flex-layout.row#suggestion",
@@ -123,21 +156,13 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
       "horizontalAlignment": "center"
     }
   }
+}
 ```
-
-### Admin Permission
-
-If you are facing the following error message:
-
-```
-User indicated by VtexIdclientAutCookie is not authorized to access the indicated resource
-```
-
-your user doesn't have permission to change the search configurations. Ask an admin to give you the `Search Settings - General Settings` permission.
 
 ## Troubleshooting
 
-You can check if others are passing through similar issues [here](https://github.com/vtex-apps/search/issues). Also, feel free to [open issues](https://github.com/vtex-apps/search/issues/new) or contribute with pull requests.
+You can check if others are passing through similar issues [here](https://github.com/vtex-apps/search/issues).
+Also, feel free to [open issues](https://github.com/vtex-apps/search/issues/new) or contribute with pull requests.
 
 ## Contributing
 

@@ -2,16 +2,18 @@
 
 ## Description
 
-`Autocomplete` is an alternative for the default VTEX autocomplete. It includes
+`Autocomplete` is an alternative for the default VTEX autocomplete. It includes:
 
-- Top searches list
-- Search history list
-- Product suggestion
-- Search term suggestion
+- Top Searches.
+- Search History.
+- Product Suggestions.
+- Term Suggestions.
+
+You can read a detailed explanation of Autocomplete and it's features [here](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4gXFsEWjF7QF7UtI2GAvhL).
 
 ## Usage
 
-Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also recommend to set `customSearchPageUrl` and `openAutocompleteOnFocus` as shown.
+Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also recommend to set `openAutocompleteOnFocus` as shown.
 
 ```json
 {
@@ -21,7 +23,6 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
   "search-bar": {
     "blocks": ["autocomplete-result-list.v2"],
     "props": {
-      "customSearchPageUrl": "/search?_query=${term}",
       "openAutocompleteOnFocus": true
     }
   }
@@ -51,15 +52,15 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 
 #### CustomBreakpointsProp
 
-| Prop name       | Type                                | Description                                  | Default value |
-| --------------- | ----------------------------------- | -------------------------------------------- | ------------- |
-| `md`            | [`BreakpointProp`](#breakpointprop) | Defines the options for the `md` breakpoint  | -             |
-| `lg`            | [`BreakpointProp`](#breakpointprop) | Defines the options for the `lg` breakpoint  | -             |
-| `xlg`           | [`BreakpointProp`](#breakpointprop) | Defines the options for the `xlg` breakpoint | -             |
+| Prop name | Type                                | Description                                  | Default value |
+| --------- | ----------------------------------- | -------------------------------------------- | ------------- |
+| `md`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `md` breakpoint  | -             |
+| `lg`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `lg` breakpoint  | -             |
+| `xlg`     | [`BreakpointProp`](#breakpointprop) | Defines the options for the `xlg` breakpoint | -             |
 
 #### BreakpointProp
 
-| Prop name              | Type                                | Description                                             | Default value |
-| ---------------------- | ----------------------------------- | ------------------------------------                    | ------------- |
-| `width`                | `Number`                            | Minimum width for the breakpoint                        | -             |
-| `maxSuggestedProducts` | `Number`                            | Maximum number of suggested products for the breakpoint | -             |
+| Prop name              | Type     | Description                                             | Default value |
+| ---------------------- | -------- | ------------------------------------------------------- | ------------- |
+| `width`                | `Number` | Minimum width for the breakpoint                        | -             |
+| `maxSuggestedProducts` | `Number` | Maximum number of suggested products for the breakpoint | -             |
