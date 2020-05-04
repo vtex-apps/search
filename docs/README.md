@@ -8,7 +8,7 @@
 
 # VTEX Intelligent Search
 
-The VTEX Search is an app that handles the result of our Search and Engagement API, used to provide
+The VTEX Search is an app that handles the result of our Search and Personalization API, used to provide
 a more complete search experience.
 
 :loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
