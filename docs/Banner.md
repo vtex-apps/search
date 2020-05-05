@@ -1,5 +1,3 @@
-📢 Use this project, [contribute](https://github.com/vtex-apps/search) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
-
 # Banner
 
 `Banner` is a component used in the `vtex.store.search.v2`. It is a simple banner with the difference that you can configure the banner that will appear for each query.
@@ -54,9 +52,9 @@
 | `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner                                                                         | `"center"`    |
 
 The possible values for `horizontalAlignment` are:
-| Values    |
+| Values |
 | --------- |
-| `"left"`  |
+| `"left"` |
 | `"right"` |
 | `"center"`|
 

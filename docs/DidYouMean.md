@@ -1,5 +1,3 @@
-📢 Use this project, [contribute](https://github.com/vtex-apps/search) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
-
 # DidYouMean
 
 `DidYouMean` is a component used in the `vtex.store.search.v2` to suggest a possible misspelling correction to the current query.
