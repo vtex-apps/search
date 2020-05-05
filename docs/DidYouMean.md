@@ -1,20 +1,10 @@
-📢 Use this project, [contribute](https://github.com/vtex-apps/search) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
-
 # DidYouMean
 
-`DidYouMean` is a component used in the `vtex.store.search.v2` to suggest a possible misspelling correction to the current query.
+`DidYouMean` is a component used to suggest a possible misspelling correction to the current query.
 
-## Configuration
+## Usage
 
-1. Import the DidYouMean's app to your theme's dependencies in the `manifest.json`, for example:
-
-```json
-  dependencies: {
-    "vtex.search": "0.x"
-  }
-```
-
-2. Add the `did-you-mean` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
+Add the `did-you-mean` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
 
 ```json
 "search-result-layout.desktop": {
