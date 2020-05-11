@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "private": true,
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
     "@types/jest": "24.0.15",
     "@types/node": "12.6.8",
     "@types/pubsub-js": "^1.5.18",
