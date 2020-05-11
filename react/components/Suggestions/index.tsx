@@ -2,20 +2,40 @@ import React from "react";
 import { Link } from "vtex.render-runtime";
 import styles from "./styles.css";
 import { FormattedMessage } from "react-intl";
+import searchSuggestionsQuery from "vtex.store-resources/QuerySearchSuggestions";
+import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
+import { useQuery } from "react-apollo";
 
-interface SuggestionsProps {
-  suggestion: {
-    searches: {
-      term: string;
-      count: number;
-    }[];
-  };
+interface Suggestion {
+  searches: {
+    term: string;
+    count: number;
+  }[];
 }
 
-const Suggestions = (props: SuggestionsProps) => {
-  const { suggestion } = props;
+const Suggestions = () => {
+  const {
+    searchQuery: {
+      variables: { fullText },
+    },
+  } = useSearchPage();
 
-  if (!suggestion || suggestion.searches.length === 0) {
+  const { loading, data } = useQuery(searchSuggestionsQuery, {
+    variables: {
+      fullText,
+    },
+  });
+
+  if (!loading) {
+    console.log("my data");
+    console.log(searchSuggestionsQuery);
+  } else {
+    console.log(loading);
+  }
+
+  const suggestion: Suggestion | undefined = data?.searchSuggestions?.searches;
+
+  if (loading || !suggestion || suggestion.searches.length === 0) {
     return null;
   }
 
