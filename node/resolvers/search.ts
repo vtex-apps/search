@@ -21,8 +21,13 @@ export const search = {
     const { biggySearch } = ctx.clients;
     const tradePolicy = path<string | undefined>(["segment", "channel"], args);
 
-    const result = await biggySearch.searchResult({ ...args, tradePolicy });
+    try {
+      const result = await biggySearch.searchResult({ ...args, tradePolicy });
 
-    return result;
+      return result;
+    } catch (err) {
+      ctx.res.setHeader("x-vtex-ignore-circuit-breaker", "true");
+      throw err;
+    }
   },
 };
