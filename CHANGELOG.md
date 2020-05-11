@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.11.13] - 2020-05-11
+
 ### Changed
 
 - Bump timeout while we're investigating heavy load.
