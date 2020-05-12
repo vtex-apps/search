@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Change `autocomplete` overflow css property from `scroll` to `auto`
+
 ## [1.0.6] - 2020-05-05
 
 ### Changed
