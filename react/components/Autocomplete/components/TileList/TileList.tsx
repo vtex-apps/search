@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExtensionPoint } from "vtex.render-runtime";
+import { ExtensionPoint, Link } from "vtex.render-runtime";
 import styles from "./styles";
 import { CustomListItem } from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
@@ -73,15 +73,16 @@ export class TileList extends React.Component<TileListProps> {
 
             <footer>
               {unseenProductsCount > 0 ? (
-                <a
+                <Link
+                  to={`/${this.props.term}`}
+                  query={`map=ft`}
                   className={styles.tileListSeeMore}
-                  href={`/${this.props.term}?map=ft`}
                 >
                   <FormattedMessage
                     id="store/seeMore"
                     values={{ count: unseenProductsCount }}
                   />
-                </a>
+                </Link>
               ) : null}
             </footer>
           </>
