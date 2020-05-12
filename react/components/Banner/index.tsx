@@ -41,6 +41,9 @@ const getAlignmentClass = (alignment: HorizotalAlignment | undefined) => {
 const Banner = (props: BannerProps) => {
   const { area, horizontalAlignment } = props;
 
+  const CSS_HANDLES = ["searchBanner"];
+  const handles = useCssHandles(CSS_HANDLES);
+
   const {
     searchQuery: {
       variables: { fullText, selectedFacets },
@@ -60,17 +63,15 @@ const Banner = (props: BannerProps) => {
     return null;
   }
 
-  const selectedBanner = data.banners.banners.find(
+  const banners = data?.banners?.banners || [];
+
+  const selectedBanner = banners.find(
     (banner: ElasticBanner) => banner.area === area,
   );
 
   if (!selectedBanner) {
     return null;
   }
-
-  const CSS_HANDLES = ["searchBanner"];
-
-  const handles = useCssHandles(CSS_HANDLES);
 
   const className = `flex ${getAlignmentClass(horizontalAlignment)} ${
     handles.searchBanner

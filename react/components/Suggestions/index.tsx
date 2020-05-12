@@ -26,14 +26,7 @@ const Suggestions = () => {
     },
   });
 
-  if (!loading) {
-    console.log("my data");
-    console.log(searchSuggestionsQuery);
-  } else {
-    console.log(loading);
-  }
-
-  const suggestion: Suggestion | undefined = data?.searchSuggestions?.searches;
+  const suggestion: Suggestion | undefined = data?.searchSuggestions;
 
   if (loading || !suggestion || suggestion.searches.length === 0) {
     return null;
