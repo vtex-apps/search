@@ -123,8 +123,8 @@ A full documentation of our custom autocomplete can be found [here](Autocomplete
 
 ### Order Options
 
-We don't yet support some of the ordering options that are supported by the current search implementation,
-so they should be hidden so that it doesn't confuse your customers. You can hide ordering options by
+We don't yet support one of the ordering options that are supported by the current search implementation,
+so it should be hidden so that it doesn't confuse your customers. You can hide ordering options by
 passing them to the `hiddenOptions` prop on the `order-by` component.
 
 ```json
@@ -133,8 +133,6 @@ passing them to the `hiddenOptions` prop on the `order-by` component.
     "props": {
       "hiddenOptions": [
         "OrderByReleaseDateDESC",
-        "OrderByNameASC",
-        "OrderByNameDESC"
       ]
     }
   }
