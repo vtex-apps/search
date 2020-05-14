@@ -18,7 +18,6 @@ used to provide a more complete search experience, by providing new functionalit
   - [UI Components](#ui-components)
     - [Autocomplete](#autocomplete)
     - [Search Result Complements](#search-result-complements)
-  - [Admin Permission](#admin-permission)
   - [Google Analytics Configuration](#google-analytics-configuration)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -160,6 +159,12 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
   }
 }
 ```
+
+### Google Analytics Configuration
+
+Our search engine uses `_q` as the querystring for the search term. If you want to track the search in your Google Analytics you need to register it.
+
+Check the correct configuration for Google Analytics using [this documentation](https://vtex.io/docs/recipes/store-management/setting-up-google-analytics-search-tracking/).
 
 ## Troubleshooting
 
