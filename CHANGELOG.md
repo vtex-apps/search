@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.8] - 2020-05-14
+
 ### Changed
 
 - The documentation now has a description for configuring Google Analytics.
