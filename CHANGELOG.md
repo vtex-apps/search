@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.9] - 2020-05-19
+
 ### Fixed
 - Use `Link` instead of `a`in the "See more" button.
 
