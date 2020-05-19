@@ -42,7 +42,7 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `hideTitles`                  | `Boolean`                                         | If true, all the titles will be hidden                        | `false`       |
 | `historyFirst`                | `Boolean`                                         | If true, the history list will be prioritized                 | `false`       |
 | `customBreakpoints`           | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints | -             |
-| `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as 'true' if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
+| `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as `true` if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
 
 #### ProductLayoutEnum
 
