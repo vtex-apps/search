@@ -31,17 +31,18 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 
 ### Props
 
-| Prop name              | Type                                              | Description                                                   | Default value |
-| ---------------------- | ------------------------------------------------- | ------------------------------------------------------------- | ------------- |
-| `maxTopSearches`       | `Number`                                          | Maximum number of terms in the top searches list              | `10`          |
-| `maxHistory`           | `Number`                                          | Maximum number of terms in the search history list            | `5`           |
-| `maxSuggestedProducts` | `Number`                                          | Maximum number of suggested products                          | `3`           |
-| `maxSuggestedTerms`    | `Number`                                          | Maximum number of suggested terms                             | `3`           |
-| `autocompleteWidth`    | `Number`                                          | Autocomplete width. Number between `0` and `100`              | -             |
-| `productLayout`        | [`ProductLayoutEnum`](#productlayoutenum)         | Defines the product layout in the suggested products list     | -             |
-| `hideTitles`           | `Boolean`                                         | If true, all the titles will be hidden                        | `false`       |
-| `historyFirst`         | `Boolean`                                         | If true, the history list will be prioritized                 | `false`       |
-| `customBreakpoints`    | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints | -             |
+| Prop name                     | Type                                              | Description                                                   | Default value |
+| ----------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------ | ------------- |
+| `maxTopSearches`              | `Number`                                          | Maximum number of terms in the top searches list              | `10`          |
+| `maxHistory`                  | `Number`                                          | Maximum number of terms in the search history list            | `5`           |
+| `maxSuggestedProducts`        | `Number`                                          | Maximum number of suggested products                          | `3`           |
+| `maxSuggestedTerms`           | `Number`                                          | Maximum number of suggested terms                             | `3`           |
+| `autocompleteWidth`           | `Number`                                          | Autocomplete width. Number between `0` and `100`              | -             |
+| `productLayout`               | [`ProductLayoutEnum`](#productlayoutenum)         | Defines the product layout in the suggested products list     | -             |
+| `hideTitles`                  | `Boolean`                                         | If true, all the titles will be hidden                        | `false`       |
+| `historyFirst`                | `Boolean`                                         | If true, the history list will be prioritized                 | `false`       |
+| `customBreakpoints`           | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints | -             |
+| `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as 'true' if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
 
 #### ProductLayoutEnum
 
