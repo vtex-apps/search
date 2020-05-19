@@ -1,99 +1,43 @@
-> :warning:
->
-> **Warning:** You’re reading the documentation for `vtex.search@1.x`.
->
-> You can read about [version 0.x here](https://github.com/vtex-apps/search/tree/0.x).
+📢 Use this project, [contribute](https://github.com/vtex-apps/search) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
 
-# VTEX Intelligent Search
+# Search
 
-The VTEX Search is an app that handles the result of the new [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search),
-used to provide a more complete search experience, by providing new functionality, components and a centralized hub for everything related to Search!
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-:loudspeaker: **Disclaimer:** Don't fork this project; use, contribute, or open issue with your feature request.
+The VTEX Search app is responsible for handling the new [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search) solution in IO stores by providing new UI components that enhance the search experience, such as the autocomplete feature.
 
-## Table of Contents
+![search-app-gif](https://user-images.githubusercontent.com/52087100/82367576-6d196800-99ea-11ea-9672-77fa2b90a581.gif)
 
-- [Usage](#usage)
-  - [Indexing Process](#indexing-process)
-  - [UI Components](#ui-components)
-    - [Autocomplete](#autocomplete)
-    - [Search Result Complements](#search-result-complements)
-  - [Google Analytics Configuration](#google-analytics-configuration)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
+## Configuration
 
-## Usage
+:warning: The proper functioning of the Search app components relies on having already installed apps `vtex.admin-search` and `vtex.search-resolver@1.x` in your store. For more on this, access our Help Center track on [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search).
 
-The first step to start using [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search) is to install
-our suite of apps, that includes:
+### Step 1 - Adding the Search app to your theme's dependencies
 
-- `vtex.admin-search`, responsible for the VTEX Admin experience for [VTEX Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search). :computer:
-- `vtex.search-resolver`, the underlying implementation of our search engine. :nerd_face:
+Add the `search` app to your theme's dependencies in the `manifest.json` as showed below:
 
-You can do this easily by running:
-
-```sh
-vtex install vtex.admin-search vtex.search-resolver@1.x
-```
-
-The app you're reading the documentation right now, `vtex.search`, became the house of new UI components closely
-related to the Search experience, it's not necessary to install it in your workspace and will be covered in [UI Components](#ui-components).
-
-> :loudspeaker: **Important:** After installation, all navigation and search pages will be delivered by the new VTEX Search.
->
-> Confirm that the [Indexing Process step](#indexing-process) has been completed successfully before promoting the app to `master`.
-
-### Indexing Process
-
-After installing our suite of apps, your workspace is ready to begin it's Search journey, but first we need to index your
-account's catalog in our Search Engine.
-
-Go to your Admin page and click on the menu [Search > Integration Settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/6wKQgKmu2FT6084BJT7z5V)
-and start the Indexing Process.
-
-![](https://images.ctfassets.net/alneenqid6w5/6Dhh6x6Roi1vRePJDtbOFY/d642a9f13d421ef3f3062a5ff261ff39/config-int-EN.png)
-
-### UI Components
-
-If you want to use our UI components you need import this app in your dependencies on the `manifest.json`.
-
-```json
-{
+```diff
   "dependencies": {
-    "vtex.search": "1.x"
++   "vtex.search": "1.x"
   }
-}
 ```
 
-This app provides the following blocks:
+You are now able to use all of the blocks exported by the `search` app. Check the full list below:
 
-- [Autocomplete](#autocomplete)
-- [Banner](#search-result-complements)
-- [DidYouMean](#search-result-complements)
-- [Suggestions](#search-result-complements)
+| Block name | Description |
+| -------------- | ----------------------------------------------- |
+| `autocomplete-result-list.v2` | Provides customized autocomplete features in the search bar component, such as top searches, search history, product suggestions or term suggestions. You can read more about the Intelligent Search [autocomplete feature](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4gXFsEWjF7QF7UtI2GAvhL) on VTEX Help Center. |
+| `search-banner` | Renders a customized banner according to the search query performed. |
+| `did-you-mean` | Helps users with possible misspelling corrections for the current search query. |
+| `search-suggestions` | Renders a list of similar search terms for the current search query. |
 
-#### Autocomplete
+:warning: The blocks `banner`, `did-you-mean` and `suggestions` require you to have [Search Results app](https://vtex.io/docs/components/all/vtex.search-result@3.59.0/) version 3.x or higher installed in your theme.
 
-We provide a customized autocomplete with new features. It includes:
+### Step 2 - Adding the Search's blocks into the theme
 
-- Top Searches.
-- Search History.
-- Product Suggestions.
-- Term Suggestions.
-
-You can read a detailed explanation of Autocomplete and it's features [here](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4gXFsEWjF7QF7UtI2GAvhL).
-
-To use our autocomplete, first, you need to declare a block for it in your `store/blocks.json`.
-
-```json
-{
-  "autocomplete-result-list.v2": {
-    "blocks": ["product-summary"]
-  }
-}
-```
-
-Finally, append this block to your Search Bar. To improve the client experience, we also recommend to add the `openAutocompleteOnFocus` prop.
+First, declare the `autocomplete-result-list.v2` block as a child block of the [`search-bar` block](https://vtex.io/docs/components/all/vtex.store-components/searchbar), exported by the Store Components app. For example:
 
 ```json
 {
@@ -106,20 +50,27 @@ Finally, append this block to your Search Bar. To improve the client experience,
 }
 ```
 
-A full documentation of our custom autocomplete can be found [here](Autocomplete.md).
+#### `autocomplete-result-list.v2` props
 
-#### Search Result Complements
+>>>ADD PROP TABLE
 
-> :loudspeaker: **Important:** These improvements work only in version 3.x of
-> [search-result](https://vtex.io/docs/components/search/vtex.search-result@3.x/)
+The `autocomplete-result-list.v2` block also allows you to add a list of child blocks onto it.
 
-This app provides three new components to improve the search result experience. They are:
+This means that you can declare a theme block of your choosing and have it rendered among the autocomplete features. For example:
 
-- [`did-you-mean`](DidYouMean.md). A possible misspelling correction for the current query.
-- [`search-suggestion`](Suggestions.md). A list of search terms similar to the query.
-- [`search-banner`](Banner.md). A banner that can be configured by query.
+```json
+{
+  "autocomplete-result-list.v2": {
+    "blocks": ["product-summary"]
+  }
+}
+``` 
 
-Add any of these components into the `search-result-layout.desktop` or the `search-result-layout.mobile` block.
+Now, the time has come to add the last 3 search blocks: `search-banner`, `did-you-mean` and `search-suggestions`.
+
+Those blocks, differently from `autocomplete-result-list.v2`, need to be added under the `search-result-layout.desktop` or the `search-result-layout.mobile` blocks, according to the Search Results block hierarchy.
+
+Once added, these can be declared using their respective props for their configuration. For example:
 
 ```json
 {
@@ -160,17 +111,43 @@ Add any of these components into the `search-result-layout.desktop` or the `sear
 }
 ```
 
-### Google Analytics Configuration
+#### `search-banner` props
 
-Our search engine uses `_q` as the querystring for the search term. If you want to track the search in your Google Analytics you need to register it.
+>>> ADD PROP TABLE
 
-Check the correct configuration for Google Analytics using [this documentation](https://vtex.io/docs/recipes/store-management/setting-up-google-analytics-search-tracking/).
+#### `did-you-mean` props
 
-## Troubleshooting
+>>> ADD PROP TABLE
 
-You can check if others are passing through similar issues [here](https://github.com/vtex-apps/search/issues).
-Also, feel free to [open issues](https://github.com/vtex-apps/search/issues/new) or contribute with pull requests.
+#### `search-suggestion` props
 
-## Contributing
+>>> ADD PROP TABLE 
+  
+## Modus Operandi
 
-Check it out [how to contribute](https://github.com/vtex-apps/awesome-io#contributing) with this project.
+The Search app is merely responsible for offering blocks that when rendered as components will improve the user's search experience in stores where the VTEX Intelligent Search engine is already supported. 
+  
+These components use `_q` as the query-string for the search term, meaning that if you wish to **track the searches** of your users in these components you'll need to add the `_q` query-string to the store's Google Analytics.
+
+Find out how to do this by accessing our [Google Analytics search tracking](https://vtex.io/docs/recipes/store-management/setting-up-google-analytics-search-tracking/) documentation.
+  
+## Customization
+
+No CSS Handles are available yet for the app customization.
+
+<!-- DOCS-IGNORE:start -->
+
+## Contributors ✨
+
+Thanks goes out to these wonderful people:
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+
+<!-- DOCS-IGNORE:end -->
