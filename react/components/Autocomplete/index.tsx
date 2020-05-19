@@ -138,7 +138,7 @@ class AutoComplete extends React.Component<
 
   addTermToHistory() {
     const path = window.location.href.split("_q=");
-    if (path[1] && path[1].split("&")) {
+    if (path[1]) {
       const term = path[1].split("&")[0];
       this.client.prependSearchHistory(decodeURI(term));
     }

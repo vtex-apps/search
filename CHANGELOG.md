@@ -7,26 +7,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- History that was not being updated.
+
 ## [1.0.15] - 2020-06-03
 
 ### Changed
+
 - Remove cacheId
 
 ## [1.0.14] - 2020-06-02
 
 ### Fixed
+
 - Remove hardcoded value in messages.
 
 ## [1.0.13] - 2020-06-02
 
 ### Changed
+
 - Replace `See more` to `See all`.
 
 ## [1.0.12] - 2020-05-26
 
 ## [1.0.11] - 2020-05-20
 
-### Fixed 
+### Fixed
 
 - Update the app documentation (README.md file)
 
@@ -39,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.9] - 2020-05-19
 
 ### Fixed
+
 - Use `Link` instead of `a`in the "See more" button.
 
 ## [1.0.8] - 2020-05-14
