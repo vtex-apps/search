@@ -52,6 +52,7 @@ interface AutoCompleteProps {
     };
   };
   __unstableProductOrigin: "BIGGY" | "VTEX";
+  __unstableProductOriginVtex: boolean;
   __unstableIndexingType: "XML" | "API";
 }
 
@@ -220,7 +221,8 @@ class AutoComplete extends React.Component<
   async updateProducts() {
     const term = this.state.dynamicTerm;
     const {
-      __unstableProductOrigin = "BIGGY",
+      __unstableProductOrigin,
+      __unstableProductOriginVtex = false,
       __unstableIndexingType,
     } = this.props;
     const { queryFromHover } = this.state;
@@ -233,6 +235,12 @@ class AutoComplete extends React.Component<
       return;
     }
 
+    if (__unstableProductOrigin) {
+      console.warn(
+        "The prop `__unstableProductOrigin` has been deprecated. Use the boolean prop `__unstableProductOriginVtex` instead.",
+      );
+    }
+
     this.setState({
       isProductsLoading: true,
     });
@@ -241,7 +249,9 @@ class AutoComplete extends React.Component<
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
-      __unstableProductOrigin,
+      __unstableProductOrigin === "VTEX" || __unstableProductOriginVtex === true
+        ? "VTEX"
+        : "BIGGY",
       __unstableIndexingType,
     );
 
@@ -438,25 +448,26 @@ class AutoComplete extends React.Component<
 
     if (!window || isMobile || !customBreakpoints) {
       return maxSuggestedProducts;
-    } else {
-      const windowWidth = window.innerWidth;
-
-      if (
-        !customBreakpoints.md ||
-        !customBreakpoints.lg ||
-        !customBreakpoints.xlg
-      ) {
-        return maxSuggestedProducts;
-      } else if (windowWidth >= customBreakpoints.xlg.width) {
-        return customBreakpoints.xlg.maxSuggestedProducts;
-      } else if (windowWidth >= customBreakpoints.lg.width) {
-        return customBreakpoints.lg.maxSuggestedProducts;
-      } else if (windowWidth >= customBreakpoints.md.width) {
-        return customBreakpoints.md.maxSuggestedProducts;
-      } else {
-        return maxSuggestedProducts;
-      }
     }
+    const windowWidth = window.innerWidth;
+
+    if (
+      !customBreakpoints.md ||
+      !customBreakpoints.lg ||
+      !customBreakpoints.xlg
+    ) {
+      return maxSuggestedProducts;
+    }
+    if (windowWidth >= customBreakpoints.xlg.width) {
+      return customBreakpoints.xlg.maxSuggestedProducts;
+    }
+    if (windowWidth >= customBreakpoints.lg.width) {
+      return customBreakpoints.lg.maxSuggestedProducts;
+    }
+    if (windowWidth >= customBreakpoints.md.width) {
+      return customBreakpoints.md.maxSuggestedProducts;
+    }
+    return maxSuggestedProducts;
   }
 
   render() {
