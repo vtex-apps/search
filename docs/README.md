@@ -52,8 +52,6 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 
 #### `autocomplete-result-list.v2` props
 
->>>ADD PROP TABLE
-
 The `autocomplete-result-list.v2` block also allows you to add a list of child blocks onto it.
 
 This means that you can declare a theme block of your choosing and have it rendered among the autocomplete features. For example:
@@ -65,6 +63,41 @@ This means that you can declare a theme block of your choosing and have it rende
   }
 }
 ``` 
+
+| Prop name                     | Type                                              | Description                                                   | Default value |
+| ----------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------ | ------------- |
+| `maxTopSearches`              | `Number`                                          | Maximum number of terms in the top searches list              | `10`          |
+| `maxHistory`                  | `Number`                                          | Maximum number of terms in the search history list            | `5`           |
+| `maxSuggestedProducts`        | `Number`                                          | Maximum number of suggested products                          | `3`           |
+| `maxSuggestedTerms`           | `Number`                                          | Maximum number of suggested terms                             | `3`           |
+| `autocompleteWidth`           | `Number`                                          | Autocomplete width. Number between `0` and `100`              | -             |
+| `productLayout`               | [`ProductLayoutEnum`](#productlayoutenum)         | Defines the product layout in the suggested products list     | -             |
+| `hideTitles`                  | `Boolean`                                         | If true, all the titles will be hidden                        | `false`       |
+| `historyFirst`                | `Boolean`                                         | If true, the history list will be prioritized                 | `false`       |
+| `customBreakpoints`           | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints | -             |
+| `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as `true` if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
+
+##### ProductLayoutEnum
+
+| Enum name    | Enum value   |
+| ------------ | ------------ |
+| `Horizontal` | `HORIZONTAL` |
+| `Vertical`   | `VERTICAL`   |
+
+##### CustomBreakpointsProp
+
+| Prop name | Type                                | Description                                  |
+| --------- | ----------------------------------- | -------------------------------------------- |
+| `md`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `md` breakpoint  |
+| `lg`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `lg` breakpoint  |
+| `xlg`     | [`BreakpointProp`](#breakpointprop) | Defines the options for the `xlg` breakpoint |
+
+##### BreakpointProp
+
+| Prop name              | Type     | Description                                             |
+| ---------------------- | -------- | ------------------------------------------------------- |
+| `width`                | `Number` | Minimum width for the breakpoint                        |
+| `maxSuggestedProducts` | `Number` | Maximum number of suggested products for the breakpoint |
 
 Now, the time has come to add the last 3 search blocks: `search-banner`, `did-you-mean` and `search-suggestions`.
 
@@ -113,15 +146,13 @@ Once added, these can be declared using their respective props for their configu
 
 #### `search-banner` props
 
->>> ADD PROP TABLE
+| Prop name             | Type     | Description                                                             | Default value |
+| --------------------- | -------- | ----------------------------------------------------------------------- | ------------- |
+| `area`                | `String` | Idicates the area. It needs to match the area configured in the banner. | -             |
+| `blockClass`          | `String` | Defines a custom class for the banner div.                              | -             |
+| `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner.                        | `"center"`    |
 
-#### `did-you-mean` props
-
->>> ADD PROP TABLE
-
-#### `search-suggestion` props
-
->>> ADD PROP TABLE 
+The possible values for `horizontalAlignment` are `"left"`, `"right"` and `"center"`
   
 ## Modus Operandi
 
@@ -133,7 +164,30 @@ Find out how to do this by accessing our [Google Analytics search tracking](http
   
 ## Customization
 
-No CSS Handles are available yet for the app customization.
+In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
+
+### Banner
+
+| CSS Handles    |
+| -------------- |
+| `searchBanner` |
+
+### DidYouMean
+
+| CSS Handles        |
+| ------------------ |
+| `didYouMeanPrefix` |
+| `didYouMeanTerm`   |
+
+### Suggestions
+
+| CSS Handles             |
+| ----------------------- |
+| `suggestionsList`       |
+| `suggestionsListPrefix` |
+| `suggestionsListLink`   |
+| `suggestionsListItem`   |
+
 
 <!-- DOCS-IGNORE:start -->
 
