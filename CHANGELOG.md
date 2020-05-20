@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Use the prop `__unstableProductOriginVtex` instead of `__unstableProductOrigin`.
+
 ## [1.0.9] - 2020-05-19
 
 ### Fixed
