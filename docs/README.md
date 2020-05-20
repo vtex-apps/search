@@ -52,6 +52,34 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 
 #### `autocomplete-result-list.v2` props
 
+| Prop name    | Type  | Description                | Default value |
+| -------- | ------- | ------------------------------- | ------------- |
+| `maxTopSearches` | `number`   | Maximum number of items in the top searches list. | `10` |
+| `maxHistory` | `number`   | Maximum number of items in the search history list.         | `5`   |
+| `maxSuggestedProducts` | `number` | Maximum number of items in the suggested products list.    | `3`  |
+| `maxSuggestedTerms`   | `number`  | Maximum number of items in the suggested terms list.  | `3` |
+| `autocompleteWidth` | `number`    | Autocomplete list width. The value must be between `0` and `100`   | `undefined`  |
+| `productLayout` | `enum` | Defines the suggested products list layout when rendered. Possible values are `HORIZONTAL` and `VERTICAL`.  | `undefined` |
+| `hideTitles` | `boolean` | Defines whether all component titles are hidden when redered (`true`) or not (`false`).   | `false`  |
+| `historyFirst` | `boolean` | Defines whether the search history list should be prioritized over the other lists (`true`) or not (`false`).  | `false`       |
+| `customBreakpoints` | `object` | Defines a maximum number of suggested products by breakpoints. Possible values are `md`, `lg` or `xlg`. | -             |
+| `__unstableProductOriginVtex` | `boolean` | Defines whether any Product Summary blocks' props should come with `null` value (`true`) or not (`false`). This prop because some product information does not come by default in the Search. | `false` |
+
+- `customBreakpoints` object:
+
+| Prop name | Type  | Description     | Default value | 
+| --------- | ----- | --------------- | ------------- | 
+| `md`      | `object` | Defines the maximum number of suggested products for the `md` breakpoint.  | `undefined` | 
+| `lg`      | `object` | Defines the the maximum number of suggested products for the `lg` breakpoint.  | `undefined` |
+| `xlg`     | `object` | Defines the the maximum number of suggested products for the `xlg` breakpoint. | `undefined` |
+
+- `md`, `lg` and `xlg` objects:
+
+| Prop name   | Type     | Description     | Default value | 
+| ---------------------- | -------- | --------- | --------- | 
+| `width`    | `number` | Breakpoint minimum width.  | `undefined` | 
+| `maxSuggestedProducts` | `number` | Maximum number of suggested products. | `undefined` | 
+
 The `autocomplete-result-list.v2` block also allows you to add a list of child blocks onto it.
 
 This means that you can declare a theme block of your choosing and have it rendered among the autocomplete features. For example:
@@ -63,41 +91,6 @@ This means that you can declare a theme block of your choosing and have it rende
   }
 }
 ``` 
-
-| Prop name                     | Type                                              | Description                                                   | Default value |
-| ----------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------ | ------------- |
-| `maxTopSearches`              | `Number`                                          | Maximum number of terms in the top searches list              | `10`          |
-| `maxHistory`                  | `Number`                                          | Maximum number of terms in the search history list            | `5`           |
-| `maxSuggestedProducts`        | `Number`                                          | Maximum number of suggested products                          | `3`           |
-| `maxSuggestedTerms`           | `Number`                                          | Maximum number of suggested terms                             | `3`           |
-| `autocompleteWidth`           | `Number`                                          | Autocomplete width. Number between `0` and `100`              | -             |
-| `productLayout`               | [`ProductLayoutEnum`](#productlayoutenum)         | Defines the product layout in the suggested products list     | -             |
-| `hideTitles`                  | `Boolean`                                         | If true, all the titles will be hidden                        | `false`       |
-| `historyFirst`                | `Boolean`                                         | If true, the history list will be prioritized                 | `false`       |
-| `customBreakpoints`           | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints | -             |
-| `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as `true` if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
-
-##### ProductLayoutEnum
-
-| Enum name    | Enum value   |
-| ------------ | ------------ |
-| `Horizontal` | `HORIZONTAL` |
-| `Vertical`   | `VERTICAL`   |
-
-##### CustomBreakpointsProp
-
-| Prop name | Type                                | Description                                  |
-| --------- | ----------------------------------- | -------------------------------------------- |
-| `md`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `md` breakpoint  |
-| `lg`      | [`BreakpointProp`](#breakpointprop) | Defines the options for the `lg` breakpoint  |
-| `xlg`     | [`BreakpointProp`](#breakpointprop) | Defines the options for the `xlg` breakpoint |
-
-##### BreakpointProp
-
-| Prop name              | Type     | Description                                             |
-| ---------------------- | -------- | ------------------------------------------------------- |
-| `width`                | `Number` | Minimum width for the breakpoint                        |
-| `maxSuggestedProducts` | `Number` | Maximum number of suggested products for the breakpoint |
 
 Now, the time has come to add the last 3 search blocks: `search-banner`, `did-you-mean` and `search-suggestions`.
 
@@ -146,13 +139,11 @@ Once added, these can be declared using their respective props for their configu
 
 #### `search-banner` props
 
-| Prop name             | Type     | Description                                                             | Default value |
-| --------------------- | -------- | ----------------------------------------------------------------------- | ------------- |
-| `area`                | `String` | Idicates the area. It needs to match the area configured in the banner. | -             |
-| `blockClass`          | `String` | Defines a custom class for the banner div.                              | -             |
-| `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner.                        | `"center"`    |
-
-The possible values for `horizontalAlignment` are `"left"`, `"right"` and `"center"`
+| Prop name             | Type     | Description            | Default value |
+| --------------------- | -------- | ---------------------- | ------------- |
+| `area`                | `string` | Banner area. It needs to match the pre-defined area value in the banner set up. | `undefined`    |
+| `blockClass`          | `string` | Unique block ID to be used in [CSS customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization/)       | `undefined`          |
+| `horizontalAlignment` | `string` | Defines the banner horizontal alignment. Possible values are `left`, `center` or `right`.  | `center`    |
   
 ## Modus Operandi
 
@@ -166,27 +157,16 @@ Find out how to do this by accessing our [Google Analytics search tracking](http
 
 In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
-### Banner
-
-| CSS Handles    |
-| -------------- |
-| `searchBanner` |
-
-### DidYouMean
-
 | CSS Handles        |
-| ------------------ |
+| -------------------|
+| `searchBanner`     |
 | `didYouMeanPrefix` |
-| `didYouMeanTerm`   |
-
-### Suggestions
-
-| CSS Handles             |
-| ----------------------- |
-| `suggestionsList`       |
-| `suggestionsListPrefix` |
+| `didYouMeanTerm`   | 
+| `searchBanner`     |
+| `suggestionsList`  |
+| `suggestionsListItem`|
 | `suggestionsListLink`   |
-| `suggestionsListItem`   |
+| `suggestionsListPrefix` |
 
 
 <!-- DOCS-IGNORE:start -->
