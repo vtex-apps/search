@@ -58,12 +58,12 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 | `maxHistory` | `number`   | Maximum number of items in the search history list.         | `5`   |
 | `maxSuggestedProducts` | `number` | Maximum number of items in the suggested products list.    | `3`  |
 | `maxSuggestedTerms`   | `number`  | Maximum number of items in the suggested terms list.  | `3` |
-| `autocompleteWidth` | `number`    | Autocomplete list width. The value must be between `0` and `100`   | `undefined`  |
+| `autocompleteWidth` | `number`    | Autocomplete list width (in percent). The value must be between `0` and `100`   | `undefined`  |
 | `productLayout` | `enum` | Defines the suggested products list layout when rendered. Possible values are `HORIZONTAL` and `VERTICAL`.  | `undefined` |
-| `hideTitles` | `boolean` | Defines whether all component titles are hidden when redered (`true`) or not (`false`).   | `false`  |
+| `hideTitles` | `boolean` | Defines whether all component titles are hidden when rendered (`true`) or not (`false`).   | `false`  |
 | `historyFirst` | `boolean` | Defines whether the search history list should be prioritized over the other lists (`true`) or not (`false`).  | `false`       |
 | `customBreakpoints` | `object` | Defines a maximum number of suggested products by breakpoints. Possible values are `md`, `lg` or `xlg`. | -             |
-| `__unstableProductOriginVtex` | `boolean` | Defines whether any Product Summary blocks' props should come with `null` value (`true`) or not (`false`). This prop because some product information does not come by default in the Search. | `false` |
+| `__unstableProductOriginVtex` | `boolean` | Some product information is not sent by default by the Intelligent Search to improve performance, in some cases this can generate an error. In case there is an error for not having information about the product or if you have sellers whitelabels, you can use this prop as `true` to retrieve the catalog data. | `false` |
 
 - `customBreakpoints` object:
 
@@ -141,7 +141,7 @@ Once added, these can be declared using their respective props for their configu
 
 | Prop name             | Type     | Description            | Default value |
 | --------------------- | -------- | ---------------------- | ------------- |
-| `area`                | `string` | Banner area. It needs to match the pre-defined area value in the banner set up. | `undefined`    |
+| `area`                | `string` | Area of ​​the store where the banner will be displayed. It needs to match the predefined area value in the banner setup. | `undefined`    |
 | `blockClass`          | `string` | Unique block ID to be used in [CSS customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization/)       | `undefined`          |
 | `horizontalAlignment` | `string` | Defines the banner horizontal alignment. Possible values are `left`, `center` or `right`.  | `center`    |
   
@@ -161,8 +161,7 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | -------------------|
 | `searchBanner`     |
 | `didYouMeanPrefix` |
-| `didYouMeanTerm`   | 
-| `searchBanner`     |
+| `didYouMeanTerm`   |
 | `suggestionsList`  |
 | `suggestionsListItem`|
 | `suggestionsListLink`   |
