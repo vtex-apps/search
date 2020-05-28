@@ -19,7 +19,6 @@ a more complete search experience.
   - [Indexing Process](#indexing-process)
   - [Custom Search Page URL](#custom-search-page-url)
   - [Autocomplete](#autocomplete)
-  - [Order Options](#order-options)
   - [Search Result Complements](#search-result-complements)
   - [PriceRange](#pricerange)
   - [Plug & Play](#plug--play)
@@ -120,24 +119,6 @@ Finally, append this block in the search bar. To improve the client experience, 
 ```
 
 A full documentation of our custom autocomplete can be found [here](Autocomplete.md).
-
-### Order Options
-
-We don't yet support one of the ordering options that are supported by the current search implementation,
-so it should be hidden so that it doesn't confuse your customers. You can hide ordering options by
-passing them to the `hiddenOptions` prop on the `order-by` component.
-
-```json
-{
-  "order-by": {
-    "props": {
-      "hiddenOptions": [
-        "OrderByReleaseDateDESC",
-      ]
-    }
-  }
-}
-```
 
 ### Search Result Complements
 
