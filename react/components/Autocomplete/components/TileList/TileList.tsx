@@ -24,11 +24,6 @@ export class TileList extends React.Component<TileListProps> {
       return null;
     }
 
-    const unseenProductsCount = Math.max(
-      this.props.totalProducts - this.props.shelfProductCount,
-      0,
-    );
-
     return (
       <section className={styles.tileList}>
         {this.props.showTitle ? (
@@ -72,7 +67,7 @@ export class TileList extends React.Component<TileListProps> {
             </ul>
 
             <footer>
-              {unseenProductsCount > 0 ? (
+              {this.props.totalProducts > 0 ? (
                 <Link
                   to={`/${this.props.term}`}
                   query={`map=ft`}
@@ -80,7 +75,7 @@ export class TileList extends React.Component<TileListProps> {
                 >
                   <FormattedMessage
                     id="store/seeMore"
-                    values={{ count: unseenProductsCount }}
+                    values={{ count: this.props.totalProducts }}
                   />
                 </Link>
               ) : null}
