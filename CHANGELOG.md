@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.14] - 2020-06-02
+
+### Fixed
+- Remove hardcoded value in messages.
+
 ## [1.0.13] - 2020-06-02
 
 ### Changed
