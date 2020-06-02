@@ -3,7 +3,7 @@
     "store/history": "Histórico de buscas",
     "store/suggestions" : "Sugestões",
     "store/emptySuggestion": "Sem Sugestões",
-    "store/seeMore": "Veja mais {count} produtos",
+    "store/seeMore": "Veja todos os {count} produtos",
     "store/suggestedProducts": "Produtos para {term}",
     "store/ordinalNumber": "º",
     "store/didYouMean": "Você quis dizer",
