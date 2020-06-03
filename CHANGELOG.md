@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.15] - 2020-06-03
+
+### Changed
+- When the product has split the cacheId will be concatenated with its own id.
+- Remove cacheId
+
 ## [1.0.14] - 2020-06-02
 
 ### Fixed
