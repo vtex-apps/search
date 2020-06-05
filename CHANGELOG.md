@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `cacheId` to the `convertBiggyProduct`.
+
 ## [1.0.16] - 2020-06-05
 
 ### Fixed
