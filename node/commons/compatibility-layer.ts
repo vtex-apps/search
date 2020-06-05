@@ -17,7 +17,6 @@ export const convertBiggyProduct = (
     : [];
 
   const skus: any[] = propOr([], "skus", product)
-    .filter((sku: any) => propOr(product.stock, "stock", sku) > 0)
     .map(convertSKU(product, indexingType, tradePolicy));
 
   return {

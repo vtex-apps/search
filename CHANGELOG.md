@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Remove stock filter from `convertBiggyProduct`.
+
 ## [1.0.17] - 2020-06-05
 
 ### Added
