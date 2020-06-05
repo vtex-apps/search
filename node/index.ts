@@ -1,4 +1,4 @@
-import { Service, ServiceContext } from "@vtex/api";
+import { ParamsContext, RecorderState, Service, ServiceContext } from "@vtex/api";
 import { Clients } from "./clients";
 import { schemaDirectives } from "./directives";
 import { autocomplete } from "./resolvers/autocomplete";
@@ -12,7 +12,7 @@ declare global {
   type Context = ServiceContext<Clients>;
 }
 
-export default new Service({
+export default new Service<Clients, RecorderState, ParamsContext>({
   clients: {
     implementation: Clients,
     options: {

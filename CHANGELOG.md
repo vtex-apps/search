@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Upgrade node builder to `6.x`.
+- Make `search-graphql` client call `graphql-server`.
 
 ## [1.0.18] - 2020-06-05
 
