@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- `correction`, `suggestions`, and `banners` are now comming from graphql instead of `searchContext`.
+
 ## [1.0.19] - 2020-06-09
 
 ### Removed
