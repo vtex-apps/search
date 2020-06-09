@@ -32,7 +32,6 @@
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
     "vtex.search-resolver": "1.x",
-    "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
     "vtex.css-handles": "0.x"
