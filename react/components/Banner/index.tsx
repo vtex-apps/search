@@ -1,4 +1,7 @@
 import { useCssHandles } from "vtex.css-handles";
+import bannersQuery from "vtex.store-resources/QueryBanners";
+import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
+import { useQuery } from "react-apollo";
 
 interface ElasticBanner {
   id: string;
@@ -14,10 +17,14 @@ enum HorizotalAlignment {
 }
 
 interface BannerProps {
-  banners: ElasticBanner[];
   area: string;
   blockClass?: string;
   horizontalAlignment?: HorizotalAlignment;
+}
+
+interface SelectedFacet {
+  key: string;
+  value: string;
 }
 
 const getAlignmentClass = (alignment: HorizotalAlignment | undefined) => {
@@ -32,21 +39,39 @@ const getAlignmentClass = (alignment: HorizotalAlignment | undefined) => {
 };
 
 const Banner = (props: BannerProps) => {
-  const { area, banners, horizontalAlignment } = props;
+  const { area, horizontalAlignment } = props;
 
-  if (!banners) {
+  const CSS_HANDLES = ["searchBanner"];
+  const handles = useCssHandles(CSS_HANDLES);
+
+  const {
+    searchQuery: {
+      variables: { fullText, selectedFacets },
+    },
+  } = useSearchPage();
+
+  const { loading, data } = useQuery(bannersQuery, {
+    variables: {
+      fullText,
+      selectedFacets: selectedFacets.filter(
+        (facet: SelectedFacet) => facet.key !== "ft",
+      ),
+    },
+  });
+
+  if (loading || !data) {
     return null;
   }
 
-  const selectedBanner = banners.find(banner => banner.area === area);
+  const banners = data?.banners?.banners || [];
+
+  const selectedBanner = banners.find(
+    (banner: ElasticBanner) => banner.area === area,
+  );
 
   if (!selectedBanner) {
     return null;
   }
-
-  const CSS_HANDLES = ["searchBanner"];
-
-  const handles = useCssHandles(CSS_HANDLES);
 
   const className = `flex ${getAlignmentClass(horizontalAlignment)} ${
     handles.searchBanner
