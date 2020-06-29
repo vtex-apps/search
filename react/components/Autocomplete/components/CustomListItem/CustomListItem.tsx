@@ -2,7 +2,8 @@ import * as React from "react";
 import { path } from "ramda";
 import { Link } from "vtex.render-runtime";
 import styles from "./styles.css";
-import ProductPrice from "vtex.store-components/ProductPrice";
+import { SellingPrice } from "vtex.product-price";
+import { ProductContextProvider } from "vtex.product-context";
 
 interface CustomListItemProps {
   product: any;
@@ -12,7 +13,6 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
   render() {
     const product = this.props.product;
     const sku = path<any>(["sku"], product);
-    const commertialOffer = path<any>(["seller", "commertialOffer"], sku);
 
     return (
       <div>
@@ -42,16 +42,14 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                 </span>
               </div>
               <div className={styles.priceContainer}>
-                <ProductPrice
-                  sellingPrice={commertialOffer.Price}
-                  listPrice={commertialOffer.ListPrice}
-                  sellingPriceContainerClass="c-on-base"
-                  sellingPriceLabelClass="dib"
-                  sellingPriceClass="dib t-small c-muted-2"
-                  showListPrice={true}
-                  showLabels={false}
-                  showInstallments={false}
-                />
+                <ProductContextProvider
+                  product={product}
+                  query={{
+                    skuId: sku && sku.itemId,
+                  }}
+                >
+                  <SellingPrice message="{sellingPriceWithTax}" />
+                </ProductContextProvider>
               </div>
             </div>
           </article>
