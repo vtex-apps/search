@@ -48,7 +48,9 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                     skuId: sku && sku.itemId,
                   }}
                 >
-                  <SellingPrice message="{sellingPriceWithTax}" />
+                  <span className="dib t-small c-muted-2">
+                    <SellingPrice message="{sellingPriceWithTax}" />
+                  </span>
                 </ProductContextProvider>
               </div>
             </div>
