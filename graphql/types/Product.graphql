@@ -236,6 +236,7 @@ type Offer {
   ): [Installment]
   Price: Float
   ListPrice: Float
+  taxPercentage: Float
   PriceWithoutDiscount: Float
   RewardValue: Float
   PriceValidUntil: String

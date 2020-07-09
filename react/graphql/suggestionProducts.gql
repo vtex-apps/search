@@ -82,6 +82,7 @@ fragment Product on Product @context(provider: "vtex.search") {
         }
         Price
         ListPrice
+        taxPercentage
         PriceWithoutDiscount
         RewardValue
         PriceValidUntil

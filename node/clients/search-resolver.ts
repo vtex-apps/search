@@ -107,6 +107,7 @@ const PRODUCTS_BY_ID_QUERY = `
             }
             Price
             ListPrice
+            taxPercentage
             PriceWithoutDiscount
             RewardValue
             PriceValidUntil
