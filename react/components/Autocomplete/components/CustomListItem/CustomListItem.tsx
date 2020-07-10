@@ -2,7 +2,7 @@ import * as React from "react";
 import { path } from "ramda";
 import { Link } from "vtex.render-runtime";
 import styles from "./styles.css";
-import { SellingPrice } from "vtex.product-price";
+import { SellingPrice, ListPrice } from "vtex.product-price";
 import { ProductContextProvider } from "vtex.product-context";
 
 interface CustomListItemProps {
@@ -48,6 +48,9 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                     skuId: sku && sku.itemId,
                   }}
                 >
+                  <span className="dib t-small c-muted-2">
+                    <ListPrice message="{listPriceWithTax}" />
+                  </span>
                   <span className="dib t-small c-muted-2">
                     <SellingPrice message="{sellingPriceWithTax}" />
                   </span>
