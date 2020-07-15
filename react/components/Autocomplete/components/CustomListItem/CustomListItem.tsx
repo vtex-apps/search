@@ -48,7 +48,7 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                     skuId: sku && sku.itemId,
                   }}
                 >
-                  <span className="dib t-small c-muted-2">
+                  <span className="db f7 c-muted-2">
                     <ListPrice message="{listPriceWithTax}" />
                   </span>
                   <span className="dib t-small c-muted-2">
