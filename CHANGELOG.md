@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Deal with missing `fulltext` in `searchSuggestions` query.
+
 ## [1.3.0] - 2020-07-15
 ### Added
 - ListPrice in CustomListItem.
