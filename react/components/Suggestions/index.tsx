@@ -20,6 +20,10 @@ const Suggestions = () => {
     },
   } = useSearchPage();
 
+  if (!fullText) {
+    return null;
+  }
+
   const { loading, data } = useQuery(searchSuggestionsQuery, {
     variables: {
       fullText,
