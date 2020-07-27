@@ -54,7 +54,6 @@ interface AutoCompleteProps {
   };
   __unstableProductOrigin: "BIGGY" | "VTEX";
   __unstableProductOriginVtex: boolean;
-  __unstableIndexingType: "XML" | "API";
 }
 
 interface AutoCompleteState {
@@ -178,15 +177,15 @@ class AutoComplete extends React.Component<
   }
 
   highlightTerm(label: string, query: string) {
-    const splitedLabel = label.split(query);
+    const splittedLabel = label.split(query);
 
     return (
       <>
-        {splitedLabel.map((str: string, index: number) => {
+        {splittedLabel.map((str: string, index: number) => {
           return (
             <>
               {str}
-              {index !== splitedLabel.length - 1 ? (
+              {index !== splittedLabel.length - 1 ? (
                 <span className="b">{query}</span>
               ) : null}
             </>
@@ -198,7 +197,7 @@ class AutoComplete extends React.Component<
 
   async updateSuggestions() {
     const result = await this.client.suggestionSearches(this.props.inputValue);
-    const { searches } = result.data.suggestionSearches;
+    const { searches } = result.data.autocompleteSearchSuggestions;
     const { maxSuggestedTerms = MAX_SUGGESTED_TERMS_DEFAULT } = this.props;
 
     const items = searches.slice(0, maxSuggestedTerms).map(query => {
@@ -235,7 +234,6 @@ class AutoComplete extends React.Component<
     const {
       __unstableProductOrigin,
       __unstableProductOriginVtex = false,
-      __unstableIndexingType,
     } = this.props;
     const { queryFromHover } = this.state;
 
@@ -261,26 +259,23 @@ class AutoComplete extends React.Component<
       term,
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
-      __unstableProductOrigin === "VTEX" || __unstableProductOriginVtex === true
-        ? "VTEX"
-        : "BIGGY",
-      __unstableIndexingType,
+      __unstableProductOrigin === "VTEX" || __unstableProductOriginVtex,
     );
 
     this.setState({
       isProductsLoading: false,
     });
 
-    const { suggestionProducts } = result.data;
+    const { productSuggestions } = result.data;
 
-    const products = suggestionProducts.products.slice(
+    const products = productSuggestions.products.slice(
       0,
       this.getProductCount(),
     );
 
     this.setState({
       products,
-      totalProducts: suggestionProducts.count,
+      totalProducts: productSuggestions.count,
     });
   }
 

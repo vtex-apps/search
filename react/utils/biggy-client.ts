@@ -1,9 +1,9 @@
 import ApolloClient, { ApolloQueryResult } from "apollo-client";
 import { getCookie, setCookie } from "./dom-utils";
 
-import suggestionProducts from "../graphql/suggestionProducts.gql";
-import suggestionSearches from "../graphql/suggestionSearches.gql";
-import topSearches from "../graphql/topSearches.gql";
+import suggestionProducts from "vtex.store-resources/QuerySuggestionProducts";
+import suggestionSearches from "vtex.store-resources/QueryAutocompleteSearchSuggestions";
+import topSearches from "vtex.store-resources/QueryTopSearches";
 import { ISearchProduct } from "../models/search-product";
 
 export default class BiggyClient {
@@ -21,11 +21,13 @@ export default class BiggyClient {
 
   public async suggestionSearches(
     term: string,
-  ): Promise<ApolloQueryResult<{ suggestionSearches: ISearchesOutput }>> {
+  ): Promise<
+    ApolloQueryResult<{ autocompleteSearchSuggestions: ISearchesOutput }>
+  > {
     return this.client.query({
       query: suggestionSearches,
       variables: {
-        term,
+        fullText: term,
       },
     });
   }
@@ -34,17 +36,15 @@ export default class BiggyClient {
     term: string,
     attributeKey?: string,
     attributeValue?: string,
-    productOrigin: "BIGGY" | "VTEX" = "BIGGY",
-    indexingType: "XML" | "API" = "API",
-  ): Promise<ApolloQueryResult<{ suggestionProducts: IProductsOutput }>> {
+    productOrigin: boolean = false,
+  ): Promise<ApolloQueryResult<{ productSuggestions: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
       variables: {
-        term,
-        attributeKey,
-        attributeValue,
-        productOrigin,
-        indexingType,
+        fullText: term,
+        facetKey: attributeKey,
+        facetValue: attributeValue,
+        productOriginVtex: productOrigin,
       },
       fetchPolicy: "network-only",
     });
