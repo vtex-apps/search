@@ -1,10 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "vtex.render-runtime";
 import styles from "./styles.css";
 import { FormattedMessage } from "react-intl";
 import searchSuggestionsQuery from "vtex.store-resources/QuerySearchSuggestions";
 import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
 import { useQuery } from "react-apollo";
+
+interface SuggestionsProps {
+  customPage: string;
+}
 
 interface Suggestion {
   searches: {
@@ -13,7 +17,7 @@ interface Suggestion {
   }[];
 }
 
-const Suggestions = () => {
+const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
   const {
     searchQuery: {
       variables: { fullText },
@@ -49,7 +53,11 @@ const Suggestions = () => {
           <li className={styles.suggestionsListItem} key={search.term}>
             <Link
               className={`${styles.suggestionsListLink} link f7`}
-              to={`/${search.term}?map=ft`}
+              page={customPage || "store.search"}
+              query="map=ft"
+              params={{
+                term: search.term,
+              }}
             >
               {search.term}
             </Link>
