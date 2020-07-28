@@ -17,6 +17,12 @@ Add the `search-suggestions` block to the `search-result-layout.desktop` or `sea
 }
 ```
 
+### Props
+
+| Prop name    | Type     | Description                                                                           | Default value |
+| ------------ | -------- | ------------------------------------------------------------------------------------- | ------------- |
+| `customPage` | `string` | Defines the destiny page of the Link. If not, the page will be send to `store.search` | -             |
+
 ## Customization
 
 In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
