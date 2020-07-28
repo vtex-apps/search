@@ -54,6 +54,7 @@ interface AutoCompleteProps {
   };
   __unstableProductOrigin: "BIGGY" | "VTEX";
   __unstableProductOriginVtex: boolean;
+  simulationBehavior: "default" | "skip" | null;
 }
 
 interface AutoCompleteState {
@@ -234,6 +235,7 @@ class AutoComplete extends React.Component<
     const {
       __unstableProductOrigin,
       __unstableProductOriginVtex = false,
+      simulationBehavior = "default",
     } = this.props;
     const { queryFromHover } = this.state;
 
@@ -260,6 +262,7 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin === "VTEX" || __unstableProductOriginVtex,
+      simulationBehavior,
     );
 
     this.setState({

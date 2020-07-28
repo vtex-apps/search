@@ -64,6 +64,7 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 | `historyFirst` | `boolean` | Defines whether the search history list should be prioritized over the other lists (`true`) or not (`false`).  | `false`       |
 | `customBreakpoints` | `object` | Defines a maximum number of suggested products by breakpoints. Possible values are `md`, `lg` or `xlg`. | -             |
 | `__unstableProductOriginVtex` | `boolean` |  When set as `true`, the prop enables the Intelligent Search to fetch catalog data in scenarios where product information is missing. This prop is extremely useful if you have [sellers White Labels](https://help.vtex.com/tutorial/what-are-franchise-account-and-seller-white-label--5orlGHyDHGAYciQ64oEgKa?locale=en#what-is-a-seller-white-label) or if you just want to avoid rendering errors related to product data. But note the following: it may lead to a search performance loss.  | `false` |
+| `simulationBehavior`          | `"skip"` or `"default"`                             | If you want faster searches and do not care about most up to date prices and promotions, use `"skip"` value.                                                                          | `default`     |
 
 - `customBreakpoints` object:
 
