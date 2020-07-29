@@ -40,6 +40,10 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
     return null;
   }
 
+  const getSearchPage = customPage
+    ? (term: string) => `/${customPage}?term=${term}&map=ft`
+    : (term: string) => `/${term}?map=ft`;
+
   return (
     <div
       className={`${styles.suggestionListWrapper} flex flex-row items-center`}
@@ -53,11 +57,7 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
           <li className={styles.suggestionsListItem} key={search.term}>
             <Link
               className={`${styles.suggestionsListLink} link f7`}
-              page={customPage || "store.search"}
-              query="map=ft"
-              params={{
-                term: search.term,
-              }}
+              to={getSearchPage(search.term)}
             >
               {search.term}
             </Link>
