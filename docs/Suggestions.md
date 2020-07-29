@@ -19,9 +19,9 @@ Add the `search-suggestions` block to the `search-result-layout.desktop` or `sea
 
 ### Props
 
-| Prop name    | Type     | Description                                                                           | Default value |
-| ------------ | -------- | ------------------------------------------------------------------------------------- | ------------- |
-| `customPage` | `string` | Defines the destiny page of the Link. If not, the page will be send to `store.search` | -             |
+| Prop name    | Type     | Description                                           | Default value |
+| ------------ | -------- | ----------------------------------------------------- | ------------- |
+| `customPage` | `string` | Defines a custom URL path to the link of a suggestion |               |
 
 ## Customization
 
