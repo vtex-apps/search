@@ -41,8 +41,12 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
   }
 
   const getSearchPage = customPage
-    ? (term: string) => `/${customPage}?term=${term}&map=ft`
-    : (term: string) => `/${term}?map=ft`;
+    ? (term: string) => ({
+        page: customPage,
+        query: "map=ft",
+        params: { term },
+      })
+    : (term: string) => ({ to: `/${term}?map=ft` });
 
   return (
     <div
@@ -57,7 +61,7 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
           <li className={styles.suggestionsListItem} key={search.term}>
             <Link
               className={`${styles.suggestionsListLink} link f7`}
-              to={getSearchPage(search.term)}
+              {...getSearchPage(search.term)}
             >
               {search.term}
             </Link>
