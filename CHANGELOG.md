@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- New `customPage` prop on `Suggestion`
+
 ## [1.3.1] - 2020-07-22
 
 ### Fixed
