@@ -31,6 +31,7 @@
     "vtex.search-result": "3.x",
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
+    "vtex.product-list-context": "0.x",
     "vtex.search-resolver": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",

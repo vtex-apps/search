@@ -11,6 +11,7 @@ import stylesCss from "./styles.css";
 import BiggyClient from "../../utils/biggy-client";
 import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
+import { ProductListContext } from "vtex.product-list-context";
 import { withDevice } from "vtex.device-detector";
 import debounce from "debounce";
 
@@ -67,6 +68,8 @@ interface AutoCompleteState {
   isProductsLoading: boolean;
   currentHeightWhenOpen: number;
 }
+
+const { ProductListProvider } = ProductListContext;
 
 class AutoComplete extends React.Component<
   WithApolloClient<AutoCompleteProps>,
@@ -348,13 +351,15 @@ class AutoComplete extends React.Component<
     const hasSuggestion =
       !!this.state.suggestionItems && this.state.suggestionItems.length > 0;
 
-    const titleMessageId = hasSuggestion
-      ? "store/suggestions"
-      : "store/emptySuggestion";
+    const titleMessage = hasSuggestion ? (
+      <FormattedMessage id="store/suggestions" />
+    ) : (
+      <FormattedMessage id="store/emptySuggestion" />
+    );
 
     return (
       <ItemList
-        title={<FormattedMessage id={titleMessageId} />}
+        title={titleMessage}
         items={this.state.suggestionItems || []}
         modifier="suggestion"
         showTitle={!hasSuggestion || !this.props.hideTitles}
@@ -505,12 +510,14 @@ class AutoComplete extends React.Component<
                 : "row",
           }}
         >
-          {this.renderContent()}
-          {this.props.isMobile ? (
-            <button className={stylesCss["close-btn"]}>
-              <IconClose />
-            </button>
-          ) : null}
+          <ProductListProvider listName={"autocomplete-result-list"}>
+            {this.renderContent()}
+            {this.props.isMobile ? (
+              <button className={stylesCss["close-btn"]}>
+                <IconClose />
+              </button>
+            ) : null}
+          </ProductListProvider>
         </section>
       </div>
     );
