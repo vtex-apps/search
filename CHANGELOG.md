@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Error in dispatch when using the Autocomplete.
+
 ## [1.4.0] - 2020-07-30
 
 ### Added
