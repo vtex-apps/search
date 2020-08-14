@@ -22,20 +22,24 @@ The banner entity is composed by the following fields:
 Add the `search-banner` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
 
 ```json
-"search-result-layout.desktop": {
+{
+  "search-result-layout.desktop": {
     "children": [
-        "flex-layout.row#banner-one",
-    ],
-    "search-banner#one": {
-        "props": {
-            "area": "one",
-            "blockClass": "myBanner",
-            "horizontalAlignment": "center"
-        }
-    },
-    "flex-layout.row#banner-one": {
-        "children": ["search-banner#one"]
-    },
+      "flex-layout.row#banner-one"
+    ]
+  },
+  "search-banner#one": {
+    "props": {
+      "area": "one",
+      "blockClass": "myBanner",
+      "horizontalAlignment": "center"
+    }
+  },
+  "flex-layout.row#banner-one": {
+    "children": [
+      "search-banner#one"
+    ]
+  }
 }
 ```
 
