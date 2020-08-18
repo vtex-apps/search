@@ -14,7 +14,7 @@ The VTEX Search app is responsible for handling the new [**VTEX Intelligent Sear
 
 ## Configuration
 
-:warning: The proper functioning of the Search app components relies on having already installed apps `vtex.admin-search` and `vtex.search-resolver@2.x` in your store. For more on this, access our Help Center track on [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search).
+:warning: The proper functioning of the Search app components relies on having already installed apps `vtex.admin-search` and `vtex.search-resolver@1.x` in your store. For more on this, access our Help Center track on [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search).
 
 ### Step 1 - Adding the Search app to your theme's dependencies
 
