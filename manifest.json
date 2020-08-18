@@ -11,8 +11,6 @@
     "store": "0.x",
     "react": "3.x",
     "styles": "2.x",
-    "graphql": "1.x",
-    "node": "4.x",
     "docs": "0.x",
     "messages": "1.x"
   },
@@ -38,20 +36,6 @@
     "vtex.css-handles": "0.x",
     "vtex.product-price": "1.x"
   },
-  "policies": [
-    {
-      "name": "vbase-read-write"
-    },
-    {
-      "name": "vtex.search-resolver:resolve-graphql"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "search.biggylabs.com.br",
-        "path": "/*"
-      }
-    }
-  ],
+  "policies": [],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }

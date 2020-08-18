@@ -3,7 +3,9 @@
 # Search
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 The VTEX Search app is responsible for handling the new [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search) solution in IO stores by providing new UI components that enhance the search experience, such as the autocomplete feature.
@@ -20,18 +22,18 @@ Add the `search` app to your theme's dependencies in the `manifest.json` as show
 
 ```diff
   "dependencies": {
-+   "vtex.search": "1.x"
++   "vtex.search": "2.x"
   }
 ```
 
 You are now able to use all of the blocks exported by the `search` app. Check the full list below:
 
-| Block name | Description |
-| -------------- | ----------------------------------------------- |
+| Block name                    | Description                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `autocomplete-result-list.v2` | Provides customized autocomplete features in the search bar component, such as top searches, search history, product suggestions or term suggestions. You can read more about the Intelligent Search [autocomplete feature](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4gXFsEWjF7QF7UtI2GAvhL) on VTEX Help Center. |
-| `search-banner` | Renders a customized banner according to the search query performed. |
-| `did-you-mean` | Helps users with possible misspelling corrections for the current search query. |
-| `search-suggestions` | Renders a list of similar search terms for the current search query. |
+| `search-banner`               | Renders a customized banner according to the search query performed.                                                                                                                                                                                                                                                                                  |
+| `did-you-mean`                | Helps users with possible misspelling corrections for the current search query.                                                                                                                                                                                                                                                                       |
+| `search-suggestions`          | Renders a list of similar search terms for the current search query.                                                                                                                                                                                                                                                                                  |
 
 :warning: The blocks `banner`, `did-you-mean` and `suggestions` require you to have [Search Results app](https://vtex.io/docs/components/all/vtex.search-result@3.59.0/) version 3.x or higher installed in your theme.
 
@@ -52,33 +54,34 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 
 #### `autocomplete-result-list.v2` props
 
-| Prop name    | Type  | Description                | Default value |
-| -------- | ------- | ------------------------------- | ------------- |
-| `maxTopSearches` | `number`   | Maximum number of items in the top searches list. | `10` |
-| `maxHistory` | `number`   | Maximum number of items in the search history list.         | `5`   |
-| `maxSuggestedProducts` | `number` | Maximum number of items in the suggested products list.    | `3`  |
-| `maxSuggestedTerms`   | `number`  | Maximum number of items in the suggested terms list.  | `3` |
-| `autocompleteWidth` | `number`    | Autocomplete list width (in percent). The value must be between `0` and `100`   | `undefined`  |
-| `productLayout` | `enum` | Defines the suggested products list layout when rendered. Possible values are `HORIZONTAL` and `VERTICAL`.  | `undefined` |
-| `hideTitles` | `boolean` | Defines whether all component titles are hidden when rendered (`true`) or not (`false`).   | `false`  |
-| `historyFirst` | `boolean` | Defines whether the search history list should be prioritized over the other lists (`true`) or not (`false`).  | `false`       |
-| `customBreakpoints` | `object` | Defines a maximum number of suggested products by breakpoints. Possible values are `md`, `lg` or `xlg`. | -             |
-| `__unstableProductOriginVtex` | `boolean` |  When set as `true`, the prop enables the Intelligent Search to fetch catalog data in scenarios where product information is missing. This prop is extremely useful if you have [sellers White Labels](https://help.vtex.com/tutorial/what-are-franchise-account-and-seller-white-label--5orlGHyDHGAYciQ64oEgKa?locale=en#what-is-a-seller-white-label) or if you just want to avoid rendering errors related to product data. But note the following: it may lead to a search performance loss.  | `false` |
+| Prop name                     | Type                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Default value |
+| ----------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `maxTopSearches`              | `number`                | Maximum number of items in the top searches list.                                                                                                                                                                                                                                                                                                                                                                                                                                               | `10`          |
+| `maxHistory`                  | `number`                | Maximum number of items in the search history list.                                                                                                                                                                                                                                                                                                                                                                                                                                             | `5`           |
+| `maxSuggestedProducts`        | `number`                | Maximum number of items in the suggested products list.                                                                                                                                                                                                                                                                                                                                                                                                                                         | `3`           |
+| `maxSuggestedTerms`           | `number`                | Maximum number of items in the suggested terms list.                                                                                                                                                                                                                                                                                                                                                                                                                                            | `3`           |
+| `autocompleteWidth`           | `number`                | Autocomplete list width (in percent). The value must be between `0` and `100`                                                                                                                                                                                                                                                                                                                                                                                                                   | `undefined`   |
+| `productLayout`               | `enum`                  | Defines the suggested products list layout when rendered. Possible values are `HORIZONTAL` and `VERTICAL`.                                                                                                                                                                                                                                                                                                                                                                                      | `undefined`   |
+| `hideTitles`                  | `boolean`               | Defines whether all component titles are hidden when rendered (`true`) or not (`false`).                                                                                                                                                                                                                                                                                                                                                                                                        | `false`       |
+| `historyFirst`                | `boolean`               | Defines whether the search history list should be prioritized over the other lists (`true`) or not (`false`).                                                                                                                                                                                                                                                                                                                                                                                   | `false`       |
+| `customBreakpoints`           | `object`                | Defines a maximum number of suggested products by breakpoints. Possible values are `md`, `lg` or `xlg`.                                                                                                                                                                                                                                                                                                                                                                                         | -             |
+| `__unstableProductOriginVtex` | `boolean`               | When set as `true`, the prop enables the Intelligent Search to fetch catalog data in scenarios where product information is missing. This prop is extremely useful if you have [sellers White Labels](https://help.vtex.com/tutorial/what-are-franchise-account-and-seller-white-label--5orlGHyDHGAYciQ64oEgKa?locale=en#what-is-a-seller-white-label) or if you just want to avoid rendering errors related to product data. But note the following: it may lead to a search performance loss. | `false`       |
+| `simulationBehavior`          | `"skip"` or `"default"` | If you want faster searches and do not care about most up to date prices and promotions, use `"skip"` value.                                                                                                                                                                                                                                                                                                                                                                                    | `default`     |
 
 - `customBreakpoints` object:
 
-| Prop name | Type  | Description     | Default value | 
-| --------- | ----- | --------------- | ------------- | 
-| `md`      | `object` | Defines the maximum number of suggested products for the `md` breakpoint.  | `undefined` | 
-| `lg`      | `object` | Defines the the maximum number of suggested products for the `lg` breakpoint.  | `undefined` |
-| `xlg`     | `object` | Defines the the maximum number of suggested products for the `xlg` breakpoint. | `undefined` |
+| Prop name | Type     | Description                                                                    | Default value |
+| --------- | -------- | ------------------------------------------------------------------------------ | ------------- |
+| `md`      | `object` | Defines the maximum number of suggested products for the `md` breakpoint.      | `undefined`   |
+| `lg`      | `object` | Defines the the maximum number of suggested products for the `lg` breakpoint.  | `undefined`   |
+| `xlg`     | `object` | Defines the the maximum number of suggested products for the `xlg` breakpoint. | `undefined`   |
 
 - `md`, `lg` and `xlg` objects:
 
-| Prop name   | Type     | Description     | Default value | 
-| ---------------------- | -------- | --------- | --------- | 
-| `width`    | `number` | Breakpoint minimum width.  | `undefined` | 
-| `maxSuggestedProducts` | `number` | Maximum number of suggested products. | `undefined` | 
+| Prop name              | Type     | Description                           | Default value |
+| ---------------------- | -------- | ------------------------------------- | ------------- |
+| `width`                | `number` | Breakpoint minimum width.             | `undefined`   |
+| `maxSuggestedProducts` | `number` | Maximum number of suggested products. | `undefined`   |
 
 The `autocomplete-result-list.v2` block also allows you to add a list of child blocks onto it.
 
@@ -90,7 +93,7 @@ This means that you can declare a theme block of your choosing and have it rende
     "blocks": ["product-summary"]
   }
 }
-``` 
+```
 
 Now, the time has come to add the last 3 search blocks: `search-banner`, `did-you-mean` and `search-suggestions`.
 
@@ -139,34 +142,33 @@ Once added, these can be declared using their respective props for their configu
 
 #### `search-banner` props
 
-| Prop name             | Type     | Description            | Default value |
-| --------------------- | -------- | ---------------------- | ------------- |
-| `area`                | `string` | Area of ​​the store where the banner will be displayed. It needs to match the predefined area value in the banner setup. | `undefined`    |
-| `blockClass`          | `string` | Unique block ID to be used in [CSS customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization/)       | `undefined`          |
-| `horizontalAlignment` | `string` | Defines the banner horizontal alignment. Possible values are `left`, `center` or `right`.  | `center`    |
-  
+| Prop name             | Type     | Description                                                                                                                      | Default value |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `area`                | `string` | Area of ​​the store where the banner will be displayed. It needs to match the predefined area value in the banner setup.         | `undefined`   |
+| `blockClass`          | `string` | Unique block ID to be used in [CSS customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization/) | `undefined`   |
+| `horizontalAlignment` | `string` | Defines the banner horizontal alignment. Possible values are `left`, `center` or `right`.                                        | `center`      |
+
 ## Modus Operandi
 
-The Search app is merely responsible for offering blocks that when rendered as components will improve the user's search experience in stores where the VTEX Intelligent Search engine is already supported. 
-  
+The Search app is merely responsible for offering blocks that when rendered as components will improve the user's search experience in stores where the VTEX Intelligent Search engine is already supported.
+
 These components use `_q` as the query-string for the search term, meaning that if you wish to **track the searches** of your users in these components you'll need to add the `_q` query-string to the store's Google Analytics.
 
 Find out how to do this by accessing our [Google Analytics search tracking](https://vtex.io/docs/recipes/store-management/setting-up-google-analytics-search-tracking/) documentation.
-  
+
 ## Customization
 
 In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
-| CSS Handles        |
-| -------------------|
-| `searchBanner`     |
-| `didYouMeanPrefix` |
-| `didYouMeanTerm`   |
-| `suggestionsList`  |
-| `suggestionsListItem`|
+| CSS Handles             |
+| ----------------------- |
+| `searchBanner`          |
+| `didYouMeanPrefix`      |
+| `didYouMeanTerm`        |
+| `suggestionsList`       |
+| `suggestionsListItem`   |
 | `suggestionsListLink`   |
 | `suggestionsListPrefix` |
-
 
 <!-- DOCS-IGNORE:start -->
 
@@ -179,6 +181,7 @@ Thanks goes out to these wonderful people:
 <!-- markdownlint-disable -->
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
