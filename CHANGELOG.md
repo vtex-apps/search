@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Error when the `searchQuery` is missing.
+
 ## [1.4.1] - 2020-08-12
 
 ### Fixed
@@ -16,20 +20,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.4.0] - 2020-07-30
 
 ### Added
+
 - New `customPage` prop on `Suggestion`
 
 ## [1.3.1] - 2020-07-22
 
 ### Fixed
+
 - Deal with missing `fulltext` in `searchSuggestions` query.
 
 ## [1.3.0] - 2020-07-15
+
 ### Added
+
 - ListPrice in CustomListItem.
 
 ## [1.2.0] - 2020-07-09
 
 ### Fixed
+
 - `taxPercentage` in autocomplete price.
 
 ## [1.1.0] - 2020-06-17
@@ -41,16 +50,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.19] - 2020-06-09
 
 ### Removed
+
 - `vtex.sae-analytics@1.x` as dependency.
 
 ## [1.0.18] - 2020-06-05
 
 ### Fixed
+
 - Remove stock filter from `convertBiggyProduct`.
 
 ## [1.0.17] - 2020-06-05
 
 ### Added
+
 - `cacheId` to the `convertBiggyProduct`.
 
 ## [1.0.16] - 2020-06-05
