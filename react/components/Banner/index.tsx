@@ -44,11 +44,15 @@ const Banner = (props: BannerProps) => {
   const CSS_HANDLES = ["searchBanner"];
   const handles = useCssHandles(CSS_HANDLES);
 
+  const { searchQuery } = useSearchPage();
+
+  if (!searchQuery) {
+    return null;
+  }
+
   const {
-    searchQuery: {
-      variables: { fullText, selectedFacets },
-    },
-  } = useSearchPage();
+    variables: { fullText, selectedFacets },
+  } = searchQuery;
 
   const { loading, data } = useQuery(bannersQuery, {
     variables: {
