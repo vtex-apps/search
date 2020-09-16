@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Price on the mobile Autocomplete that displayed `NaN` when there is no `taxPercentage`.
+
 ## [1.4.2] - 2020-09-08
 
 ### Fixed
