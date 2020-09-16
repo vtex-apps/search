@@ -13,6 +13,7 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
   render() {
     const product = this.props.product;
     const sku = path<any>(["sku"], product);
+    const taxPercentage = sku?.sellers?.[0]?.commertialOffer?.taxPercentage;
 
     return (
       <div>
@@ -49,10 +50,22 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                   }}
                 >
                   <span className="db f7 c-muted-2">
-                    <ListPrice message="{listPriceWithTax}" />
+                    <ListPrice
+                      message={
+                        taxPercentage
+                          ? "{listPriceWithTax}"
+                          : "{listPriceValue}"
+                      }
+                    />
                   </span>
                   <span className="dib t-small c-muted-2">
-                    <SellingPrice message="{sellingPriceWithTax}" />
+                    <SellingPrice
+                      message={
+                        taxPercentage
+                          ? "{sellingPriceWithTax}"
+                          : "{sellingPriceValue}"
+                      }
+                    />
                   </span>
                 </ProductContextProvider>
               </div>
