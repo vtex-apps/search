@@ -16,6 +16,8 @@ interface TileListProps {
   totalProducts: number;
   layout: ProductLayout;
   isLoading: boolean;
+  onProductClick: (product: string, position: number) => void;
+  onSeeAllClick: (term: string) => void;
 }
 
 export class TileList extends React.Component<TileListProps> {
@@ -46,7 +48,7 @@ export class TileList extends React.Component<TileListProps> {
                     : "row",
               }}
             >
-              {this.props.products.map(product => {
+              {this.props.products.map((product, index: number) => {
                 const productSummary = ProductSummary.mapCatalogProductToProductSummary(
                   product,
                 );
@@ -59,6 +61,12 @@ export class TileList extends React.Component<TileListProps> {
                       <ExtensionPoint
                         id="product-summary"
                         product={productSummary}
+                        actionOnClick={() => {
+                          this.props.onProductClick(
+                            productSummary.productId,
+                            index,
+                          );
+                        }}
                       />
                     )}
                   </li>
@@ -72,6 +80,7 @@ export class TileList extends React.Component<TileListProps> {
                   to={`/${this.props.term}`}
                   query={`map=ft`}
                   className={styles.tileListSeeMore}
+                  onClick={() => this.props.onSeeAllClick(this.props.term)}
                 >
                   <FormattedMessage
                     id="store/seeMore"
