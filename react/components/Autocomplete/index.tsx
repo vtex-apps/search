@@ -330,6 +330,8 @@ class AutoComplete extends React.Component<
     if (!queryFromHover) {
       const { count, operator, misspelled } = result.data.productSuggestions;
 
+      console.log(result.data.productSuggestions);
+
       push({
         event: EVENT_NAME,
         eventType: count > 0 ? EventType.Search : EventType.EmptySearch,
