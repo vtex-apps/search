@@ -15,6 +15,7 @@ import { ProductListContext } from "vtex.product-list-context";
 import { withDevice } from "vtex.device-detector";
 import debounce from "debounce";
 import withUsePixel from "../../utils/withUsePixel";
+import { withRuntime } from "../../utils/withRuntime";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
@@ -39,7 +40,7 @@ enum EventType {
 
 interface AutoCompleteProps {
   isOpen: boolean;
-  runtime: { account: string };
+  runtime: { page: string };
   inputValue: string;
   maxTopSearches: number;
   maxSuggestedTerms: number;
@@ -114,8 +115,10 @@ class AutoComplete extends React.Component<
 
   handleProductClick(productId: string, position: number) {
     const { push } = this.props.pixel;
+    const { page } = this.props.runtime;
 
     push({
+      page,
       event: EVENT_NAME,
       eventType: EventType.ProductClick,
       product: {
@@ -128,8 +131,10 @@ class AutoComplete extends React.Component<
   handleItemClick(type: string) {
     return (term: string, position: number) => {
       const { push } = this.props.pixel;
+      const { page } = this.props.runtime;
 
       push({
+        page,
         event: EVENT_NAME,
         eventType: type,
         search: {
@@ -142,8 +147,10 @@ class AutoComplete extends React.Component<
 
   handleSeeAllClick(term: string) {
     const { push } = this.props.pixel;
+    const { page } = this.props.runtime;
 
     push({
+      page,
       event: EVENT_NAME,
       eventType: EventType.SeeAllClick,
       search: {
@@ -597,4 +604,4 @@ class AutoComplete extends React.Component<
   }
 }
 
-export default withUsePixel(withDevice(withApollo(AutoComplete)));
+export default withUsePixel(withDevice(withApollo(withRuntime(AutoComplete))));
