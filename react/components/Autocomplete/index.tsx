@@ -34,7 +34,6 @@ enum EventType {
   TopSearchClick = "top_search_click",
   HistoryClick = "history_click",
   Search = "search",
-  EmptySearch = "empty_search",
   SeeAllClick = "see_all_click",
 }
 
@@ -334,7 +333,7 @@ class AutoComplete extends React.Component<
 
       push({
         event: EVENT_NAME,
-        eventType: count > 0 ? EventType.Search : EventType.EmptySearch,
+        eventType: EventType.Search,
         search: {
           operator,
           misspelled,
