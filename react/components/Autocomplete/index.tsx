@@ -14,7 +14,7 @@ import { IconClose, IconClock } from "vtex.styleguide";
 import { ProductListContext } from "vtex.product-list-context";
 import { withDevice } from "vtex.device-detector";
 import debounce from "debounce";
-import withUsePixel from "../../utils/withUsePixel";
+import { withPixel } from "vtex.pixel-manager/PixelContext";
 import { withRuntime } from "../../utils/withRuntime";
 import {
   EventType,
@@ -64,7 +64,7 @@ interface AutoCompleteProps {
   __unstableProductOrigin: "BIGGY" | "VTEX";
   __unstableProductOriginVtex: boolean;
   simulationBehavior: "default" | "skip" | null;
-  pixel: { push: (data: any) => void };
+  push: (data: any) => void;
 }
 
 interface AutoCompleteState {
@@ -249,7 +249,6 @@ class AutoComplete extends React.Component<
       simulationBehavior = "default",
     } = this.props;
     const { queryFromHover } = this.state;
-    const { push } = this.props.pixel;
 
     if (!term) {
       this.setState({
@@ -280,7 +279,13 @@ class AutoComplete extends React.Component<
     if (!queryFromHover) {
       const { count, operator, misspelled } = result.data.productSuggestions;
 
-      handleAutocompleteSearch(push, operator, misspelled, count, term);
+      handleAutocompleteSearch(
+        this.props.push,
+        operator,
+        misspelled,
+        count,
+        term,
+      );
     }
 
     this.setState({
@@ -382,7 +387,7 @@ class AutoComplete extends React.Component<
         onItemHover={this.updateQueryByItemHover.bind(this)}
         showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
         onItemClick={handleItemClick(
-          this.props.pixel.push,
+          this.props.push,
           this.props.runtime.page,
           EventType.SearchSuggestionClick,
         )}
@@ -407,7 +412,7 @@ class AutoComplete extends React.Component<
             items={this.state.topSearchedItems || []}
             showTitle={!this.props.hideTitles}
             onItemClick={handleItemClick(
-              this.props.pixel.push,
+              this.props.push,
               this.props.runtime.page,
               EventType.TopSearchClick,
             )}
@@ -422,7 +427,7 @@ class AutoComplete extends React.Component<
             items={this.state.history || []}
             showTitle={!this.props.hideTitles}
             onItemClick={handleItemClick(
-              this.props.pixel.push,
+              this.props.push,
               this.props.runtime.page,
               EventType.HistoryClick,
             )}
@@ -451,11 +456,11 @@ class AutoComplete extends React.Component<
           layout={this.getProductLayout()}
           isLoading={this.state.isProductsLoading}
           onProductClick={handleProductClick(
-            this.props.pixel.push,
+            this.props.push,
             this.props.runtime.page,
           )}
           onSeeAllClick={handleSeeAllClick(
-            this.props.pixel.push,
+            this.props.push,
             this.props.runtime.page,
           )}
         />
@@ -563,4 +568,4 @@ class AutoComplete extends React.Component<
   }
 }
 
-export default withUsePixel(withDevice(withApollo(withRuntime(AutoComplete))));
+export default withPixel(withDevice(withApollo(withRuntime(AutoComplete))));
