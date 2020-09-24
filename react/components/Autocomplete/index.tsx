@@ -16,25 +16,22 @@ import { withDevice } from "vtex.device-detector";
 import debounce from "debounce";
 import withUsePixel from "../../utils/withUsePixel";
 import { withRuntime } from "../../utils/withRuntime";
+import {
+  EventType,
+  handleAutocompleteSearch,
+  handleItemClick,
+  handleProductClick,
+  handleSeeAllClick,
+} from "../../utils/pixel";
 
 const MAX_TOP_SEARCHES_DEFAULT = 10;
 const MAX_SUGGESTED_TERMS_DEFAULT = 5;
 const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3;
 const MAX_HISTORY_DEFAULT = 5;
-const EVENT_NAME = "autocomplete";
 
 export enum ProductLayout {
   Horizontal = "HORIZONTAL",
   Vertical = "VERTICAL",
-}
-
-enum EventType {
-  ProductClick = "product_click",
-  SearchSuggestionClick = "search_suggestion_click",
-  TopSearchClick = "top_search_click",
-  HistoryClick = "history_click",
-  Search = "search",
-  SeeAllClick = "see_all_click",
 }
 
 interface AutoCompleteProps {
@@ -110,52 +107,6 @@ class AutoComplete extends React.Component<
     this.client = new BiggyClient(this.props.client);
     this.autocompleteRef = React.createRef();
     this.isIOS = navigator && !!navigator.userAgent.match(/(iPod|iPhone|iPad)/);
-  }
-
-  handleProductClick(productId: string, position: number) {
-    const { push } = this.props.pixel;
-    const { page } = this.props.runtime;
-
-    push({
-      page,
-      event: EVENT_NAME,
-      eventType: EventType.ProductClick,
-      product: {
-        productId,
-        position,
-      },
-    });
-  }
-
-  handleItemClick(type: string) {
-    return (term: string, position: number) => {
-      const { push } = this.props.pixel;
-      const { page } = this.props.runtime;
-
-      push({
-        page,
-        event: EVENT_NAME,
-        eventType: type,
-        search: {
-          term,
-          position,
-        },
-      });
-    };
-  }
-
-  handleSeeAllClick(term: string) {
-    const { push } = this.props.pixel;
-    const { page } = this.props.runtime;
-
-    push({
-      page,
-      event: EVENT_NAME,
-      eventType: EventType.SeeAllClick,
-      search: {
-        term,
-      },
-    });
   }
 
   fitAutocompleteInWindow() {
@@ -329,18 +280,7 @@ class AutoComplete extends React.Component<
     if (!queryFromHover) {
       const { count, operator, misspelled } = result.data.productSuggestions;
 
-      console.log(result.data.productSuggestions);
-
-      push({
-        event: EVENT_NAME,
-        eventType: EventType.Search,
-        search: {
-          operator,
-          misspelled,
-          text: decodeURI(term),
-          match: count,
-        },
-      });
+      handleAutocompleteSearch(push, operator, misspelled, count, term);
     }
 
     this.setState({
@@ -441,7 +381,11 @@ class AutoComplete extends React.Component<
         showTitle={!hasSuggestion || !this.props.hideTitles}
         onItemHover={this.updateQueryByItemHover.bind(this)}
         showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
-        onItemClick={this.handleItemClick(EventType.SearchSuggestionClick)}
+        onItemClick={handleItemClick(
+          this.props.pixel.push,
+          this.props.runtime.page,
+          EventType.SearchSuggestionClick,
+        )}
       />
     );
   }
@@ -462,7 +406,11 @@ class AutoComplete extends React.Component<
             title={<FormattedMessage id={"store/topSearches"} />}
             items={this.state.topSearchedItems || []}
             showTitle={!this.props.hideTitles}
-            onItemClick={this.handleItemClick(EventType.TopSearchClick)}
+            onItemClick={handleItemClick(
+              this.props.pixel.push,
+              this.props.runtime.page,
+              EventType.TopSearchClick,
+            )}
           />
         ) : null}
 
@@ -473,7 +421,11 @@ class AutoComplete extends React.Component<
             title={<FormattedMessage id={"store/history"} />}
             items={this.state.history || []}
             showTitle={!this.props.hideTitles}
-            onItemClick={this.handleItemClick(EventType.HistoryClick)}
+            onItemClick={handleItemClick(
+              this.props.pixel.push,
+              this.props.runtime.page,
+              EventType.HistoryClick,
+            )}
           />
         ) : null}
       </div>
@@ -498,8 +450,14 @@ class AutoComplete extends React.Component<
           totalProducts={this.state.totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={this.state.isProductsLoading}
-          onProductClick={this.handleProductClick.bind(this)}
-          onSeeAllClick={this.handleSeeAllClick.bind(this)}
+          onProductClick={handleProductClick(
+            this.props.pixel.push,
+            this.props.runtime.page,
+          )}
+          onSeeAllClick={handleSeeAllClick(
+            this.props.pixel.push,
+            this.props.runtime.page,
+          )}
         />
       </>
     );

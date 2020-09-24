@@ -56,7 +56,15 @@ export class TileList extends React.Component<TileListProps> {
                 return (
                   <li key={product.productId} className={styles.tileListItem}>
                     {this.props.layout === ProductLayout.Horizontal ? (
-                      <CustomListItem product={productSummary} />
+                      <CustomListItem
+                        product={productSummary}
+                        onClick={() => {
+                          this.props.onProductClick(
+                            productSummary.productId,
+                            index,
+                          );
+                        }}
+                      />
                     ) : (
                       <ExtensionPoint
                         id="product-summary"
