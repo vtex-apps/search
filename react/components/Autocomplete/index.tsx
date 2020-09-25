@@ -433,6 +433,7 @@ class AutoComplete extends React.Component<
           onProductClick={handleProductClick(
             this.props.push,
             this.props.runtime.page,
+            this.props.inputValue,
           )}
           onSeeAllClick={handleSeeAllClick(
             this.props.push,

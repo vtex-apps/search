@@ -9,10 +9,15 @@ export enum EventType {
   SeeAllClick = "see_all_click",
 }
 
-export function handleProductClick(push: (data: any) => void, page: string) {
+export function handleProductClick(
+  push: (data: any) => void,
+  page: string,
+  term: string,
+) {
   return (productId: string, position: number) =>
     push({
       page,
+      term,
       event: EVENT_NAME,
       eventType: EventType.ProductClick,
       product: {
