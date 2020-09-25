@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Pixel events to the autocomplete.
+
 ## [0.11.15] - 2020-06-02
 
 ## [0.11.14] - 2020-05-19

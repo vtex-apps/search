@@ -35,7 +35,9 @@
     "vtex.sae-analytics": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
-    "vtex.css-handles": "0.x"
+    "vtex.css-handles": "0.x",
+    "vtex.product-price": "1.x",
+    "vtex.pixel-manager": "1.x"
   },
   "policies": [
     {

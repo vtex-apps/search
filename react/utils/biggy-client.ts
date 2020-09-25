@@ -103,6 +103,8 @@ interface ISearchesOutput {
 interface IProductsOutput {
   products: ISearchProduct[];
   count: number;
+  misspelled: boolean;
+  operator: string;
 }
 
 interface ISuggestionQueryResponseSearch {
