@@ -80,6 +80,8 @@ type ResultResponse {
 Result of a SuggestionProducts query, a list of suggestion products.
 """
 type SuggestionProductsOutput {
+  operator: String
+  misspelled: Boolean
   count: Int!
   products(origin: Origin = BIGGY, indexingType: IndexingType = "API"): [Product]!
 }

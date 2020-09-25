@@ -46,6 +46,14 @@ export const autocomplete = {
       tradePolicy,
     });
 
-    return result;
+    const {
+      count,
+      operator,
+      correction: { misspelled },
+      products
+    } = result
+
+
+    return {count, operator, misspelled, products};
   },
 };

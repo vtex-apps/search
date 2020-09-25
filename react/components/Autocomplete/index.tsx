@@ -231,10 +231,7 @@ class AutoComplete extends React.Component<
 
   async updateProducts() {
     const term = this.state.dynamicTerm;
-    const {
-      __unstableProductOrigin = "BIGGY",
-      __unstableIndexingType,
-    } = this.props;
+    const { __unstableProductOrigin = "BIGGY" } = this.props;
     const { queryFromHover } = this.state;
 
     if (!term) {
@@ -254,11 +251,10 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin,
-      __unstableIndexingType,
     );
 
     if (!queryFromHover) {
-      const { count, operator, misspelled } = result.data.productSuggestions;
+      const { count, operator, misspelled } = result.data.suggestionProducts;
 
       handleAutocompleteSearch(
         this.props.push,

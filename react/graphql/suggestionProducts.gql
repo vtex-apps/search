@@ -113,6 +113,8 @@ query suggestionProducts(
     indexingType: $indexingType
   ) @context(provider: "vtex.search") {
     count
+    operator
+    misspelled
     products(origin: $productOrigin, indexingType: $indexingType) {
       ...Product
     }
