@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExtensionPoint } from "vtex.render-runtime";
+import { ExtensionPoint, Link } from "vtex.render-runtime";
 import styles from "./styles";
 import { CustomListItem } from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
@@ -16,6 +16,8 @@ interface TileListProps {
   totalProducts: number;
   layout: ProductLayout;
   isLoading: boolean;
+  onProductClick: (product: string, position: number) => void;
+  onSeeAllClick: (term: string) => void;
 }
 
 export class TileList extends React.Component<TileListProps> {
@@ -51,7 +53,7 @@ export class TileList extends React.Component<TileListProps> {
                     : "row",
               }}
             >
-              {this.props.products.map(product => {
+              {this.props.products.map((product, index: number) => {
                 const productSummary = ProductSummary.mapCatalogProductToProductSummary(
                   product,
                 );
@@ -59,11 +61,25 @@ export class TileList extends React.Component<TileListProps> {
                 return (
                   <li key={product.productId} className={styles.tileListItem}>
                     {this.props.layout === ProductLayout.Horizontal ? (
-                      <CustomListItem product={productSummary} />
+                      <CustomListItem
+                        product={productSummary}
+                        onClick={() => {
+                          this.props.onProductClick(
+                            productSummary.productId,
+                            index,
+                          );
+                        }}
+                      />
                     ) : (
                       <ExtensionPoint
                         id="product-summary"
                         product={productSummary}
+                        actionOnClick={() => {
+                          this.props.onProductClick(
+                            productSummary.productId,
+                            index,
+                          );
+                        }}
                       />
                     )}
                   </li>
@@ -73,15 +89,16 @@ export class TileList extends React.Component<TileListProps> {
 
             <footer>
               {unseenProductsCount > 0 ? (
-                <a
+                <Link
+                  to={`/search`}
+                  query={`_query=${this.props.term}`}
                   className={styles.tileListSeeMore}
-                  href={`/search?_query=${this.props.term}`}
                 >
                   <FormattedMessage
                     id="store/seeMore"
                     values={{ count: unseenProductsCount }}
                   />
-                </a>
+                </Link>
               ) : null}
             </footer>
           </>
