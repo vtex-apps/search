@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ExtensionPoint, Link } from "vtex.render-runtime";
 import styles from "./styles";
-import { CustomListItem } from "../CustomListItem/CustomListItem";
+import CustomListItem from "../CustomListItem/CustomListItem";
 import { ProductLayout } from "../..";
 import { Spinner } from "vtex.styleguide";
 import ProductSummary from "vtex.product-summary/ProductSummaryCustom";

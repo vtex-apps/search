@@ -1,23 +1,9 @@
 
 .clearLink {}
 
-.element {
-    position: relative;
-}
-
 .imageContainer {
     max-height: 80px;
 }
-
-.image {}
-
-.information {}
-
-.productNameContainer {}
-
-.productBrand {}
-
-.priceContainer {}
 
 .priceOld {}
 
