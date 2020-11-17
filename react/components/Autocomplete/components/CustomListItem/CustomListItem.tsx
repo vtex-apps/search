@@ -7,6 +7,7 @@ import { ProductContextProvider } from "vtex.product-context";
 
 interface CustomListItemProps {
   product: any;
+  onClick: () => void;
 }
 
 export class CustomListItem extends React.Component<CustomListItemProps> {
@@ -24,6 +25,7 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
           }}
           page="store.product"
           className="no-underline"
+          onClick={this.props.onClick}
         >
           <article
             className={`${styles.element} flex flex-row justify-start items-center pa3 bg-animate hover-bg-light-gray`}

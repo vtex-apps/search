@@ -8,6 +8,7 @@ interface ItemListProps {
   title: string | JSX.Element;
   items: Item[];
   showTitle: boolean;
+  onItemClick: (term: string, position: number) => void;
   modifier?: string;
   onItemHover?: (item: Item | AttributeItem) => void;
   showTitleOnEmpty?: boolean;
@@ -63,7 +64,7 @@ export class ItemList extends React.Component<ItemListProps> {
           </p>
         ) : null}
         <ol className={stylesCss.itemListList}>
-          {this.props.items.map(item => {
+          {this.props.items.map((item, index) => {
             return (
               <li
                 key={item.value}
@@ -71,7 +72,11 @@ export class ItemList extends React.Component<ItemListProps> {
                 onMouseOver={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
               >
-                <Link to={item.link} query={`map=ft`}>
+                <Link
+                  to={item.link}
+                  query={`map=ft`}
+                  onClick={() => this.props.onItemClick(item.value, index)}
+                >
                   {item.icon ? (
                     <span className={stylesCss.itemListIcon}>{item.icon}</span>
                   ) : null}
