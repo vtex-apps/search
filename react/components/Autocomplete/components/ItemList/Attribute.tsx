@@ -20,7 +20,7 @@ const Attribute = (props: IAttributeProps) =>
           onMouseOut={() => props.handleMouseOut()}
         >
           <Link
-            className={`c-on-base`}
+            className={`${stylesCss.itemListSubItemLink} c-on-base`}
             to={`/${props.item.value}/${attribute.value}`}
             query={`map=ft,${attribute.key}`}
           >
