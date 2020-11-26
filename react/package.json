@@ -23,11 +23,12 @@
     "react-apollo": "2.4.1",
     "react-dom": "^16.8.6",
     "react-intl": "^3.9.2",
-    "typescript": "3.9.7",
+    "typescript": "^4.1.2",
     "unescape": "^1.0.1",
     "vtex": "^2.77.11"
   },
   "devDependencies": {
+    "cypress": "4.5.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.5.0",

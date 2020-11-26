@@ -34,3 +34,8 @@ npm-debug.log
 .eslintrc
 *.orig
 yarn-error.log
+
+# Cypress
+react/cypress/videos
+react/cypress/screenshots
+react/cypress/results

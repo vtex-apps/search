@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://<workspace>--<account>.myvtex.com",
+  "specCallback": true,
+  "completeCallback": true,
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
+  "pluginsFile": "cypress/plugins/index.js",
+  "supportFile": "cypress/support/index.ts"
+}

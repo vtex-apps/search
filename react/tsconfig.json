@@ -28,7 +28,13 @@
     "noEmit": true
   },
   "exclude": ["node_modules"],
-  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts", "index.js"],
+  "include": [
+    "./typings/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.ts",
+    "index.js",
+    "cypress/plugins/index.js"
+  ],
   "typeAcquisition": {
     "enable": false
   }
