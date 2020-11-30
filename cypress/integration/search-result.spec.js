@@ -1,4 +1,4 @@
-/// <reference types='cypress' />
+// / <reference types='cypress' />
 
 import * as CONSTANTS from '../constants'
 
