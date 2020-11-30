@@ -29,11 +29,11 @@
   },
   "exclude": ["node_modules"],
   "include": [
+    "../cypress/plugins/index.js",
     "./typings/*.d.ts",
     "./**/*.tsx",
     "./**/*.ts",
-    "index.js",
-    "cypress/plugins/index.js"
+    "index.js"
   ],
   "typeAcquisition": {
     "enable": false
