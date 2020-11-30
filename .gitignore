@@ -36,6 +36,6 @@ npm-debug.log
 yarn-error.log
 
 # Cypress
-react/cypress/videos
-react/cypress/screenshots
-react/cypress/results
+cypress/videos
+cypress/screenshots
+cypress/results
