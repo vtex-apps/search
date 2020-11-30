@@ -168,7 +168,9 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `suggestionsList`       |
 | `suggestionsListItem`   |
 | `suggestionsListLink`   |
-| `suggestionsListPrefix` |
+| `itemListSubItemLink`   |
+| `itemListLink`          |
+| `itemListLinkTitle`     |
 
 <!-- DOCS-IGNORE:start -->
 
