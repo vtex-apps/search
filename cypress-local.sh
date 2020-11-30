@@ -8,7 +8,7 @@ resolvedConfig="resolved-cypress.json"
 
 # replace <account> and <workspace> placeholders in baseUrl
 # and write config to $resolvedConfig
-node -e "c=require('./cypress.json');console.log(JSON.stringify({...c,baseUrl:c.baseUrl.split('<account>').join('$account').split('<workspace>').join('$workspace')}, null, 2))" > $resolvedConfig
+cat cypress.json | sed -e "s/<workspace>/$workspace/" | sed -e "s/<account>/$account/" > $resolvedConfig
 
 # expose local token to Cypress tests
 export CYPRESS_authToken=$token
@@ -19,6 +19,6 @@ cmd=$1
 # discard cmd from argument list
 shift
 
-npx cypress $cmd -C $resolvedConfig "$@" --browser chrome
+yarn cypress $cmd -C $resolvedConfig "$@" --browser chrome
 
 rm $resolvedConfig
