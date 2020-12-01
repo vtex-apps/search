@@ -23,7 +23,7 @@
     "react-apollo": "2.4.1",
     "react-dom": "^16.8.6",
     "react-intl": "^3.9.2",
-    "typescript": "3.8.3",
+    "typescript": "3.9.7",
     "unescape": "^1.0.1",
     "vtex": "^2.77.11"
   },

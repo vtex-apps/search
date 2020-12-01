@@ -76,6 +76,7 @@ export class ItemList extends React.Component<ItemListProps> {
                   to={item.link}
                   query={`map=ft`}
                   onClick={() => this.props.onItemClick(item.value, index)}
+                  className={stylesCss.itemListLink}
                 >
                   {item.icon ? (
                     <span className={stylesCss.itemListIcon}>{item.icon}</span>
@@ -86,7 +87,10 @@ export class ItemList extends React.Component<ItemListProps> {
                       {item.prefix}
                     </span>
                   ) : null}
-                  <span className="c-on-base">{item.label}</span>
+
+                  <span className={`${stylesCss.itemListLinkTitle} c-on-base`}>
+                    {item.label}
+                  </span>
                 </Link>
                 <Attribute
                   item={item}
