@@ -172,6 +172,22 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `itemListLink`          |
 | `itemListLinkTitle`     |
 
+## Tests
+
+We use [Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to run end to end tests.
+If you want to run our tests, use the VTEX test command:
+```console
+$ vtex test e2e
+```
+
+To provide your local user *token*, pass the `--token` command line argument to the *test* command:
+```console
+$ vtex test e2e --token
+```
+
+If you want to run Cypress locally, you can use the commands `yarn e2e:open` or `yarn e2e:run`.
+
+
 <!-- DOCS-IGNORE:start -->
 
 ## Contributors ✨

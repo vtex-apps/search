@@ -12,7 +12,8 @@
     "react": "3.x",
     "styles": "2.x",
     "docs": "0.x",
-    "messages": "1.x"
+    "messages": "1.x",
+    "cypress": "0.x"
   },
   "dependencies": {
     "vtex.native-types": "0.x",
@@ -35,7 +36,8 @@
     "vtex.search-page-context": "0.x",
     "vtex.css-handles": "0.x",
     "vtex.product-price": "1.x",
-    "vtex.pixel-manager": "1.x"
+    "vtex.pixel-manager": "1.x",
+    "vtex.tester-hub": "0.x"
   },
   "policies": [],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
