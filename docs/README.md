@@ -35,7 +35,7 @@ You are now able to use all of the blocks exported by the `search` app. Check th
 | `did-you-mean`                | Helps users with possible misspelling corrections for the current search query.                                                                                                                                                                                                                                                                       |
 | `search-suggestions`          | Renders a list of similar search terms for the current search query.                                                                                                                                                                                                                                                                                  |
 
-:warning: The blocks `banner`, `did-you-mean` and `suggestions` require you to have [Search Results app](https://vtex.io/docs/components/all/vtex.search-result@3.59.0/) version 3.x or higher installed in your theme.
+:warning: The blocks `search-banner`, `did-you-mean` and `search-suggestions` require you to have [Search Results app](https://vtex.io/docs/components/all/vtex.search-result@3.59.0/) version 3.x or higher installed in your theme.
 
 ### Step 2 - Adding the Search's blocks into the theme
 
