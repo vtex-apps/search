@@ -3,5 +3,5 @@
   "ttl": 10,
   "timeout": 20,
   "minReplicas": 8,
-  "maxReplicas": 20
+  "maxReplicas": 80
 }
