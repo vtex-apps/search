@@ -16,6 +16,7 @@ import { withDevice } from "vtex.device-detector";
 import debounce from "debounce";
 import { withPixel } from "vtex.pixel-manager/PixelContext";
 import { withRuntime } from "../../utils/withRuntime";
+import { sanitizeString } from "../../utils/string-utils"
 import {
   EventType,
   handleAutocompleteSearch,
@@ -334,7 +335,7 @@ class AutoComplete extends React.Component<
       .slice(0, this.props.maxHistory || MAX_HISTORY_DEFAULT)
       .map((item: string) => {
         return {
-          label: item,
+          label: sanitizeString(item),
           value: item,
           link: `/${item}?map=ft`,
           icon: <IconClock />,
