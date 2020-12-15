@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-### Fixex
+### Fixed
 - Added sanitize function in `string-utils` and using in `history` label in `Autocomplete`
 
 ## [2.2.0] - 2020-12-02
