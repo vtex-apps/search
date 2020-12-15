@@ -9,3 +9,7 @@ export function removeBaseUrl(url: string) {
 
   return url;
 }
+
+export function sanitizeString(str: string) {
+  return str.replace(/\$2F/gi, '/')
+}
