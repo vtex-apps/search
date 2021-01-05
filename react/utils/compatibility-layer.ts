@@ -1,4 +1,4 @@
-import unescape from "unescape";
+import unescape from 'unescape'
 
 /*
  * Functions designed to provide compatibility between our search components
@@ -6,22 +6,22 @@ import unescape from "unescape";
  */
 
 function textOverflow(text: string, maxWidth: number) {
-  return text.length > maxWidth ? `${text.substr(0, maxWidth - 3)}...` : text;
+  return text.length > maxWidth ? `${text.substr(0, maxWidth - 3)}...` : text
 }
 
-type UpdateQuery = (prev: any, options: { fetchMoreResult: any }) => void;
+type UpdateQuery = (prev: any, options: { fetchMoreResult: any }) => void
 type FetchMoreOptions = {
-  variables: { to: number; page?: number };
-  updateQuery: UpdateQuery;
-};
-type FetchMore = (options: FetchMoreOptions) => Promise<any>;
+  variables: { to: number; page?: number }
+  updateQuery: UpdateQuery
+}
+type FetchMore = (options: FetchMoreOptions) => Promise<any>
 type RefetchVariables = {
-  from: number;
-  to: number;
-  count: number;
-  page: number;
-};
-type Refetch = (options: Partial<RefetchVariables>) => Promise<any>;
+  from: number
+  to: number
+  count: number
+  page: number
+}
+type Refetch = (options: Partial<RefetchVariables>) => Promise<any>
 
 /**
  * Our Query depends on a `page` variable, but store-components' SearchContext
@@ -33,16 +33,16 @@ type Refetch = (options: Partial<RefetchVariables>) => Promise<any>;
 export const makeFetchMore = (
   fetchMore: FetchMore,
   page: number,
-  setPage: (func: (page: number) => number) => number,
+  setPage: (func: (page: number) => number) => number
 ): FetchMore => async ({ variables, updateQuery = () => {} }) => {
-  const newPage = page + 1;
+  const newPage = page + 1
 
   await fetchMore({
     updateQuery: makeUpdateQuery(newPage),
     variables: { ...variables, page: newPage },
-  });
+  })
 
-  setPage((page: number) => page + 1);
+  setPage((page: number) => page + 1)
 
   return updateQuery(
     { productSearch: { products: [] } },
@@ -50,9 +50,9 @@ export const makeFetchMore = (
       fetchMoreResult: {
         productSearch: { products: [] },
       },
-    },
-  );
-};
+    }
+  )
+}
 
 /**
  * Our Query depends on a `page` variable, but store-components' SearchContext
@@ -62,17 +62,14 @@ export const makeFetchMore = (
  * @param refetch Apollo's refetch function for our query.
  */
 export const makeRefetch = (refetch: Refetch): Refetch => async variables => {
-  const { from, to } = variables;
-  const hasPagination =
-    typeof from !== "undefined" && typeof to !== "undefined";
+  const { from, to } = variables
+  const hasPagination = typeof from !== 'undefined' && typeof to !== 'undefined'
 
-  const count = hasPagination ? to! - from! + 1 : undefined;
-  const page = hasPagination
-    ? Math.round((to! + 1) / (to! - from!))
-    : undefined;
+  const count = hasPagination ? to! - from! + 1 : undefined
+  const page = hasPagination ? Math.round((to! + 1) / (to! - from!)) : undefined
 
-  return await refetch({ from, to, page, count });
-};
+  return await refetch({ from, to, page, count })
+}
 
 /**
  * UpdateQuery factory for our own query.
@@ -81,9 +78,9 @@ export const makeRefetch = (refetch: Refetch): Refetch => async variables => {
  */
 const makeUpdateQuery: (page: number) => UpdateQuery = page => (
   prev,
-  { fetchMoreResult },
+  { fetchMoreResult }
 ) => {
-  if (!fetchMoreResult || page === 1) return prev;
+  if (!fetchMoreResult || page === 1) return prev
 
   return {
     ...fetchMoreResult,
@@ -94,8 +91,8 @@ const makeUpdateQuery: (page: number) => UpdateQuery = page => (
         ...fetchMoreResult.searchResult.products,
       ],
     },
-  };
-};
+  }
+}
 
 /**
  * Convert Biggy attributes into VTEX Catalog facets.
@@ -105,12 +102,12 @@ const makeUpdateQuery: (page: number) => UpdateQuery = page => (
  * @returns A Catalog facet.
  */
 export function fromAttributesToFacets(attribute: any) {
-  if (attribute.type === "number") {
+  if (attribute.type === 'number') {
     return {
-      map: "priceRange",
+      map: 'priceRange',
       name: attribute.label,
       slug: `de-${attribute.minValue}-a-${attribute.maxValue}`,
-    };
+    }
   }
 
   return {
@@ -124,20 +121,20 @@ export function fromAttributesToFacets(attribute: any) {
         map: attribute.key,
         selected: value.active,
         value: `z${value.key}`,
-      };
+      }
     }),
-  };
+  }
 }
 
 type OrderBy =
-  | "OrderByPriceDESC"
-  | "OrderByPriceASC"
-  | "OrderByTopSaleDESC"
-  | "OrderByReviewRateDESC"
-  | "OrderByNameDESC"
-  | "OrderByNameASC"
-  | "OrderByReleaseDateDESC"
-  | "OrderByBestDiscountDESC";
+  | 'OrderByPriceDESC'
+  | 'OrderByPriceASC'
+  | 'OrderByTopSaleDESC'
+  | 'OrderByReviewRateDESC'
+  | 'OrderByNameDESC'
+  | 'OrderByNameASC'
+  | 'OrderByReleaseDateDESC'
+  | 'OrderByBestDiscountDESC'
 
 /**
  * Convert from VTEX OrderBy into Biggy's sort.
@@ -148,24 +145,32 @@ type OrderBy =
  */
 export function convertOrderBy(orderBy: OrderBy): string {
   switch (orderBy) {
-    case "OrderByPriceDESC":
-      return "price:desc";
-    case "OrderByPriceASC":
-      return "price:asc";
-    case "OrderByTopSaleDESC":
-      return "orders:desc";
-    case "OrderByReviewRateDESC":
-      return ""; // TODO: Not Supported
-    case "OrderByNameDESC":
-      return "name:desc";
-    case "OrderByNameASC":
-      return "name:asc";
-    case "OrderByReleaseDateDESC":
-      return "fields.release:desc";
-    case "OrderByBestDiscountDESC":
-      return "discount:desc";
+    case 'OrderByPriceDESC':
+      return 'price:desc'
+
+    case 'OrderByPriceASC':
+      return 'price:asc'
+
+    case 'OrderByTopSaleDESC':
+      return 'orders:desc'
+
+    case 'OrderByReviewRateDESC':
+      return '' // TODO: Not Supported
+
+    case 'OrderByNameDESC':
+      return 'name:desc'
+
+    case 'OrderByNameASC':
+      return 'name:asc'
+
+    case 'OrderByReleaseDateDESC':
+      return 'fields.release:desc'
+
+    case 'OrderByBestDiscountDESC':
+      return 'discount:desc'
+
     default:
-      return "";
+      return ''
   }
 }
 
@@ -173,20 +178,21 @@ export function convertURLToAttributePath(
   attributePath: string,
   map: string,
   priceRange: string,
-  priceRangeKey: string,
+  priceRangeKey: string
 ) {
-  const facets = (attributePath || "").split("/");
-  const apiUrlTerms = (map || "")
-    .split(",")
+  const facets = (attributePath || '').split('/')
+  const apiUrlTerms = (map || '')
+    .split(',')
     .slice(1)
-    .map((item, index) => `${item}/${facets[index].replace(/^z/, "")}`);
+    .map((item, index) => `${item}/${facets[index].replace(/^z/, '')}`)
 
-  const url = apiUrlTerms.join("/");
+  const url = apiUrlTerms.join('/')
 
   if (priceRange && priceRangeKey) {
-    const [from, to] = priceRange.split(" TO ");
-    return `${url}/${priceRangeKey}/${from}:${to}`;
+    const [from, to] = priceRange.split(' TO ')
+
+    return `${url}/${priceRangeKey}/${from}:${to}`
   }
 
-  return url;
+  return url
 }

@@ -1,12 +1,13 @@
-import React from "react";
-import { Item } from "./types";
-import stylesCss from "./styles.css";
-import { Link } from "vtex.render-runtime";
+import React from 'react'
+import { Link } from 'vtex.render-runtime'
+
+import { Item } from './types'
+import stylesCss from './styles.css'
 
 interface IAttributeProps {
-  item: Item;
-  handleMouseOver: (ee: React.MouseEvent, item: Item) => void;
-  handleMouseOut: () => void;
+  item: Item
+  handleMouseOver: (ee: React.MouseEvent, item: Item) => void
+  handleMouseOut: () => void
 }
 
 const Attribute = (props: IAttributeProps) =>
@@ -29,6 +30,6 @@ const Attribute = (props: IAttributeProps) =>
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : null
 
-export default Attribute;
+export default Attribute

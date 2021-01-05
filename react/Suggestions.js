@@ -1,3 +1,3 @@
-import Suggestions from "./components/Suggestions";
+import Suggestions from './components/Suggestions'
 
-export default Suggestions;
+export default Suggestions

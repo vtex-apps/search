@@ -1,41 +1,41 @@
-import { Link } from "vtex.render-runtime";
-import { useCssHandles } from "vtex.css-handles";
-import correctionQuery from "vtex.store-resources/QueryCorrection";
-import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
-import { useQuery } from "react-apollo";
-import { FormattedMessage } from "react-intl";
+import { Link } from 'vtex.render-runtime'
+import { useCssHandles } from 'vtex.css-handles'
+import correctionQuery from 'vtex.store-resources/QueryCorrection'
+import { useSearchPage } from 'vtex.search-page-context/SearchPageContext'
+import { useQuery } from 'react-apollo'
+import { FormattedMessage } from 'react-intl'
 
 interface Correction {
-  correction: boolean;
-  misspelled: boolean;
-  text: string;
-  highlighted: string;
+  correction: boolean
+  misspelled: boolean
+  text: string
+  highlighted: string
 }
 
-const CSS_HANDLES = ["didYouMeanPrefix", "didYouMeanTerm"];
+const CSS_HANDLES = ['didYouMeanPrefix', 'didYouMeanTerm']
 
 const DidYouMean = () => {
-  const handles = useCssHandles(CSS_HANDLES);
+  const handles = useCssHandles(CSS_HANDLES)
 
   const {
     searchQuery: {
       variables: { fullText },
     },
-  } = useSearchPage();
+  } = useSearchPage()
 
   const { loading, data } = useQuery(correctionQuery, {
     variables: {
       fullText,
     },
-  });
+  })
 
-  const correction: Correction = data?.correction?.correction;
+  const correction: Correction = data?.correction?.correction
 
   return !loading && correction?.correction ? (
     <p>
       <span className={`${handles.didYouMeanPrefix} c-muted-1`}>
-        <FormattedMessage id={"store/didYouMean"} />
-        {": "}
+        <FormattedMessage id="store/didYouMean" />
+        {': '}
       </span>
       <span className={handles.didYouMeanTerm}>
         <Link className="link" to={`/${correction.text}?map=ft`}>
@@ -43,7 +43,7 @@ const DidYouMean = () => {
         </Link>
       </span>
     </p>
-  ) : null;
-};
+  ) : null
+}
 
-export default DidYouMean;
+export default DidYouMean

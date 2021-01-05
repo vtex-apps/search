@@ -1,3 +1,3 @@
-import Banner from "./components/Banner";
+import Banner from './components/Banner'
 
-export default Banner;
+export default Banner

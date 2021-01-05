@@ -1,29 +1,31 @@
-import * as React from "react";
-import { ExtensionPoint, Link } from "vtex.render-runtime";
-import styles from "./styles";
-import { CustomListItem } from "../CustomListItem/CustomListItem";
-import { ProductLayout } from "../..";
-import { Spinner } from "vtex.styleguide";
-import ProductSummary from "vtex.product-summary/ProductSummaryCustom";
-import { FormattedMessage } from "react-intl";
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import * as React from 'react'
+import { ExtensionPoint, Link } from 'vtex.render-runtime'
+import { Spinner } from 'vtex.styleguide'
+import ProductSummary from 'vtex.product-summary/ProductSummaryCustom'
+import { FormattedMessage } from 'react-intl'
+
+import styles from './styles'
+import { CustomListItem } from '../CustomListItem/CustomListItem'
+import { ProductLayout } from '../..'
 
 interface TileListProps {
-  term: string;
-  title: string | JSX.Element;
-  products: any[];
-  showTitle: boolean;
-  shelfProductCount: number;
-  totalProducts: number;
-  layout: ProductLayout;
-  isLoading: boolean;
-  onProductClick: (product: string, position: number) => void;
-  onSeeAllClick: (term: string) => void;
+  term: string
+  title: string | JSX.Element
+  products: any[]
+  showTitle: boolean
+  shelfProductCount: number
+  totalProducts: number
+  layout: ProductLayout
+  isLoading: boolean
+  onProductClick: (product: string, position: number) => void
+  onSeeAllClick: (term: string) => void
 }
 
 export class TileList extends React.Component<TileListProps> {
   render() {
     if (this.props.products.length === 0 && !this.props.isLoading) {
-      return null;
+      return null
     }
 
     return (
@@ -44,14 +46,14 @@ export class TileList extends React.Component<TileListProps> {
               style={{
                 flexDirection:
                   this.props.layout === ProductLayout.Horizontal
-                    ? "column"
-                    : "row",
+                    ? 'column'
+                    : 'row',
               }}
             >
               {this.props.products.map((product, index: number) => {
                 const productSummary = ProductSummary.mapCatalogProductToProductSummary(
-                  product,
-                );
+                  product
+                )
 
                 return (
                   <li key={product.productId} className={styles.tileListItem}>
@@ -61,8 +63,8 @@ export class TileList extends React.Component<TileListProps> {
                         onClick={() => {
                           this.props.onProductClick(
                             productSummary.productId,
-                            index,
-                          );
+                            index
+                          )
                         }}
                       />
                     ) : (
@@ -72,13 +74,13 @@ export class TileList extends React.Component<TileListProps> {
                         actionOnClick={() => {
                           this.props.onProductClick(
                             productSummary.productId,
-                            index,
-                          );
+                            index
+                          )
                         }}
                       />
                     )}
                   </li>
-                );
+                )
               })}
             </ul>
 
@@ -86,7 +88,7 @@ export class TileList extends React.Component<TileListProps> {
               {this.props.totalProducts > 0 ? (
                 <Link
                   to={`/${this.props.term}`}
-                  query={`map=ft`}
+                  query="map=ft"
                   className={styles.tileListSeeMore}
                   onClick={() => this.props.onSeeAllClick(this.props.term)}
                 >
@@ -100,6 +102,6 @@ export class TileList extends React.Component<TileListProps> {
           </>
         )}
       </section>
-    );
+    )
   }
 }

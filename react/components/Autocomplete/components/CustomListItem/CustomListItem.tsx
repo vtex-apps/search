@@ -1,20 +1,21 @@
-import * as React from "react";
-import { path } from "ramda";
-import { Link } from "vtex.render-runtime";
-import styles from "./styles.css";
-import { SellingPrice, ListPrice } from "vtex.product-price";
-import { ProductContextProvider } from "vtex.product-context";
+import * as React from 'react'
+import { path } from 'ramda'
+import { Link } from 'vtex.render-runtime'
+import { SellingPrice, ListPrice } from 'vtex.product-price'
+import { ProductContextProvider } from 'vtex.product-context'
+
+import styles from './styles.css'
 
 interface CustomListItemProps {
-  product: any;
-  onClick: () => void;
+  product: any
+  onClick: () => void
 }
 
 export class CustomListItem extends React.Component<CustomListItemProps> {
   render() {
-    const product = this.props.product;
-    const sku = path<any>(["sku"], product);
-    const taxPercentage = sku?.sellers?.[0]?.commertialOffer?.taxPercentage;
+    const { product } = this.props
+    const sku = path<any>(['sku'], product)
+    const taxPercentage = sku?.sellers?.[0]?.commertialOffer?.taxPercentage
 
     return (
       <div>
@@ -55,8 +56,8 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                     <ListPrice
                       message={
                         taxPercentage
-                          ? "{listPriceWithTax}"
-                          : "{listPriceValue}"
+                          ? '{listPriceWithTax}'
+                          : '{listPriceValue}'
                       }
                     />
                   </span>
@@ -64,8 +65,8 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                     <SellingPrice
                       message={
                         taxPercentage
-                          ? "{sellingPriceWithTax}"
-                          : "{sellingPriceValue}"
+                          ? '{sellingPriceWithTax}'
+                          : '{sellingPriceValue}'
                       }
                     />
                   </span>
@@ -75,6 +76,6 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
           </article>
         </Link>
       </div>
-    );
+    )
   }
 }

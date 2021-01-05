@@ -1,3 +1,3 @@
-import DidYouMean from "./components/DidYouMean";
+import DidYouMean from './components/DidYouMean'
 
-export default DidYouMean;
+export default DidYouMean
