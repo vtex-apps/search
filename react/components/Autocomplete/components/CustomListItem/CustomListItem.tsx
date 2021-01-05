@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import * as React from 'react'
-import { path } from 'ramda'
 import { Link } from 'vtex.render-runtime'
 import { SellingPrice, ListPrice } from 'vtex.product-price'
 import { ProductContextProvider } from 'vtex.product-context'
@@ -14,15 +16,15 @@ interface CustomListItemProps {
 export class CustomListItem extends React.Component<CustomListItemProps> {
   render() {
     const { product } = this.props
-    const sku = path<any>(['sku'], product)
+    const sku = product?.sku
     const taxPercentage = sku?.sellers?.[0]?.commertialOffer?.taxPercentage
 
     return (
       <div>
         <Link
           params={{
-            slug: product && product.linkText,
-            id: product && product.productId,
+            slug: product?.linkText,
+            id: product?.productId,
           }}
           page="store.product"
           className="no-underline"
@@ -49,7 +51,7 @@ export class CustomListItem extends React.Component<CustomListItemProps> {
                 <ProductContextProvider
                   product={product}
                   query={{
-                    skuId: sku && sku.itemId,
+                    skuId: sku?.itemId,
                   }}
                 >
                   <span className="db f7 c-muted-2">

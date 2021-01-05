@@ -6,19 +6,21 @@ import stylesCss from './styles.css'
 
 interface IAttributeProps {
   item: Item
-  handleMouseOver: (ee: React.MouseEvent, item: Item) => void
-  handleMouseOut: () => void
+  onMouseOver: (ee: React.MouseEvent | React.FocusEvent, item: Item) => void
+  onMouseOut: () => void
 }
 
 const Attribute = (props: IAttributeProps) =>
-  props.item && props.item.attributes ? (
+  props.item?.attributes ? (
     <ul className={stylesCss.itemListSubList}>
       {props.item.attributes.map((attribute, index) => (
         <li
           key={index}
           className={`${stylesCss.itemListSubItem} c-on-base pointer`}
-          onMouseOver={e => props.handleMouseOver(e, attribute)}
-          onMouseOut={() => props.handleMouseOut()}
+          onMouseOver={e => props.onMouseOver(e, attribute)}
+          onFocus={e => props.onMouseOver(e, attribute)}
+          onMouseOut={() => props.onMouseOut()}
+          onBlur={() => props.onMouseOut()}
         >
           <Link
             className={`${stylesCss.itemListSubItemLink} c-on-base`}

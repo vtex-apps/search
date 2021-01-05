@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import * as React from 'react'
 import { Link } from 'vtex.render-runtime'
 
@@ -24,14 +25,14 @@ export class ItemList extends React.Component<ItemListProps> {
     currentTimeoutId: null,
   }
 
-  handleMouseOver(e: React.MouseEvent, item: Item) {
+  handleMouseOver = (e: React.MouseEvent | React.FocusEvent, item: Item) => {
     e.stopPropagation()
 
     const { currentTimeoutId } = this.state
 
     if (!currentTimeoutId) {
       const timeoutId = setTimeout(() => {
-        this.props.onItemHover ? this.props.onItemHover!(item) : null
+        this.props.onItemHover ? this.props.onItemHover(item) : null
         this.setState({ currentTimeoutId: null })
       }, 100)
 
@@ -39,7 +40,7 @@ export class ItemList extends React.Component<ItemListProps> {
     }
   }
 
-  handleMouseOut() {
+  handleMouseOut = () => {
     const { currentTimeoutId } = this.state
 
     if (currentTimeoutId) {
@@ -71,7 +72,9 @@ export class ItemList extends React.Component<ItemListProps> {
                 key={item.value}
                 className={`${stylesCss.itemListItem}`}
                 onMouseOver={e => this.handleMouseOver(e, item)}
+                onFocus={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
+                onBlur={() => this.handleMouseOut()}
               >
                 <Link
                   to={item.link}
@@ -95,8 +98,8 @@ export class ItemList extends React.Component<ItemListProps> {
                 </Link>
                 <Attribute
                   item={item}
-                  handleMouseOver={this.handleMouseOver.bind(this)}
-                  handleMouseOut={this.handleMouseOut.bind(this)}
+                  onMouseOver={this.handleMouseOver}
+                  onMouseOut={this.handleMouseOut}
                 />
               </li>
             )

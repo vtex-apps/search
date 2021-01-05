@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import React from 'react'
 import { withApollo, WithApolloClient } from 'react-apollo'
@@ -32,6 +34,7 @@ const MAX_SUGGESTED_TERMS_DEFAULT = 5
 const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3
 const MAX_HISTORY_DEFAULT = 5
 
+// eslint-disable-next-line no-shadow
 export enum ProductLayout {
   Horizontal = 'HORIZONTAL',
   Vertical = 'VERTICAL',
@@ -127,6 +130,7 @@ class AutoComplete extends React.Component<
       .y
 
     const autocompleteHeight = this.autocompleteRef.current.offsetHeight
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     const autocompleteEnd = autocompletePosition + autocompleteHeight
 
     const currentHeight = autocompleteHeight - (autocompleteEnd - windowHeight)
@@ -165,34 +169,36 @@ class AutoComplete extends React.Component<
   }
 
   componentDidUpdate(prevProps: AutoCompleteProps) {
-    if (this.shouldUpdate(prevProps)) {
-      this.addTermToHistory()
-      this.fitAutocompleteInWindow()
+    if (!this.shouldUpdate(prevProps)) {
+      return
+    }
 
-      const { inputValue } = this.props
+    this.addTermToHistory()
+    this.fitAutocompleteInWindow()
+
+    const { inputValue } = this.props
+
+    this.setState({
+      dynamicTerm: inputValue,
+      queryFromHover: undefined,
+    })
+
+    if (inputValue === null || inputValue === '') {
+      this.updateTopSearches()
+      this.updateHistory()
 
       this.setState({
-        dynamicTerm: inputValue,
-        queryFromHover: undefined,
+        suggestionItems: [],
+        products: [],
       })
+    } else {
+      this.updateSuggestions()
+        .then(() => {
+          this.fitAutocompleteInWindow()
 
-      if (inputValue === null || inputValue === '') {
-        this.updateTopSearches()
-        this.updateHistory()
-
-        this.setState({
-          suggestionItems: [],
-          products: [],
+          return this.updateProducts()
         })
-      } else {
-        this.updateSuggestions()
-          .then(() => {
-            this.fitAutocompleteInWindow()
-
-            return this.updateProducts()
-          })
-          .then(() => this.fitAutocompleteInWindow())
-      }
+        .then(() => this.fitAutocompleteInWindow())
     }
   }
 
@@ -356,7 +362,7 @@ class AutoComplete extends React.Component<
     })
   }
 
-  updateQueryByItemHover(item: Item | AttributeItem) {
+  handleItemHover = (item: Item | AttributeItem) => {
     if (instanceOfAttributeItem(item)) {
       this.setState({
         dynamicTerm: item.groupValue,
@@ -394,7 +400,7 @@ class AutoComplete extends React.Component<
         items={this.state.suggestionItems || []}
         modifier="suggestion"
         showTitle={!hasSuggestion || !this.props.hideTitles}
-        onItemHover={this.updateQueryByItemHover.bind(this)}
+        onItemHover={this.handleItemHover}
         showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
         onItemClick={handleItemClick(
           this.props.push,

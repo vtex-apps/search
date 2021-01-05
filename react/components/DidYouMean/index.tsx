@@ -4,6 +4,7 @@ import correctionQuery from 'vtex.store-resources/QueryCorrection'
 import { useSearchPage } from 'vtex.search-page-context/SearchPageContext'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
+import React from 'react'
 
 interface Correction {
   correction: boolean

@@ -1,7 +1,9 @@
+/* eslint-disable no-restricted-syntax */
 import { useCssHandles } from 'vtex.css-handles'
 import bannersQuery from 'vtex.store-resources/QueryBanners'
 import { useSearchPage } from 'vtex.search-page-context/SearchPageContext'
 import { useQuery } from 'react-apollo'
+import React from 'react'
 
 interface ElasticBanner {
   id: string
@@ -10,6 +12,7 @@ interface ElasticBanner {
   html: string
 }
 
+// eslint-disable-next-line no-shadow
 enum HorizotalAlignment {
   Left = 'left',
   Right = 'right',
