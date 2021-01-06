@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax */
+// /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import React from 'react'
@@ -12,7 +12,7 @@ import { withPixel } from 'vtex.pixel-manager/PixelContext'
 
 import BiggyClient from '../../utils/biggy-client'
 import stylesCss from './styles.css'
-import { TileList } from './components/TileList/TileList'
+import TileList from './components/TileList/TileList'
 import {
   Item,
   instanceOfAttributeItem,
