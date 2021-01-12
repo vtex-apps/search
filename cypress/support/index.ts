@@ -14,8 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands";
-import "./vtex";
+import './commands'
+import './vtex'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

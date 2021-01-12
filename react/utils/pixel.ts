@@ -1,12 +1,12 @@
-const EVENT_NAME = "autocomplete";
+const EVENT_NAME = 'autocomplete'
 
 export enum EventType {
-  ProductClick = "product_click",
-  SearchSuggestionClick = "search_suggestion_click",
-  TopSearchClick = "top_search_click",
-  HistoryClick = "history_click",
-  Search = "search",
-  SeeAllClick = "see_all_click",
+  ProductClick = 'product_click',
+  SearchSuggestionClick = 'search_suggestion_click',
+  TopSearchClick = 'top_search_click',
+  HistoryClick = 'history_click',
+  Search = 'search',
+  SeeAllClick = 'see_all_click',
 }
 
 export function handleProductClick(push: (data: any) => void, page: string) {
@@ -19,13 +19,13 @@ export function handleProductClick(push: (data: any) => void, page: string) {
         productId,
         position,
       },
-    });
+    })
 }
 
 export function handleItemClick(
   push: (data: any) => void,
   page: string,
-  type: string,
+  type: string
 ) {
   return (term: string, position: number) => {
     push({
@@ -36,8 +36,8 @@ export function handleItemClick(
         term,
         position,
       },
-    });
-  };
+    })
+  }
 }
 
 export function handleSeeAllClick(push: (data: any) => void, page: string) {
@@ -49,7 +49,7 @@ export function handleSeeAllClick(push: (data: any) => void, page: string) {
       search: {
         term,
       },
-    });
+    })
 }
 
 export function handleAutocompleteSearch(
@@ -57,7 +57,7 @@ export function handleAutocompleteSearch(
   operator: string,
   misspelled: boolean,
   count: number,
-  term: string,
+  term: string
 ) {
   push({
     event: EVENT_NAME,
@@ -68,5 +68,5 @@ export function handleAutocompleteSearch(
       text: decodeURI(term),
       match: count,
     },
-  });
+  })
 }

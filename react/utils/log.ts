@@ -1,31 +1,29 @@
-import axios from "axios";
+import axios from 'axios'
 
 const client = axios.create({
-  baseURL: "https://search.biggylabs.com.br/search-api/v1",
+  baseURL: 'https://search.biggylabs.com.br/search-api/v1',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-});
+})
 
 const logError = (
   store: string,
   workspace: string,
   attributePath: string,
-  error: any,
+  error: any
 ) => {
   const browser =
-    typeof navigator !== "undefined"
-      ? navigator.userAgent
-      : "server-side-error";
+    typeof navigator !== 'undefined' ? navigator.userAgent : 'server-side-error'
 
   const message = `Workspace: ${workspace}\nBrowser: ${browser}\nMessage: ${
     error.message
-  }\n${error.stack != null ? error.stack : ""}`;
+  }\n${error.stack != null ? error.stack : ''}`
 
   client.post(`/${store}/log`, {
     message,
     url: `Search App Error at: ${attributePath}`,
-  });
-};
+  })
+}
 
-export default logError;
+export default logError

@@ -1,13 +1,13 @@
-import ApolloClient, { ApolloQueryResult } from "apollo-client";
-import { getCookie, setCookie } from "./dom-utils";
+import ApolloClient, { ApolloQueryResult } from 'apollo-client'
+import suggestionProducts from 'vtex.store-resources/QuerySuggestionProducts'
+import suggestionSearches from 'vtex.store-resources/QueryAutocompleteSearchSuggestions'
+import topSearches from 'vtex.store-resources/QueryTopSearches'
 
-import suggestionProducts from "vtex.store-resources/QuerySuggestionProducts";
-import suggestionSearches from "vtex.store-resources/QueryAutocompleteSearchSuggestions";
-import topSearches from "vtex.store-resources/QueryTopSearches";
-import { ISearchProduct } from "../models/search-product";
+import { getCookie, setCookie } from './dom-utils'
+import { ISearchProduct } from '../models/search-product'
 
 export default class BiggyClient {
-  private historyKey = "biggy-search-history";
+  private historyKey = 'biggy-search-history'
 
   constructor(private client: ApolloClient<any>) {}
 
@@ -16,11 +16,11 @@ export default class BiggyClient {
   > {
     return this.client.query({
       query: topSearches,
-    });
+    })
   }
 
   public async suggestionSearches(
-    term: string,
+    term: string
   ): Promise<
     ApolloQueryResult<{ autocompleteSearchSuggestions: ISearchesOutput }>
   > {
@@ -29,15 +29,15 @@ export default class BiggyClient {
       variables: {
         fullText: term,
       },
-    });
+    })
   }
 
   public async suggestionProducts(
     term: string,
     attributeKey?: string,
     attributeValue?: string,
-    productOrigin: boolean = false,
-    simulationBehavior: "default" | "skip" | null = "default",
+    productOrigin = false,
+    simulationBehavior: 'default' | 'skip' | null = 'default'
   ): Promise<ApolloQueryResult<{ productSuggestions: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
@@ -48,71 +48,71 @@ export default class BiggyClient {
         facetValue: attributeValue,
         productOriginVtex: productOrigin,
       },
-      fetchPolicy: "network-only",
-    });
+      fetchPolicy: 'network-only',
+    })
   }
 
   public searchHistory(): string[] {
-    const history = getCookie(this.historyKey) || "";
+    const history = getCookie(this.historyKey) || ''
 
-    return history.split(",").filter(x => !!x);
+    return history.split(',').filter(x => !!x)
   }
 
-  public prependSearchHistory(term: string, limit: number = 5) {
-    if (term == null || term.trim() === "") {
-      return;
+  public prependSearchHistory(term: string, limit = 5) {
+    if (term == null || term.trim() === '') {
+      return
     }
 
-    let history = this.searchHistory();
+    let history = this.searchHistory()
 
     if (history.indexOf(term) < 0) {
-      history.unshift(term);
-      history = history.slice(0, limit);
+      history.unshift(term)
+      history = history.slice(0, limit)
     }
 
-    setCookie(this.historyKey, history.join(","));
+    setCookie(this.historyKey, history.join(','))
   }
 }
 
 interface ISearchesOutput {
-  searches: ISuggestionQueryResponseSearch[];
+  searches: ISuggestionQueryResponseSearch[]
 }
 
 interface IProductsOutput {
-  products: ISearchProduct[];
-  count: number;
-  misspelled: boolean;
-  operator: string;
+  products: ISearchProduct[]
+  count: number
+  misspelled: boolean
+  operator: string
 }
 
 interface ISuggestionQueryResponseSearch {
-  term: string;
-  count: number;
-  attributes: IElasticProductText[];
+  term: string
+  count: number
+  attributes: IElasticProductText[]
 }
 
 interface IElasticProductText {
-  key: string;
-  value: string;
-  labelKey: string;
-  labelValue: string;
+  key: string
+  value: string
+  labelKey: string
+  labelValue: string
 }
 
 export interface IElasticProductInstallment {
-  count: number;
-  value: number;
-  interest: boolean;
-  valueText: string;
+  count: number
+  value: number
+  interest: boolean
+  valueText: string
 }
 
 interface IElasticProductText {
-  key: string;
-  value: string;
-  labelKey: string;
-  labelValue: string;
+  key: string
+  value: string
+  labelKey: string
+  labelValue: string
 }
 
 export interface IExtraInfo {
-  key: string;
-  value: string;
+  key: string
+  value: string
 }

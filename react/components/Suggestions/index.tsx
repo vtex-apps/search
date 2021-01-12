@@ -1,20 +1,21 @@
-import React, { FC } from "react";
-import { Link } from "vtex.render-runtime";
-import styles from "./styles.css";
-import { FormattedMessage } from "react-intl";
-import searchSuggestionsQuery from "vtex.store-resources/QuerySearchSuggestions";
-import { useSearchPage } from "vtex.search-page-context/SearchPageContext";
-import { useQuery } from "react-apollo";
+import React, { FC } from 'react'
+import { Link } from 'vtex.render-runtime'
+import { FormattedMessage } from 'react-intl'
+import searchSuggestionsQuery from 'vtex.store-resources/QuerySearchSuggestions'
+import { useSearchPage } from 'vtex.search-page-context/SearchPageContext'
+import { useQuery } from 'react-apollo'
+
+import styles from './styles.css'
 
 interface SuggestionsProps {
-  customPage: string;
+  customPage: string
 }
 
 interface Suggestion {
-  searches: {
-    term: string;
-    count: number;
-  }[];
+  searches: Array<{
+    term: string
+    count: number
+  }>
 }
 
 const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
@@ -22,22 +23,22 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
     searchQuery: {
       variables: { fullText },
     },
-  } = useSearchPage();
+  } = useSearchPage()
 
   if (!fullText) {
-    return null;
+    return null
   }
 
   const { loading, data } = useQuery(searchSuggestionsQuery, {
     variables: {
       fullText,
     },
-  });
+  })
 
-  const suggestion: Suggestion | undefined = data?.searchSuggestions;
+  const suggestion: Suggestion | undefined = data?.searchSuggestions
 
   if (loading || !suggestion || suggestion.searches.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -46,14 +47,14 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
     >
       <p className={`${styles.suggestionsListPrefix} mr5 b f7 ma0`}>
         <FormattedMessage id="store/searchSuggestions" />
-        {": "}
+        {': '}
       </p>
       <ul className={`${styles.suggestionsList} list flex pa0 ma0`}>
         {suggestion.searches.map(search => (
           <li className={styles.suggestionsListItem} key={search.term}>
             <Link
               className={`${styles.suggestionsListLink} link f7`}
-              page={customPage || "store.search"}
+              page={customPage || 'store.search'}
               query="map=ft"
               params={{
                 term: search.term,
@@ -65,7 +66,7 @@ const Suggestions: FC<SuggestionsProps> = ({ customPage }) => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Suggestions;
+export default Suggestions

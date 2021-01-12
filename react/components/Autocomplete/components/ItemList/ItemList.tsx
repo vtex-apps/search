@@ -1,60 +1,62 @@
-import * as React from "react";
-import { Item, AttributeItem } from "./types";
-import stylesCss from "./styles.css";
-import { Link } from "vtex.render-runtime";
-import Attribute from "./Attribute";
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import * as React from 'react'
+import { Link } from 'vtex.render-runtime'
+
+import { Item, AttributeItem } from './types'
+import stylesCss from './styles.css'
+import Attribute from './Attribute'
 
 interface ItemListProps {
-  title: string | JSX.Element;
-  items: Item[];
-  showTitle: boolean;
-  onItemClick: (term: string, position: number) => void;
-  modifier?: string;
-  onItemHover?: (item: Item | AttributeItem) => void;
-  showTitleOnEmpty?: boolean;
+  title: string | JSX.Element
+  items: Item[]
+  showTitle: boolean
+  onItemClick: (term: string, position: number) => void
+  modifier?: string
+  onItemHover?: (item: Item | AttributeItem) => void
+  showTitleOnEmpty?: boolean
 }
 
 interface ItemListState {
-  currentTimeoutId: ReturnType<typeof setTimeout> | null;
+  currentTimeoutId: ReturnType<typeof setTimeout> | null
 }
 
 export class ItemList extends React.Component<ItemListProps> {
   public readonly state: ItemListState = {
     currentTimeoutId: null,
-  };
+  }
 
-  handleMouseOver(e: React.MouseEvent, item: Item) {
-    e.stopPropagation();
+  handleMouseOver = (e: React.MouseEvent | React.FocusEvent, item: Item) => {
+    e.stopPropagation()
 
-    const { currentTimeoutId } = this.state;
+    const { currentTimeoutId } = this.state
 
     if (!currentTimeoutId) {
       const timeoutId = setTimeout(() => {
-        this.props.onItemHover ? this.props.onItemHover!(item) : null;
-        this.setState({ currentTimeoutId: null });
-      }, 100);
+        this.props.onItemHover ? this.props.onItemHover(item) : null
+        this.setState({ currentTimeoutId: null })
+      }, 100)
 
-      this.setState({ currentTimeoutId: timeoutId });
+      this.setState({ currentTimeoutId: timeoutId })
     }
   }
 
-  handleMouseOut() {
-    const { currentTimeoutId } = this.state;
+  handleMouseOut = () => {
+    const { currentTimeoutId } = this.state
 
     if (currentTimeoutId) {
-      clearTimeout(currentTimeoutId);
-      this.setState({ currentTimeoutId: null });
+      clearTimeout(currentTimeoutId)
+      this.setState({ currentTimeoutId: null })
     }
   }
 
   render() {
     if (this.props.items.length === 0 && !this.props.showTitleOnEmpty) {
-      return null;
+      return null
     }
 
     const modifier = this.props.modifier
       ? stylesCss[`itemList--${this.props.modifier}`]
-      : "";
+      : ''
 
     return (
       <article className={`${stylesCss.itemList} ${modifier}`}>
@@ -70,11 +72,13 @@ export class ItemList extends React.Component<ItemListProps> {
                 key={item.value}
                 className={`${stylesCss.itemListItem}`}
                 onMouseOver={e => this.handleMouseOver(e, item)}
+                onFocus={e => this.handleMouseOver(e, item)}
                 onMouseOut={() => this.handleMouseOut()}
+                onBlur={() => this.handleMouseOut()}
               >
                 <Link
                   to={item.link}
-                  query={`map=ft`}
+                  query="map=ft"
                   onClick={() => this.props.onItemClick(item.value, index)}
                   className={stylesCss.itemListLink}
                 >
@@ -94,14 +98,14 @@ export class ItemList extends React.Component<ItemListProps> {
                 </Link>
                 <Attribute
                   item={item}
-                  handleMouseOver={this.handleMouseOver.bind(this)}
-                  handleMouseOut={this.handleMouseOut.bind(this)}
+                  onMouseOver={this.handleMouseOver}
+                  onMouseOut={this.handleMouseOut}
                 />
               </li>
-            );
+            )
           })}
         </ol>
       </article>
-    );
+    )
   }
 }

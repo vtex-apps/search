@@ -1,41 +1,18 @@
 {
+  "extends": "@vtex/tsconfig",
   "compilerOptions": {
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
+    "jsx": "react",
+    "noEmitOnError": false,
     "lib": ["es2017", "dom", "es2018.promise"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "target": "es2017",
-    "typeRoots": ["node_modules/@types"],
-    "types": ["node", "jest"],
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "target": "es2017"
   },
-  "exclude": ["node_modules"],
   "include": [
     "../cypress/plugins/index.js",
     "./typings/*.d.ts",
     "./**/*.tsx",
     "./**/*.ts",
     "index.js"
-  ],
-  "typeAcquisition": {
-    "enable": false
-  }
+  ]
 }
