@@ -20,7 +20,8 @@ import {
 } from './components/ItemList/types'
 import { ItemList } from './components/ItemList/ItemList'
 import { withRuntime } from '../../utils/withRuntime'
-import { sanitizeString } from '../../utils/string-utils'
+import { decodeUrlString, encodeUrlString } from '../../utils/string-utils'
+
 import {
   EventType,
   handleAutocompleteSearch,
@@ -350,7 +351,7 @@ class AutoComplete extends React.Component<
       .slice(0, this.props.maxHistory || MAX_HISTORY_DEFAULT)
       .map((item: string) => {
         return {
-          label: sanitizeString(item),
+          label: decodeUrlString(item),
           value: item,
           link: `/${item}?map=ft`,
           icon: <IconClock />,
@@ -454,30 +455,34 @@ class AutoComplete extends React.Component<
   }
 
   contentWhenQueryIsNotEmpty() {
+    const {products, totalProducts, isProductsLoading} = this.state
+    const {hideTitles, push, runtime, inputValue} = this.props
+    const inputValueEncoded = encodeUrlString(inputValue)
+
     return (
       <>
         {this.renderSuggestions()}
         <TileList
-          term={this.props.inputValue || ''}
+          term={inputValueEncoded || ""}
           shelfProductCount={this.getProductCount()}
           title={
             <FormattedMessage
-              id="store/suggestedProducts"
-              values={{ term: this.props.inputValue }}
+              id={"store/suggestedProducts"}
+              values={{term: inputValue}}
             />
           }
-          products={this.state.products || []}
-          showTitle={!this.props.hideTitles}
-          totalProducts={this.state.totalProducts || 0}
+          products={products || []}
+          showTitle={!hideTitles}
+          totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
-          isLoading={this.state.isProductsLoading}
+          isLoading={isProductsLoading}
           onProductClick={handleProductClick(
-            this.props.push,
-            this.props.runtime.page
+            push,
+            runtime.page,
           )}
           onSeeAllClick={handleSeeAllClick(
-            this.props.push,
-            this.props.runtime.page
+            push,
+            runtime.page,
           )}
         />
       </>
