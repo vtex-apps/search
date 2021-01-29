@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `hideUnavailableItems` prop to the `autocomplete-result-list.v2`.
+
 ## [2.3.1] - 2021-01-19
 ### Fixed
 - Added encoding and decoding function in `string-utils` preventing unexpected behaviors in url
