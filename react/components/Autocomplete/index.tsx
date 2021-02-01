@@ -71,6 +71,7 @@ interface AutoCompleteProps {
   __unstableProductOrigin: 'BIGGY' | 'VTEX'
   __unstableProductOriginVtex: boolean
   simulationBehavior: 'default' | 'skip' | null
+  hideUnavailableItems: boolean
   push: (data: any) => void
 }
 
@@ -262,6 +263,7 @@ class AutoComplete extends React.Component<
       __unstableProductOrigin,
       __unstableProductOriginVtex = false,
       simulationBehavior = 'default',
+      hideUnavailableItems = false,
     } = this.props
 
     const { queryFromHover } = this.state
@@ -290,7 +292,8 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.key : undefined,
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
-      simulationBehavior
+      simulationBehavior,
+      hideUnavailableItems
     )
 
     if (!queryFromHover) {
@@ -455,20 +458,20 @@ class AutoComplete extends React.Component<
   }
 
   contentWhenQueryIsNotEmpty() {
-    const {products, totalProducts, isProductsLoading} = this.state
-    const {hideTitles, push, runtime, inputValue} = this.props
+    const { products, totalProducts, isProductsLoading } = this.state
+    const { hideTitles, push, runtime, inputValue } = this.props
     const inputValueEncoded = encodeUrlString(inputValue)
 
     return (
       <>
         {this.renderSuggestions()}
         <TileList
-          term={inputValueEncoded || ""}
+          term={inputValueEncoded || ''}
           shelfProductCount={this.getProductCount()}
           title={
             <FormattedMessage
-              id={"store/suggestedProducts"}
-              values={{term: inputValue}}
+              id={'store/suggestedProducts'}
+              values={{ term: inputValue }}
             />
           }
           products={products || []}
@@ -476,14 +479,8 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={handleProductClick(
-            push,
-            runtime.page,
-          )}
-          onSeeAllClick={handleSeeAllClick(
-            push,
-            runtime.page,
-          )}
+          onProductClick={handleProductClick(push, runtime.page)}
+          onSeeAllClick={handleSeeAllClick(push, runtime.page)}
         />
       </>
     )

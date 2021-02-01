@@ -32,17 +32,20 @@ export default class BiggyClient {
     })
   }
 
+  // eslint-disable-next-line max-params
   public async suggestionProducts(
     term: string,
     attributeKey?: string,
     attributeValue?: string,
     productOrigin = false,
-    simulationBehavior: 'default' | 'skip' | null = 'default'
+    simulationBehavior: 'default' | 'skip' | null = 'default',
+    hideUnavailableItems = false
   ): Promise<ApolloQueryResult<{ productSuggestions: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
       variables: {
         simulationBehavior,
+        hideUnavailableItems,
         fullText: term,
         facetKey: attributeKey,
         facetValue: attributeValue,
