@@ -21,7 +21,6 @@ import {
 import { ItemList } from './components/ItemList/ItemList'
 import { withRuntime } from '../../utils/withRuntime'
 import { decodeUrlString, encodeUrlString } from '../../utils/string-utils'
-
 import {
   EventType,
   handleAutocompleteSearch,
@@ -35,7 +34,7 @@ const MAX_SUGGESTED_TERMS_DEFAULT = 5
 const MAX_SUGGESTED_PRODUCTS_DEFAULT = 3
 const MAX_HISTORY_DEFAULT = 5
 
-// eslint-disable-next-line no-shadow
+// eslint-disable-next-line no-shadow, no-restricted-syntax
 export enum ProductLayout {
   Horizontal = 'HORIZONTAL',
   Vertical = 'VERTICAL',
@@ -73,6 +72,10 @@ interface AutoCompleteProps {
   simulationBehavior: 'default' | 'skip' | null
   hideUnavailableItems: boolean
   push: (data: any) => void
+  HorizontalProductSummary?: React.ComponentType<{
+    product: any
+    actionOnClick: () => void
+  }>
 }
 
 interface AutoCompleteState {
@@ -470,7 +473,7 @@ class AutoComplete extends React.Component<
           shelfProductCount={this.getProductCount()}
           title={
             <FormattedMessage
-              id={'store/suggestedProducts'}
+              id="store/suggestedProducts"
               values={{ term: inputValue }}
             />
           }
@@ -481,6 +484,7 @@ class AutoComplete extends React.Component<
           isLoading={isProductsLoading}
           onProductClick={handleProductClick(push, runtime.page)}
           onSeeAllClick={handleSeeAllClick(push, runtime.page)}
+          HorizontalProductSummary={this.props.HorizontalProductSummary}
         />
       </>
     )

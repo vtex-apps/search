@@ -19,6 +19,10 @@ interface TileListProps {
   isLoading: boolean
   onProductClick: (product: string, position: number) => void
   onSeeAllClick: (term: string) => void
+  HorizontalProductSummary?: React.ComponentType<{
+    product: any
+    actionOnClick: () => void
+  }>
 }
 
 const TileList: FC<TileListProps> = ({
@@ -31,6 +35,7 @@ const TileList: FC<TileListProps> = ({
   isLoading,
   onProductClick,
   onSeeAllClick,
+  HorizontalProductSummary,
 }) => {
   if (products.length === 0 && !isLoading) {
     return null
@@ -62,12 +67,21 @@ const TileList: FC<TileListProps> = ({
               return (
                 <li key={product.productId} className={styles.tileListItem}>
                   {layout === ProductLayout.Horizontal ? (
-                    <CustomListItem
-                      product={productSummary}
-                      onClick={() => {
-                        onProductClick(productSummary.productId, index)
-                      }}
-                    />
+                    HorizontalProductSummary ? (
+                      <HorizontalProductSummary
+                        product={productSummary}
+                        actionOnClick={() => {
+                          onProductClick(productSummary.productId, index)
+                        }}
+                      />
+                    ) : (
+                      <CustomListItem
+                        product={productSummary}
+                        onClick={() => {
+                          onProductClick(productSummary.productId, index)
+                        }}
+                      />
+                    )
                   ) : (
                     <ExtensionPoint
                       id="product-summary"
