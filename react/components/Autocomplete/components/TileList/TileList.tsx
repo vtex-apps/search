@@ -20,7 +20,7 @@ interface TileListProps {
   onProductClick: (product: string, position: number) => void
   onSeeAllClick: (term: string) => void
   HorizontalProductSummary?: React.ComponentType<{
-    product: any
+    product: Product
     actionOnClick: () => void
   }>
 }
@@ -60,7 +60,7 @@ const TileList: FC<TileListProps> = ({
             }}
           >
             {products.map((product, index: number) => {
-              const productSummary = ProductSummary.mapCatalogProductToProductSummary(
+              const productSummary: Product = ProductSummary.mapCatalogProductToProductSummary(
                 product
               )
 

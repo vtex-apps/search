@@ -73,7 +73,7 @@ interface AutoCompleteProps {
   hideUnavailableItems: boolean
   push: (data: any) => void
   HorizontalProductSummary?: React.ComponentType<{
-    product: any
+    product: Product
     actionOnClick: () => void
   }>
 }
