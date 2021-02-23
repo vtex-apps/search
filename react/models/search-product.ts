@@ -1,5 +1,3 @@
-import { IProductSku } from './product'
-
 export interface ISearchProductText {
   key: string
   value: string
@@ -23,6 +21,26 @@ export interface ISearchProduct {
   product: string
   categories: string[]
   skus: IProductSku[]
+}
+
+interface IProductSku {
+  id: string
+  references: string
+  price: number
+  oldPrice: number
+  installment: {
+    count: number
+    value: number
+  }
+  sellers: Array<{
+    id: string
+    price: number
+    oldPrice: number
+    installment: {
+      count: number
+      value: number
+    }
+  }>
 }
 
 interface IElasticProductImage {

@@ -7,7 +7,7 @@ import { ProductContextProvider } from 'vtex.product-context'
 import styles from './styles.css'
 
 interface CustomListItemProps {
-  product: any
+  product: Product
   onClick: () => void
 }
 
@@ -32,7 +32,7 @@ const CustomListItem: FC<CustomListItemProps> = ({ product, onClick }) => {
           <div className={`${styles.imageContainer} h3`}>
             <img
               className={`${styles.image} h-100 w-auto mw-none`}
-              src={sku.image.imageUrl}
+              src={sku?.image?.imageUrl}
             />
           </div>
           <div
