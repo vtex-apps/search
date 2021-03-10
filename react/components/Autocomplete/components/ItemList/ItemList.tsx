@@ -14,6 +14,7 @@ interface ItemListProps {
   modifier?: string
   onItemHover?: (item: Item | AttributeItem) => void
   showTitleOnEmpty?: boolean
+  customPage?: string
 }
 
 interface ItemListState {
@@ -77,7 +78,10 @@ export class ItemList extends React.Component<ItemListProps> {
                 onBlur={() => this.handleMouseOut()}
               >
                 <Link
-                  to={item.link}
+                  page={this.props.customPage ?? 'store.search'}
+                  params={{
+                    term: item.value,
+                  }}
                   query="map=ft"
                   onClick={() => this.props.onItemClick(item.value, index)}
                   className={stylesCss.itemListLink}
