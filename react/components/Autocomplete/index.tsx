@@ -76,6 +76,7 @@ interface AutoCompleteProps {
     product: Product
     actionOnClick: () => void
   }>
+  customPage?: string
 }
 
 interface AutoCompleteState {
@@ -414,6 +415,7 @@ class AutoComplete extends React.Component<
           this.props.runtime.page,
           EventType.SearchSuggestionClick
         )}
+        customPage={this.props.customPage}
       />
     )
   }
@@ -439,6 +441,7 @@ class AutoComplete extends React.Component<
               this.props.runtime.page,
               EventType.TopSearchClick
             )}
+            customPage={this.props.customPage}
           />
         ) : null}
 
@@ -454,6 +457,7 @@ class AutoComplete extends React.Component<
               this.props.runtime.page,
               EventType.HistoryClick
             )}
+            customPage={this.props.customPage}
           />
         ) : null}
       </div>
