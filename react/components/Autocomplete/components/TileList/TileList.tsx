@@ -96,7 +96,7 @@ const TileList: FC<TileListProps> = ({
             })}
           </ul>
 
-          <footer>
+          <footer className={styles.tileListFooter}>
             {totalProducts > 0 ? (
               <Link
                 to={`/${term}`}
