@@ -77,6 +77,7 @@ interface AutoCompleteProps {
     actionOnClick: () => void
   }>
   customPage?: string
+  closeMenu: () => void
 }
 
 interface AutoCompleteState {
@@ -171,6 +172,12 @@ class AutoComplete extends React.Component<
       const term = path[1].split('&')[0]
 
       this.client.prependSearchHistory(decodeURI(term))
+    }
+  }
+
+  closeModal() {
+    if (this.props.closeMenu) {
+      this.props.closeMenu()
     }
   }
 
@@ -410,11 +417,14 @@ class AutoComplete extends React.Component<
         showTitle={!hasSuggestion || !this.props.hideTitles}
         onItemHover={this.handleItemHover}
         showTitleOnEmpty={this.props.maxSuggestedTerms !== 0}
-        onItemClick={handleItemClick(
-          this.props.push,
-          this.props.runtime.page,
-          EventType.SearchSuggestionClick
-        )}
+        onItemClick={(value, position) => {
+          handleItemClick(
+            this.props.push,
+            this.props.runtime.page,
+            EventType.SearchSuggestionClick
+          )(value, position)
+          this.closeModal()
+        }}
         customPage={this.props.customPage}
       />
     )
@@ -436,11 +446,14 @@ class AutoComplete extends React.Component<
             title={<FormattedMessage id="store/topSearches" />}
             items={this.state.topSearchedItems || []}
             showTitle={!this.props.hideTitles}
-            onItemClick={handleItemClick(
-              this.props.push,
-              this.props.runtime.page,
-              EventType.TopSearchClick
-            )}
+            onItemClick={(value, position) => {
+              handleItemClick(
+                this.props.push,
+                this.props.runtime.page,
+                EventType.TopSearchClick
+              )(value, position)
+              this.closeModal()
+            }}
             customPage={this.props.customPage}
           />
         ) : null}
@@ -452,11 +465,14 @@ class AutoComplete extends React.Component<
             title={<FormattedMessage id="store/history" />}
             items={this.state.history || []}
             showTitle={!this.props.hideTitles}
-            onItemClick={handleItemClick(
-              this.props.push,
-              this.props.runtime.page,
-              EventType.HistoryClick
-            )}
+            onItemClick={(value, position) => {
+              handleItemClick(
+                this.props.push,
+                this.props.runtime.page,
+                EventType.HistoryClick
+              )(value, position)
+              this.closeModal()
+            }}
             customPage={this.props.customPage}
           />
         ) : null}
@@ -486,8 +502,14 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={handleProductClick(push, runtime.page)}
-          onSeeAllClick={handleSeeAllClick(push, runtime.page)}
+          onProductClick={(id, position) => {
+            handleProductClick(push, runtime.page)(id, position)
+            this.closeModal()
+          }}
+          onSeeAllClick={term => {
+            handleSeeAllClick(push, runtime.page)(term)
+            this.closeModal()
+          }}
           HorizontalProductSummary={this.props.HorizontalProductSummary}
         />
       </>
