@@ -40,6 +40,8 @@
   align-items: center;
 }
 
+.tileListFooter {}
+
 @media only screen and (min-width: 1024px) {
   .tileList {
     display: inline-block;
