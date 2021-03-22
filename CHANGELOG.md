@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Close autocomplete when clicking on an item inside it.
+
 ## [2.7.0] - 2021-03-18
 
 ### Added
