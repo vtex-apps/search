@@ -12,8 +12,7 @@
     "react": "3.x",
     "styles": "2.x",
     "docs": "0.x",
-    "messages": "1.x",
-    "cypress": "0.x"
+    "messages": "1.x"
   },
   "dependencies": {
     "vtex.native-types": "0.x",
