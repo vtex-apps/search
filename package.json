@@ -4,9 +4,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "lint": "eslint --ext js,jsx,ts,tsx .",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
-    "e2e:open": "./cypress-local.sh open",
-    "e2e:run": "./cypress-local.sh run"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\""
   },
   "husky": {
     "hooks": {
@@ -24,7 +22,6 @@
   },
   "devDependencies": {
     "@vtex/prettier-config": "^0.1.4",
-    "cypress": "^6.0.0",
     "eslint": "^7.12.1",
     "eslint-config-vtex": "^12.3.2",
     "eslint-config-vtex-react": "^6.3.2",
