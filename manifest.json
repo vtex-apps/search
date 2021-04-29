@@ -1,7 +1,7 @@
 {
   "name": "search",
   "vendor": "vtex",
-  "version": "2.7.1",
+  "version": "2.8.0",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "scripts": {
