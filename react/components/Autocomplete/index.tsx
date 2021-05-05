@@ -71,6 +71,7 @@ interface AutoCompleteProps {
   __unstableProductOriginVtex: boolean
   simulationBehavior: 'default' | 'skip' | null
   hideUnavailableItems: boolean
+  disableRegionalization: boolean
   push: (data: any) => void
   HorizontalProductSummary?: React.ComponentType<{
     product: Product
@@ -275,6 +276,7 @@ class AutoComplete extends React.Component<
       __unstableProductOriginVtex = false,
       simulationBehavior = 'default',
       hideUnavailableItems = false,
+      disableRegionalization = false,
     } = this.props
 
     const { queryFromHover } = this.state
@@ -304,7 +306,8 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
       simulationBehavior,
-      hideUnavailableItems
+      hideUnavailableItems,
+      disableRegionalization
     )
 
     if (!queryFromHover) {

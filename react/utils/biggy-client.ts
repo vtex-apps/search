@@ -39,13 +39,15 @@ export default class BiggyClient {
     attributeValue?: string,
     productOrigin = false,
     simulationBehavior: 'default' | 'skip' | null = 'default',
-    hideUnavailableItems = false
+    hideUnavailableItems = false,
+    disableRegionalization = false
   ): Promise<ApolloQueryResult<{ productSuggestions: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
       variables: {
         simulationBehavior,
         hideUnavailableItems,
+        disableRegionalization,
         fullText: term,
         facetKey: attributeKey,
         facetValue: attributeValue,
