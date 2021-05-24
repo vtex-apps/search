@@ -3,7 +3,13 @@ import { pathOr } from "ramda";
 
 export class SearchResolver extends AppGraphQLClient {
   constructor(context: IOContext, options?: InstanceOptions) {
-    super("vtex.search-resolver", context, options);
+    super("vtex.search-resolver", context, {
+      ...options,
+      headers: {
+        ...(options?.headers ?? {}),
+        'x-vtex-provider': 'vtex.search-graphql'
+      },
+    });
   }
 
   public productsById = async (ids: string[]) => {
