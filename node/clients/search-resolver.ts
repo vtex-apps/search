@@ -7,7 +7,7 @@ export class SearchResolver extends AppGraphQLClient {
       ...options,
       headers: {
         ...(options?.headers ?? {}),
-        'x-vtex-provider': 'vtex.search-graphql'
+        'x-vtex-provider': 'vtex.search-graphql@0.43.0'
       },
     });
   }
