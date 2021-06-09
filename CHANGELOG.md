@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Add missing `x-vtex-provider` to the `search-resolver` call.
+
 ## [0.13.1] - 2020-12-14
 ### Changed
 - Increase maxReplicas to 80.
