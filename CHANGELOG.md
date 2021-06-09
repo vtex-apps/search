@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing `x-vtex-provider` to the `search-resolver` call.
+
 ## [1.4.3] - 2020-09-16
 
 ### Fixed
