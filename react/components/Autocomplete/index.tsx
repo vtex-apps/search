@@ -610,7 +610,10 @@ class AutoComplete extends React.Component<
           <ProductListProvider listName="autocomplete-result-list">
             {this.renderContent()}
             {this.props.isMobile ? (
-              <button className={stylesCss['close-btn']}>
+              <button
+                onClick={() => this.closeModal()}
+                className={stylesCss['close-btn']}
+              >
                 <IconClose />
               </button>
             ) : null}
