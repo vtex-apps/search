@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `closeModal` function to the `Attribute` component and to the close button.
+
 ## [2.8.0] - 2021-04-29
 
 ### Removed

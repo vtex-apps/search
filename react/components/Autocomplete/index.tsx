@@ -426,6 +426,7 @@ class AutoComplete extends React.Component<
           this.closeModal()
         }}
         customPage={this.props.customPage}
+        closeModal={() => this.closeModal()}
       />
     )
   }
@@ -455,6 +456,7 @@ class AutoComplete extends React.Component<
               this.closeModal()
             }}
             customPage={this.props.customPage}
+            closeModal={() => this.closeModal()}
           />
         ) : null}
 
@@ -474,6 +476,7 @@ class AutoComplete extends React.Component<
               this.closeModal()
             }}
             customPage={this.props.customPage}
+            closeModal={() => this.closeModal()}
           />
         ) : null}
       </div>
