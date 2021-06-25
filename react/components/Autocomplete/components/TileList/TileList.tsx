@@ -11,6 +11,7 @@ import { ProductLayout } from '../..'
 interface TileListProps {
   term: string
   title: string | JSX.Element
+  customPage?: string
   products: any[]
   showTitle: boolean
   shelfProductCount: number
@@ -36,6 +37,7 @@ const TileList: FC<TileListProps> = ({
   onProductClick,
   onSeeAllClick,
   HorizontalProductSummary,
+  customPage,
 }) => {
   if (products.length === 0 && !isLoading) {
     return null
@@ -99,8 +101,11 @@ const TileList: FC<TileListProps> = ({
           <footer className={styles.tileListFooter}>
             {totalProducts > 0 ? (
               <Link
-                to={`/${term}`}
                 query="map=ft"
+                params={{
+                  term,
+                }}
+                page={customPage || 'store.search'}
                 className={styles.tileListSeeMore}
                 onClick={() => onSeeAllClick(term)}
               >
