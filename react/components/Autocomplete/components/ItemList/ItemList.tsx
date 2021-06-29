@@ -15,6 +15,7 @@ interface ItemListProps {
   onItemHover?: (item: Item | AttributeItem) => void
   showTitleOnEmpty?: boolean
   customPage?: string
+  closeModal: () => void
 }
 
 interface ItemListState {
@@ -104,6 +105,7 @@ export class ItemList extends React.Component<ItemListProps> {
                   item={item}
                   onMouseOver={this.handleMouseOver}
                   onMouseOut={this.handleMouseOut}
+                  closeModal={this.props.closeModal}
                 />
               </li>
             )
