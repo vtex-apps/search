@@ -59,14 +59,27 @@ export function handleAutocompleteSearch(
   count: number,
   term: string
 ) {
-  push({
-    event: EVENT_NAME,
-    eventType: EventType.Search,
-    search: {
-      operator,
-      misspelled,
-      text: decodeURI(term),
-      match: count,
-    },
-  })
+  try {
+    push({
+      event: EVENT_NAME,
+      eventType: EventType.Search,
+      search: {
+        operator,
+        misspelled,
+        text: decodeURI(term),
+        match: count,
+      },
+    })
+  } catch (e) {
+    push({
+      event: EVENT_NAME,
+      eventType: EventType.Search,
+      search: {
+        operator,
+        misspelled,
+        text: term,
+        match: count,
+      },
+    })
+  }
 }
