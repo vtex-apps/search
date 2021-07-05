@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.13.3] - 2021-07-05
+
 ### Fixed
 - Autocomplete did not display products for search terms with percentage.
 
