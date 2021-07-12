@@ -1,11 +1,11 @@
 {
-    "store/topSearches": "Termos mais buscados",
-    "store/history": "Histórico de buscas",
-    "store/suggestions" : "Sugestões",
-    "store/emptySuggestion": "Sem Sugestões",
-    "store/seeMore": "Veja todos os {count} produtos",
-    "store/suggestedProducts": "Produtos para {term}",
-    "store/ordinalNumber": "º",
-    "store/didYouMean": "Você quis dizer",
-    "store/searchSuggestions": "Sugestões"
+  "store/topSearches": "Termos mais buscados",
+  "store/history": "Histórico de buscas",
+  "store/suggestions": "Sugestões",
+  "store/emptySuggestion": "Sem Sugestões",
+  "store/seeMore": "Veja todos os {count} produtos",
+  "store/suggestedProducts": "Produtos para {term}",
+  "store/ordinalNumber": "º",
+  "store/didYouMean": "Você quis dizer",
+  "store/searchSuggestions": "Sugestões"
 }

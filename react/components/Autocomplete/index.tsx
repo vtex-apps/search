@@ -493,6 +493,7 @@ class AutoComplete extends React.Component<
         {this.renderSuggestions()}
         <TileList
           term={inputValueEncoded || ''}
+          customPage={this.props.customPage}
           shelfProductCount={this.getProductCount()}
           title={
             <FormattedMessage
