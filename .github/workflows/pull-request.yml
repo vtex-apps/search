@@ -2,7 +2,7 @@ name: PR actions
 on:
   pull_request:
     branches:
-      - v1.x
+      - master
 jobs:
   e2e-tests:
     name: E2E test
@@ -39,6 +39,10 @@ jobs:
       - name: Link app
         run: vtex link --no-watch
         working-directory: ioapp
+      - name: Get committer email
+        working-directory: ioapp
+        run: |
+          echo "COMMIT_INFO_EMAIL=`git log --format='%ae' HEAD^!`" >> $GITHUB_ENV
       - uses: cypress-io/github-action@v2
         with:
           config-file: cypress.json
@@ -52,7 +56,7 @@ jobs:
           COMMIT_INFO_SHA: ${{ github.sha }}
           COMMIT_INFO_REMOTE: ${{ github.repository }}
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-          COMMIT_INFO_AUTHOR: ${{ github.actor }}
+          COMMIT_INFO_AUTHOR: ${{ github.event.pull_request.user.login }}
       - name: Add comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: failure()
@@ -61,4 +65,4 @@ jobs:
       - name: Delete workspace
         run: |
           vtex workspace use master
-          vtex workspace delete e2e${{ github.sha }}
+          yes | vtex workspace delete e2e${{ github.sha }}
