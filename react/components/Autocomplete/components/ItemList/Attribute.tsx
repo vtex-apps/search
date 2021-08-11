@@ -8,6 +8,7 @@ interface IAttributeProps {
   item: Item
   onMouseOver: (ee: React.MouseEvent | React.FocusEvent, item: Item) => void
   onMouseOut: () => void
+  closeModal: () => void
 }
 
 const Attribute = (props: IAttributeProps) =>
@@ -26,6 +27,7 @@ const Attribute = (props: IAttributeProps) =>
             className={`${stylesCss.itemListSubItemLink} c-on-base`}
             to={`/${props.item.value}/${attribute.value}`}
             query={`map=ft,${attribute.key}`}
+            onClick={() => props.closeModal()}
           >
             {attribute.label}
           </Link>

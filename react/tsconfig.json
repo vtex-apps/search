@@ -8,11 +8,5 @@
     "moduleResolution": "node",
     "target": "es2017"
   },
-  "include": [
-    "../cypress/plugins/index.js",
-    "./typings/*.d.ts",
-    "./**/*.tsx",
-    "./**/*.ts",
-    "index.js"
-  ]
+  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts", "index.js"]
 }

@@ -44,7 +44,7 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `customBreakpoints`           | [`CustomBreakpointsProp`](#custombreakpointsprop) | Defines a maximum number of suggested products by breakpoints                                                                                                                       | -             |
 | `__unstableProductOriginVtex` | `Boolean`                                         | You can use this property as `true` if any of your product-summary props come with a `null` value. This is because some product information does not come by default in the Search. | `false`       |
 | `simulationBehavior`          | `"skip"` or `"default"`                           | If you want faster searches and do not care about most up to date prices and promotions, use `"skip"` value.                                                                        | `default`     |
-| `customPage` | `string` | Defines a custom page to the link of a suggestion. Example: `store.search.custom` |  `store.search`
+| `customPage` | `string` | Defines a custom page to the autocomplete links. Example: `store.search.custom` |  `store.search`
 
 #### ProductLayoutEnum
 

@@ -10,6 +10,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Removed
 - `__unstableProductOriginVtex` was removed from the documentation on README.md.
 
+## [2.8.3] - 2021-07-12
+
+### Fixed
+- Link to see more products.
+
+## [2.8.2] - 2021-07-05
+
+### Fixed
+- Autocomplete did not display products for search terms with percentage.
+
+## [2.8.1] - 2021-06-29
+
+### Added
+- `closeModal` function to the `Attribute` component and to the close button.
+
+## [2.8.0] - 2021-04-29
+
+### Removed
+- End to end tests.
+
+
 ## [2.7.1] - 2021-03-22
 
 ### Fixed

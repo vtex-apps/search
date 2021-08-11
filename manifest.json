@@ -1,7 +1,7 @@
 {
   "name": "search",
   "vendor": "vtex",
-  "version": "2.7.1",
+  "version": "2.8.3",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "scripts": {
@@ -12,8 +12,7 @@
     "react": "3.x",
     "styles": "2.x",
     "docs": "0.x",
-    "messages": "1.x",
-    "cypress": "0.x"
+    "messages": "1.x"
   },
   "dependencies": {
     "vtex.native-types": "0.x",
