@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Removed
+- `__unstableProductOriginVtex` was removed from the documentation on README.md.
+
 ## [2.8.3] - 2021-07-12
 
 ### Fixed
@@ -26,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - End to end tests.
+
 
 ## [2.7.1] - 2021-03-22
 
