@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Resolver requests now hit the AWS infrastructure instead of the azure one.
+
 ## [0.13.3] - 2021-07-05
 
 ### Fixed
