@@ -1,5 +1,5 @@
 import { path, prop } from "ramda";
-import { ExternalClient, InstanceOptions, IOContext } from "@vtex/api";
+import { JanusClient, InstanceOptions, IOContext } from "@vtex/api";
 import { SearchResultArgs } from "../resolvers/search";
 import {
   SuggestionProductsArgs,
@@ -7,18 +7,18 @@ import {
 } from "../resolvers/autocomplete";
 import { IndexingType } from "../resolvers/products";
 
-export class BiggySearchClient extends ExternalClient {
+export class BiggySearchClient extends JanusClient {
   private store: string;
 
   constructor(context: IOContext, options?: InstanceOptions) {
-    super("http://search.biggylabs.com.br/search-api/v1/", context, options);
+    super(context, options);
 
     const { account } = context;
     this.store = account;
   }
 
   public async topSearches(): Promise<any> {
-    const result = await this.http.get<any>(`${this.store}/api/top_searches`, {
+    const result = await this.http.get<any>(`/search-api/v1/${this.store}/api/top_searches`, {
       metric: "top-searches",
     });
 
@@ -29,7 +29,7 @@ export class BiggySearchClient extends ExternalClient {
     const { term } = args;
 
     const result = await this.http.get<any>(
-      `${this.store}/api/suggestion_searches`,
+      `/search-api/v1/${this.store}/api/suggestion_searches`,
       {
         params: {
           term,
@@ -66,7 +66,7 @@ export class BiggySearchClient extends ExternalClient {
     }
 
     const result = await this.http.post<any>(
-      `${this.store}/api/suggestion_products`,
+      `/search-api/v1/${this.store}/api/suggestion_products`,
       {
         term,
         attributes,
@@ -97,7 +97,7 @@ export class BiggySearchClient extends ExternalClient {
       tradePolicy && indexingType !== IndexingType.XML
         ? `/trade-policy/${tradePolicy}`
         : "";
-    const url = `${this.store}/api/search/${attributePath}${policyAttr}`;
+    const url = `/search-api/v1/${this.store}/api/search/${attributePath}${policyAttr}`;
 
     const result = await this.http.getRaw(url, {
       params: {
