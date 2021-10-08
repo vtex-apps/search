@@ -80,7 +80,6 @@ export class BiggySearchClient extends JanusClient {
   }
 
   public async searchResult(args: SearchResultArgs): Promise<any> {
-    console.log("search-result")
     const {
       attributePath = "",
       query,
