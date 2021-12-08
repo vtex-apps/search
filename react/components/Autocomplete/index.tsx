@@ -171,7 +171,11 @@ class AutoComplete extends React.Component<
     if (path[1]) {
       const term = path[1].split('&')[0]
 
-      this.client.prependSearchHistory(decodeURI(term))
+      try {
+        return this.client.prependSearchHistory(decodeURI(term))
+      } catch {
+        return this.client.prependSearchHistory(term)
+      }
     }
   }
 
