@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.9.0] - 2021-12-13
+
 ### Added
 - `_q` query string to Autocomplete links.
 
