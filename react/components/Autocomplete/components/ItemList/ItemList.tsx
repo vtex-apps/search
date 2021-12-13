@@ -83,7 +83,7 @@ export class ItemList extends React.Component<ItemListProps> {
                   params={{
                     term: item.value,
                   }}
-                  query="map=ft"
+                  query={`map=ft&_q=${item.value}`}
                   onClick={() => this.props.onItemClick(item.value, index)}
                   className={stylesCss.itemListLink}
                 >

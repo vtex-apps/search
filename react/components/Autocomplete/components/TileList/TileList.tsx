@@ -101,7 +101,7 @@ const TileList: FC<TileListProps> = ({
           <footer className={styles.tileListFooter}>
             {totalProducts > 0 ? (
               <Link
-                query="map=ft"
+                query={`map=ft&_q=${term}`}
                 params={{
                   term,
                 }}

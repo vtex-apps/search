@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `_q` query string to Autocomplete links.
+
 ## [2.8.6] - 2021-12-08
 ### Fixed
 - Safely decoding URI components to prevent errors when the search query contains breaking characters such as "%"
