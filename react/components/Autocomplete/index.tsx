@@ -78,6 +78,7 @@ interface AutoCompleteProps {
   }>
   customPage?: string
   closeMenu: () => void
+  orderBy?: string
 }
 
 interface AutoCompleteState {
@@ -279,6 +280,7 @@ class AutoComplete extends React.Component<
       __unstableProductOriginVtex = false,
       simulationBehavior = 'default',
       hideUnavailableItems = false,
+      orderBy,
     } = this.props
 
     const { queryFromHover } = this.state
@@ -308,7 +310,8 @@ class AutoComplete extends React.Component<
       queryFromHover ? queryFromHover.value : undefined,
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
       simulationBehavior,
-      hideUnavailableItems
+      hideUnavailableItems,
+      orderBy
     )
 
     if (!queryFromHover) {
