@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "اكثر ماتم البحث عنه",
+  "store/history": "سجل البحث",
+  "store/suggestions": "الإقتراحات",
+  "store/emptySuggestion": "لا توجد اقتراحات",
+  "store/seeMore": "مشاهدة جميع المنتجات {count}",
+  "store/suggestedProducts": "المنتجات لـ {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "هل تعني",
+  "store/searchSuggestions": "الإقتراحات"
+}
