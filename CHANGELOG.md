@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- `orderBy` to the `productSuggestions` query.
+
 ## [2.10.0] - 2022-02-14
 
 ### Added
