@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "Populære søk",
+  "store/history": "Søkehistorikk",
+  "store/suggestions": "Forslag",
+  "store/emptySuggestion": "Ingen forslag",
+  "store/seeMore": "Se alle {count} produkter",
+  "store/suggestedProducts": "Produkter for {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "Mente du",
+  "store/searchSuggestions": "Forslag"
+}
