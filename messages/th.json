@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "การค้นหายอดนิยม",
+  "store/history": "ประวัติการค้นหา",
+  "store/suggestions": "คำแนะนำ",
+  "store/emptySuggestion": "ไม่มีคำแนะนำ",
+  "store/seeMore": "ดูผลิตภัณฑ์ทั้ง {count} รายการ",
+  "store/suggestedProducts": "ผลิตภัณฑ์สำหรับ {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "คุณหมายถึง... ใช่หรือไม่",
+  "store/searchSuggestions": "คำแนะนำ"
+}
