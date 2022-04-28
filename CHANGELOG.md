@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- French and Thai translation.
+
 ## [2.12.0] - 2022-03-10
 
 ### Added
