@@ -40,7 +40,8 @@ export default class BiggyClient {
     productOrigin = false,
     simulationBehavior: 'default' | 'skip' | null = 'default',
     hideUnavailableItems = false,
-    orderBy?: string
+    orderBy?: string,
+    count?: number
   ): Promise<ApolloQueryResult<{ productSuggestions: IProductsOutput }>> {
     return this.client.query({
       query: suggestionProducts,
@@ -52,6 +53,7 @@ export default class BiggyClient {
         facetKey: attributeKey,
         facetValue: attributeValue,
         productOriginVtex: productOrigin,
+        count,
       },
       fetchPolicy: 'network-only',
     })

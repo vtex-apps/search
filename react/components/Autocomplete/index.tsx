@@ -311,7 +311,8 @@ class AutoComplete extends React.Component<
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
       simulationBehavior,
       hideUnavailableItems,
-      orderBy
+      orderBy,
+      this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
     )
 
     if (!queryFromHover) {
