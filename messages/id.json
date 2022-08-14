@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "Pencarian Teratas",
+  "store/history": "Riwayat Pencarian",
+  "store/suggestions": "Saran",
+  "store/emptySuggestion": "Tidak Ada Saran",
+  "store/seeMore": "Lihat semua {count} produk",
+  "store/suggestedProducts": "Produk untuk {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "Mungkin maksud Anda",
+  "store/searchSuggestions": "Saran"
+}
