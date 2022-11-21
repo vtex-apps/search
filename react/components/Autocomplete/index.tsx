@@ -214,7 +214,7 @@ class AutoComplete extends React.Component<
         .then(() => {
           this.fitAutocompleteInWindow()
 
-          return this.updateProducts()
+          return this.updateProducts(inputValue)
         })
         .then(() => this.fitAutocompleteInWindow())
     }
@@ -273,8 +273,9 @@ class AutoComplete extends React.Component<
     this.setState({ suggestionItems })
   }
 
-  async updateProducts() {
-    const term = this.state.dynamicTerm
+  async updateProducts(itemTerm: string) {
+    const term = itemTerm
+
     const {
       __unstableProductOrigin,
       __unstableProductOriginVtex = false,
@@ -394,6 +395,7 @@ class AutoComplete extends React.Component<
           value: item.value,
         },
       })
+      this.updateProducts(item.groupValue)
     } else {
       this.setState({
         dynamicTerm: item.value,
@@ -402,9 +404,8 @@ class AutoComplete extends React.Component<
           value: undefined,
         },
       })
+      this.updateProducts(item.value)
     }
-
-    this.updateProducts()
   }
 
   renderSuggestions() {
