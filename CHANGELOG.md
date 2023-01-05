@@ -7,109 +7,134 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Hover on search suggestion.
+
 ## [2.14.1] - 2022-12-22
 
 ### Added
+
 - Indonesian translation.
 
 ## [2.14.0] - 2022-09-15
 
 ### Added
+
 - Romanian translations.
 
 ## [2.13.1] - 2022-07-07
 
 ### Fixed
+
 - Product suggestions that was not respecting the `maxSuggestedProducts` value.
 
 ## [2.13.0] - 2022-04-28
 
 ### Added
+
 - French and Thai translation.
 
 ## [2.12.0] - 2022-03-10
 
 ### Added
+
 - Norwegian and Norwegian variant translation.
 
 ## [2.11.0] - 2022-02-14
 
 ### Added
+
 - `orderBy` to the `productSuggestions` query.
 
 ## [2.10.0] - 2022-02-14
 
 ### Added
+
 - Arabic translation.
 
 ## [2.9.0] - 2021-12-13
 
 ### Added
+
 - `_q` query string to Autocomplete links.
 
 ## [2.8.6] - 2021-12-08
-### Fixed
-- Safely decoding URI components to prevent errors when the search query contains breaking characters such as "%"
 
+### Fixed
+
+- Safely decoding URI components to prevent errors when the search query contains breaking characters such as "%"
 
 ## [2.8.5] - 2021-12-03
 
 ### Fixed
+
 - General review of the documentation (`README.md` file).
 
 ## [2.8.4] - 2021-08-19
 
 ## Removed
+
 - `__unstableProductOriginVtex` was removed from the documentation on README.md.
 
 ## [2.8.3] - 2021-07-12
 
 ### Fixed
+
 - Link to see more products.
 
 ## [2.8.2] - 2021-07-05
 
 ### Fixed
+
 - Autocomplete did not display products for search terms with percentage.
 
 ## [2.8.1] - 2021-06-29
 
 ### Added
+
 - `closeModal` function to the `Attribute` component and to the close button.
 
 ## [2.8.0] - 2021-04-29
 
 ### Removed
-- End to end tests.
 
+- End to end tests.
 
 ## [2.7.1] - 2021-03-22
 
 ### Fixed
+
 - Close autocomplete when clicking on an item inside it.
 
 ## [2.7.0] - 2021-03-18
 
 ### Added
+
 - `tileListFooter` CSS handler.
 
 ## [2.6.0] - 2021-03-11
 
 ### Added
+
 - `customPage` prop to the `autocomplete-result-list.v2`.
 
 ## [2.5.0] - 2021-02-23
 
 ### Added
+
 - `HorizontalProductSummary` prop to the `autocomplete-result-list.v2`.
 
 ## [2.4.0] - 2021-02-01
 
 ### Added
+
 - `hideUnavailableItems` prop to the `autocomplete-result-list.v2`.
 
 ## [2.3.1] - 2021-01-19
+
 ### Fixed
+
 - Added encoding and decoding function in `string-utils` preventing unexpected behaviors in url
 
 ## [2.3.0] - 2021-01-12
@@ -121,11 +146,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.2.1] - 2020-12-15
 
 ### Fixed
+
 - Added sanitize function in `string-utils` and using in `history` label in `Autocomplete`
 
 ## [2.2.0] - 2020-12-02
 
 ### Added
+
 - End to end tests setup.
 
 ## [2.1.1] - 2020-12-01
@@ -173,20 +200,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.4.0] - 2020-07-30
 
 ### Added
+
 - New `customPage` prop on `Suggestion`
 
 ## [1.3.1] - 2020-07-22
 
 ### Fixed
+
 - Deal with missing `fulltext` in `searchSuggestions` query.
 
 ## [1.3.0] - 2020-07-15
+
 ### Added
+
 - ListPrice in CustomListItem.
 
 ## [1.2.0] - 2020-07-09
 
 ### Fixed
+
 - `taxPercentage` in autocomplete price.
 
 ## [1.1.0] - 2020-06-17
@@ -198,16 +230,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.19] - 2020-06-09
 
 ### Removed
+
 - `vtex.sae-analytics@1.x` as dependency.
 
 ## [1.0.18] - 2020-06-05
 
 ### Fixed
+
 - Remove stock filter from `convertBiggyProduct`.
 
 ## [1.0.17] - 2020-06-05
 
 ### Added
+
 - `cacheId` to the `convertBiggyProduct`.
 
 ## [1.0.16] - 2020-06-05
