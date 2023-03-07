@@ -28,6 +28,7 @@ import {
   handleProductClick,
   handleSeeAllClick,
 } from '../../utils/pixel'
+import getSession from '../../utils/getSession'
 
 const MAX_TOP_SEARCHES_DEFAULT = 10
 const MAX_SUGGESTED_TERMS_DEFAULT = 5
@@ -305,6 +306,10 @@ class AutoComplete extends React.Component<
       isProductsLoading: true,
     })
 
+    const session = await getSession()
+    const shippingOptions =
+      session?.map((item: Record<string, string>) => item.value) ?? []
+
     const result = await this.client.suggestionProducts(
       term,
       queryFromHover ? queryFromHover.key : undefined,
@@ -313,7 +318,8 @@ class AutoComplete extends React.Component<
       simulationBehavior,
       hideUnavailableItems,
       orderBy,
-      this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
+      this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT,
+      shippingOptions
     )
 
     if (!queryFromHover) {
