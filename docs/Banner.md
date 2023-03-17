@@ -6,7 +6,7 @@ A simple banner with that can configured to appear depending on the context of t
 
 The banner entity is composed by the following fields:
 
-| Field                | Description                                                                                                      |
+| Field                | Description                                                                                                       |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `Active`             | Indicates if banner is active or not.                                                                            |
 | `Banner name`        | Field used as an id.                                                                                             |

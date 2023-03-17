@@ -1,3 +1,6 @@
+import { Item } from "../components/Autocomplete/components/ItemList/types"
+import { ISearchProduct } from "../models/search-product"
+
 const EVENT_NAME = 'autocomplete'
 
 export enum EventType {
@@ -10,15 +13,13 @@ export enum EventType {
 }
 
 export function handleProductClick(push: (data: any) => void, page: string) {
-  return (productId: string, position: number) =>
+  return (products: ISearchProduct[], id: string, position: number) =>
     push({
+      id,
       page,
       event: EVENT_NAME,
       eventType: EventType.ProductClick,
-      product: {
-        productId,
-        position,
-      },
+      products: products[position],
     })
 }
 
@@ -27,7 +28,7 @@ export function handleItemClick(
   page: string,
   type: string
 ) {
-  return (term: string, position: number) => {
+  return (term: string, position: number, products: Item[]) => {
     push({
       page,
       event: EVENT_NAME,
@@ -35,12 +36,13 @@ export function handleItemClick(
       search: {
         term,
         position,
+        products
       },
     })
   }
 }
 
-export function handleSeeAllClick(push: (data: any) => void, page: string) {
+export function handleSeeAllClick(push: (data: any) => void, page: string, products: ISearchProduct[]) {
   return (term: string) =>
     push({
       page,
@@ -48,6 +50,7 @@ export function handleSeeAllClick(push: (data: any) => void, page: string) {
       eventType: EventType.SeeAllClick,
       search: {
         term,
+        products
       },
     })
 }
@@ -57,7 +60,8 @@ export function handleAutocompleteSearch(
   operator: string,
   misspelled: boolean,
   count: number,
-  term: string
+  term: string,
+  products: ISearchProduct[]
 ) {
   try {
     push({
@@ -68,6 +72,7 @@ export function handleAutocompleteSearch(
         misspelled,
         text: decodeURI(term),
         match: count,
+        products
       },
     })
   } catch (e) {
@@ -79,6 +84,7 @@ export function handleAutocompleteSearch(
         misspelled,
         text: term,
         match: count,
+        products
       },
     })
   }
