@@ -31,8 +31,7 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.4.3",
     "prettier": "^2.2.1",
-    "typescript": "3.9.7",
-    "vtex.search": "https://events--beautycounterqa.myvtex.com/_v/private/typings/linked/v1/vtex.search@2.14.2+build1679084378/public/@types/vtex.search"
+    "typescript": "3.9.7"
   },
   "scripts": {
     "lint": "eslint . && tslint './**/*.ts' -e './node_modules/**/*'"

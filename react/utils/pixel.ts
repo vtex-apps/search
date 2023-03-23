@@ -15,11 +15,14 @@ export enum EventType {
 export function handleProductClick(push: (data: any) => void, page: string) {
   return (products: ISearchProduct[], id: string, position: number) =>
     push({
-      id,
       page,
       event: EVENT_NAME,
       eventType: EventType.ProductClick,
       products: products[position],
+      product: {
+        productId: id,
+        position
+      }
     })
 }
 
