@@ -6,6 +6,6 @@
   "store/seeMore": "Visualizza tutti i {count} prodotti",
   "store/suggestedProducts": "Prodotti per {term}",
   "store/ordinalNumber": ".",
-  "store/didYouMean": "Volevi dire",
+  "store/didYouMean": "Intendevi",
   "store/searchSuggestions": "Suggerimenti"
 }
