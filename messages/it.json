@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "Ricerche più frequenti",
+  "store/history": "Cronologia di ricerca",
+  "store/suggestions": "Suggerimenti",
+  "store/emptySuggestion": "Nessun suggerimento",
+  "store/seeMore": "Visualizza tutti i {count} prodotti",
+  "store/suggestedProducts": "Prodotti per {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "Intendevi",
+  "store/searchSuggestions": "Suggerimenti"
+}
