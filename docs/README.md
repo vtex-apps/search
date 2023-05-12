@@ -14,7 +14,7 @@ The VTEX Search app handles the new [**VTEX Intelligent Search**](https://help.v
 
 ## Configuration
 
-To function properly, Search app components require the `vtex.admin-search@1.x` and `vtex.search-resolver@1.x` apps to be installed in your store. For more information, read our [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search) documentation.
+The Search app requires the `vtex.admin-search@1.x` and `vtex.search-resolver@1.x` apps to be installed in your store. For more information, read the [Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search) documentation.
 
 To configure the Search app, see the sections below.
 
@@ -37,11 +37,11 @@ You can now use all blocks exported by the `search` app. See the full list below
 | `did-you-mean`                | Helps users with possible misspelling corrections for the current search query.                                                                                                                                                                                                                                                                               |
 | `search-suggestions`          | Renders a list of similar search terms for the current search query.                                                                                                                                                                                                                                                                                          |
 
-> ℹ️ The `search-banner`, `did-you-mean`, and `search-suggestions` blocks require [Search Result app](https://developers.vtex.com/docs/guides/vtex-search-result) version `3.x` or higher installed in your theme.
+> ℹ️ The `search-banner`, `did-you-mean`, and `search-suggestions` blocks require [Search Result app](https://developers.vtex.com/docs/apps/vtex.search-result) version `3.x` or higher installed in your theme.
 
 ### Adding Search blocks to the theme
 
-First, declare the `autocomplete-result-list.v2` block as a child block of the [`search-bar` block](https://developers.vtex.com/docs/guides/vtex-store-components-searchbar), exported by the Store Components app. Example:
+First, declare the `autocomplete-result-list.v2` block as a child block of the [`search-bar` block](https://developers.vtex.com/docs/apps/vtex.store-components/searchbar), exported by the Store Components app. Example:
 
 ```json
 {
