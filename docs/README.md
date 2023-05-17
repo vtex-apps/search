@@ -155,7 +155,7 @@ The Search app provides blocks that, when rendered as components, will improve t
 
 These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics.
 
-Learn how to do this by reading our [Google Analytics search tracking](https://developers.vtex.com/docs/guides/vtex-io-documentation-setting-up-google-analytics-search-tracking) documentation.
+Learn how to do this by referring to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
 
 ## Customization
 
