@@ -28,7 +28,6 @@ import {
   handleProductClick,
   handleSeeAllClick,
 } from '../../utils/pixel'
-import getSession from '../../utils/getSession'
 
 const MAX_TOP_SEARCHES_DEFAULT = 10
 const MAX_SUGGESTED_TERMS_DEFAULT = 5
@@ -306,10 +305,6 @@ class AutoComplete extends React.Component<
       isProductsLoading: true,
     })
 
-    const session = await getSession()
-    const shippingOptions =
-      session?.map((item: Record<string, string>) => item.value) ?? []
-
     const result = await this.client.suggestionProducts(
       term,
       queryFromHover ? queryFromHover.key : undefined,
@@ -318,19 +313,19 @@ class AutoComplete extends React.Component<
       simulationBehavior,
       hideUnavailableItems,
       orderBy,
-      this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT,
-      shippingOptions
+      this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT
     )
 
     if (!queryFromHover) {
-      const { count, operator, misspelled } = result.data.productSuggestions
+      const { count, operator, misspelled, products } = result.data.productSuggestions
 
       handleAutocompleteSearch(
         this.props.push,
         operator,
         misspelled,
         count,
-        term
+        term,
+        products
       )
     }
 
@@ -436,8 +431,8 @@ class AutoComplete extends React.Component<
           handleItemClick(
             this.props.push,
             this.props.runtime.page,
-            EventType.SearchSuggestionClick
-          )(value, position)
+            EventType.SearchSuggestionClick,
+          )(value, position, this.state.suggestionItems)
           this.closeModal()
         }}
         customPage={this.props.customPage}
@@ -467,7 +462,7 @@ class AutoComplete extends React.Component<
                 this.props.push,
                 this.props.runtime.page,
                 EventType.TopSearchClick
-              )(value, position)
+              )(value, position, this.state.topSearchedItems)
               this.closeModal()
             }}
             customPage={this.props.customPage}
@@ -487,7 +482,7 @@ class AutoComplete extends React.Component<
                 this.props.push,
                 this.props.runtime.page,
                 EventType.HistoryClick
-              )(value, position)
+              )(value, position, this.state.topSearchedItems)
               this.closeModal()
             }}
             customPage={this.props.customPage}
@@ -522,11 +517,11 @@ class AutoComplete extends React.Component<
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
           onProductClick={(id, position) => {
-            handleProductClick(push, runtime.page)(id, position)
+            handleProductClick(push, runtime.page)(products, id, position)
             this.closeModal()
           }}
           onSeeAllClick={term => {
-            handleSeeAllClick(push, runtime.page)(term)
+            handleSeeAllClick(push, runtime.page, products)(term)
             this.closeModal()
           }}
           HorizontalProductSummary={this.props.HorizontalProductSummary}

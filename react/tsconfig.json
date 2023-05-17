@@ -3,10 +3,19 @@
   "compilerOptions": {
     "jsx": "react",
     "noEmitOnError": false,
-    "lib": ["es2017", "dom", "es2018.promise"],
+    "lib": [
+      "es2017",
+      "dom",
+      "es2018.promise"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2017"
   },
-  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts", "index.js"]
+  "include": [
+    "./typings/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.ts",
+    "index.js"
+  ]
 }

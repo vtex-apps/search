@@ -47,7 +47,7 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `customPage` | `string` | Defines a custom page to the autocomplete links. Example: `store.search.custom` |  `store.search`
 | `orderBy`         | `enum`           | Decides which order products must follow when displayed. The possible values are named after the order type: `OrderByTopSaleDESC`, `OrderByReleaseDateDESC`, `OrderByBestDiscountDESC`, `OrderByPriceDESC`, `OrderByPriceASC`, `OrderByNameASC`, `OrderByNameDESC` or `OrderByScoreDESC` ([relevance Score](https://help.vtex.com/en/tutorial/how-does-the-score-field-work--1BUZC0mBYEEIUgeQYAKcae)). `ASC` and `DESC` stand for ascending order and descending order, respectively.  | `OrderByScoreDESC`    |
 
-#### ProductLayoutEnum
+#### ProductLayoutEnum 
 
 | Enum name    | Enum value   |
 | ------------ | ------------ |

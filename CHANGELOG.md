@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.16.0] - 2023-05-03
 
+## [2.15.1] - 2023-03-17
+
+### Added
+- Incrementing autocomplete events.
+
 ## [2.15.0] - 2023-03-17
 
 ### Added
