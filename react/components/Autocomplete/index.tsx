@@ -306,7 +306,7 @@ class AutoComplete extends React.Component<
       isProductsLoading: true,
     })
 
-    const session = await getSession(this.props.rootPath)
+    const session = await getSession(this.props.runtime.rootPath)
     const shippingOptions =
       session?.map((item: Record<string, string>) => item.value) ?? []
 
