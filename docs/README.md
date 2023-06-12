@@ -153,7 +153,11 @@ Once added, the blocks can be declared using their respective props for configur
 
 The Search app provides blocks that, when rendered as components, will improve the user's search experience in stores where the VTEX Intelligent Search engine is supported.
 
-These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics.
+These components use `_q` as the query string for the search term. If you want to track user searches in these components, you will need to add the `_q` query string to the store Google Analytics. Learn how to set up a site search by reading Google's documentation on setting up Site Search.
+
+However, please note that the above documentation is specifically for VTEX stores using Universal Analytics (UA). As stated in this release note, be aware that **Google will no longer support UA. We strongly recommend migrating to GA4.**
+
+For stores using GA4, we recommend setting up the VTEX Google Tag Manager app, which includes the search event within the app data layer. Learn more about setting up Google Tag Manager in the Setting up Google Tag Manager documentation.
 
 Learn how to do this by referring to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
 
