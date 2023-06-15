@@ -43,7 +43,7 @@ export enum ProductLayout {
 
 interface AutoCompleteProps {
   isOpen: boolean
-  runtime: { page: string }
+  runtime: { page: string; rootPath?: string }
   inputValue: string
   maxTopSearches: number
   maxSuggestedTerms: number
@@ -306,7 +306,7 @@ class AutoComplete extends React.Component<
       isProductsLoading: true,
     })
 
-    const session = await getSession()
+    const session = await getSession(this.props.runtime.rootPath)
     const shippingOptions =
       session?.map((item: Record<string, string>) => item.value) ?? []
 

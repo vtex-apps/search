@@ -1,4 +1,4 @@
-const getSession = async () => {
+const getSession = async (rootPath?: string) => {
   const headers = new Headers()
 
   headers.append('Content-Type', 'application/json')
@@ -10,7 +10,7 @@ const getSession = async () => {
   }
 
   const session = await fetch(
-    `${window.location.origin}/api/sessions?items=public.shippingOption`,
+    `${rootPath || ''}/api/sessions?items=public.shippingOption`,
     requestOptions
   )
 
