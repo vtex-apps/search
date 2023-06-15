@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Add `rootPath` to Session API calls.
 
+## [2.16.3] - 2023-06-13
+
+### Fixed
+
+- Readme content.
+
+## [2.16.2] - 2023-06-13
+
 ## [2.16.1] - 2023-05-17
 ### Fixed
 - Fixes of i18n on readme.md according to task LOC-10514.

@@ -149,13 +149,19 @@ Once added, the blocks can be declared using their respective props for configur
 | `blockClass`          | `string` | Unique block ID to be used in [CSS customizations](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-css-handles-for-store-customization). | `undefined`   |
 | `horizontalAlignment` | `string` | Defines the horizontal alignment of the banner. Possible values are `left`, `center`, or `right`.                                                            | `center`      |
 
-## App behavior
+## App behavior: Improving search experience
 
+To improve the user's search experience in stores where the VTEX Intelligent Search engine is supported, the app have the following options:
+
+- **Stores using Universal Analytics (UA)**
 The Search app provides blocks that, when rendered as components, will improve the user's search experience in stores where the VTEX Intelligent Search engine is supported.
 
-These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics.
+These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics. To activate this behavior, refer to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
 
-Learn how to do this by referring to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
+**Please note that although the Search app's blocks enhance the search experience in VTEX stores, this feature is only compatible with VTEX stores using UA. As UA will be discontinued on July 1st, 2023, we highly recommend that you update your store to GA4. For more information of the migration, see the [release notes](https://developers.vtex.com/updates/release-notes/2023-05-04-google-tag-manager-new-version) and follow the option below.**
+
+- **Store using Google Analytics 4 (GA4)**
+Install the VTEX Google Tag Manager app, which includes the `search` event within the app's data layer. This app is responsible for tracking the user's search activity. For instructions on setting up Google Tag Manager, consult the [Setting up Google Tag Manager](https://developers.vtex.com/docs/guides/vtex-io-documentation-setting-up-google-tag-manager) documentation.
 
 ## Customization
 
