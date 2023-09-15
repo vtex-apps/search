@@ -56,6 +56,7 @@ export default class BiggyClient {
         productOriginVtex: productOrigin,
         count,
         shippingOptions,
+        variant: getCookie('sp-variant'),
       },
       fetchPolicy: 'network-only',
     })
