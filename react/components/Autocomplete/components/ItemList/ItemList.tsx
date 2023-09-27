@@ -106,6 +106,7 @@ export class ItemList extends React.Component<ItemListProps> {
                   onMouseOver={this.handleMouseOver}
                   onMouseOut={this.handleMouseOut}
                   closeModal={this.props.closeModal}
+                  onItemClick={this.props.onItemClick}
                 />
               </li>
             )
