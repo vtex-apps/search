@@ -25,8 +25,7 @@ const Attribute = (props: IAttributeProps) =>
         >
           <Link
             className={`${stylesCss.itemListSubItemLink} c-on-base`}
-            to={`/${props.item.value}/${attribute.value}`}
-            query={`map=ft,${attribute.key}`}
+            to={`/${props.item.value}/${attribute.value}?map=ft,${attribute.key}`}
             onClick={() => props.closeModal()}
           >
             {attribute.label}
