@@ -18,7 +18,7 @@ interface TileListProps {
   totalProducts: number
   layout: ProductLayout
   isLoading: boolean
-  onProductClick: (product: string, position: number) => void
+  onProductClick: (product: string, position: number, term: string) => void
   onSeeAllClick: (term: string) => void
   HorizontalProductSummary?: React.ComponentType<{
     product: Product
@@ -73,14 +73,14 @@ const TileList: FC<TileListProps> = ({
                       <HorizontalProductSummary
                         product={productSummary}
                         actionOnClick={() => {
-                          onProductClick(productSummary.productId, index)
+                          onProductClick(productSummary.productId, index, term)
                         }}
                       />
                     ) : (
                       <CustomListItem
                         product={productSummary}
                         onClick={() => {
-                          onProductClick(productSummary.productId, index)
+                          onProductClick(productSummary.productId, index, term)
                         }}
                       />
                     )
@@ -89,7 +89,7 @@ const TileList: FC<TileListProps> = ({
                       id="product-summary"
                       product={productSummary}
                       actionOnClick={() => {
-                        onProductClick(productSummary.productId, index)
+                        onProductClick(productSummary.productId, index, term)
                       }}
                     />
                   )}

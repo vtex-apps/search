@@ -10,7 +10,7 @@ export enum EventType {
 }
 
 export function handleProductClick(push: (data: any) => void, page: string) {
-  return (productId: string, position: number) =>
+  return (productId: string, position: number, term: string) =>
     push({
       page,
       event: EVENT_NAME,
@@ -19,6 +19,7 @@ export function handleProductClick(push: (data: any) => void, page: string) {
         productId,
         position,
       },
+      term,
     })
 }
 
