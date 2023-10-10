@@ -521,8 +521,8 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={(id, position) => {
-            handleProductClick(push, runtime.page)(id, position)
+          onProductClick={(id, position, term) => {
+            handleProductClick(push, runtime.page)(id, position, term)
             this.closeModal()
           }}
           onSeeAllClick={term => {
