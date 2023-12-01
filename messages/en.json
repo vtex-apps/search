@@ -2,7 +2,7 @@
   "store/topSearches": "Top Searches",
   "store/history": "Search History",
   "store/suggestions": "Suggestions",
-  "store/emptySuggestion": "No Suggestions",
+  "store/emptySuggestion": "No suggestions",
   "store/seeMore": "See all {count} products",
   "store/suggestedProducts": "Products for {term}",
   "store/ordinalNumber": ".",
