@@ -1,6 +1,6 @@
 # Banner
 
-A simple banner with that can configured to appear depending on the context of the search.
+Banners is the Intelligent Search feature that displays banners on the search results page of the customer, depending on the context of the search.
 
 ## Before you begin
 
