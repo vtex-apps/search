@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Documentation markdown.
+
+### Added
+- Before you begin section in Autocomplete, Banner, DidYouMean and Suggestions documentation.
+
 ## [2.16.7] - 2023-10-10
 
 ### Fixed
