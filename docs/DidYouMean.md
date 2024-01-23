@@ -2,6 +2,18 @@
 
 `DidYouMean` is a component used to suggest a possible misspelling correction to the current query.
 
+## Before you begin
+
+Make sure you have added the `search` app to your theme dependencies in the `manifest.json` as shown below:
+
+```json
+  "dependencies": {
+    "vtex.search": "2.x"
+  }
+```
+
+Check the [Search](https://developers.vtex.com/docs/apps/vtex.search) app documentation for more details on this step.
+
 ## Usage
 
 Add the `did-you-mean` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
