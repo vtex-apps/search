@@ -8,7 +8,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-The VTEX Search app handles the new [**VTEX Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search) solution in IO stores by providing new UI components to enhance the search experience, such as the autocomplete feature.
+The VTEX Search app handles the new [**Intelligent Search**](https://help.vtex.com/tracks/vtex-intelligent-search) solution in IO stores by providing new UI components to enhance the search experience, such as the autocomplete feature.
 
 ![search-app-gif](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-search-0.gif)
 
@@ -151,11 +151,11 @@ Once added, the blocks can be declared using their respective props for configur
 
 ## App behavior: Improving search experience
 
-To improve the user's search experience in stores where the VTEX Intelligent Search engine is supported, the app have the following options:
+To improve the user's search experience in stores where the Intelligent Search engine is supported, the app have the following options:
 
 - **Stores using Universal Analytics (UA)**:
   
-  The Search app provides blocks that, when rendered as components, will improve the user's search experience in stores where the VTEX Intelligent Search engine is supported.
+  The Search app provides blocks that, when rendered as components, will improve the user's search experience in stores where the Intelligent Search engine is supported.
 
    These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics. To activate this behavior, refer to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
 

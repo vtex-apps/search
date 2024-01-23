@@ -9,7 +9,7 @@ Autocomplete is the Intelligent Search feature that displays previous search res
 - Search Suggestions.
 - Product Suggestions.
 
-During the interaction with the search bar, VTEX Intelligent Search immediately displays the set of Top Searches and Search History (if the customer has done searches before).
+During the interaction with the search bar, Intelligent Search immediately displays the set of Top Searches and Search History (if the customer has done searches before).
 
 When the user starts typing, the system displays the Search suggestions and the Product suggestions and removes the previous lists.
 
