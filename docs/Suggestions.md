@@ -2,6 +2,18 @@
 
 `Suggestions` is a component used to suggest search terms similar to the current query.
 
+## Before you begin
+
+Make sure you have added the `search` app to your theme dependencies in the `manifest.json` as shown below:
+
+```json
+  "dependencies": {
+    "vtex.search": "2.x"
+  }
+```
+
+Check the [Search](https://developers.vtex.com/docs/apps/vtex.search) app documentation for more details on this step.
+
 ## Usage
 
 Add the `search-suggestions` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
@@ -19,9 +31,9 @@ Add the `search-suggestions` block to the `search-result-layout.desktop` or `sea
 
 ### Props
 
-| Prop name    | Type     | Description                                                                                                    | Default value |
-| ------------ | -------- | -------------------------------------------------------------------------------------------------------------- | ------------- |
-| `customPage` | `string` | Defines a custom page to the link of a suggestion. Example: `store.search.custom`. Defaults to `store.search`. |               |
+| Prop name | Type | Description | Default value |
+| - | - | - | - |
+| `customPage` | `string` | Defines a custom page to the link of a suggestion. Example: `store.search.custom`. | `store.search` |
 
 ## Customization
 
