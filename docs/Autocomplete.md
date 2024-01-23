@@ -1,8 +1,6 @@
 # Autocomplete
 
-## Description
-
-Autocomplete is the Intelligent Search feature that displays previous search results based on current and previous searches. These results are presented in four different lists, which can be together or separated, depending on the customer's interaction. It includes:
+Autocomplete is the [Intelligent Search](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb) feature that displays previous search results based on current and previous searches. These results are presented in four different lists, which can be together or separated, depending on the customer's interaction. It includes:
 
 - Top Searches.
 - Search History.
