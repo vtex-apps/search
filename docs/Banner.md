@@ -1,21 +1,33 @@
 # Banner
 
-A simple banner with that can configured to appear depending on the context of the search.
+Banners is the Intelligent Search feature that displays banners on the search results page of the customer, depending on the context of the search.
+
+## Before you begin
+
+Make sure you have added the `search` app to your theme dependencies in the `manifest.json` as shown below:
+
+```json
+  "dependencies": {
+    "vtex.search": "2.x"
+  }
+```
+
+Check the [Search](https://developers.vtex.com/docs/apps/vtex.search) app documentation for more details on this step.
 
 ## Configuration
 
 The banner entity is composed by the following fields:
 
-| Field                | Description                                                                                                      |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `Active`             | Indicates if banner is active or not.                                                                            |
-| `Banner name`        | Field used as an id.                                                                                             |
-| `Type banner`        | Indicates the banner type. It can be `HTML` or `IMAGE`.                                                          |
-| `HTML` / `Image URL` | Html or image to be inserted.                                                                                    |
-| `Area`               | Indicates which area the banner should appear. It is importante when there is multiple banners in the same page. |
-| `Terms`              | List of terms for this banner.                                                                                   |
-| `Period`             | The period that this banner will be active.                                                                      |
-| `Attributes`         | List of selected attributes for this banner.                                                                     |
+| Field | Description |
+| - | - |
+| `Active` | Indicates if the banner is active or not. |
+| `Banner name` | Field used as an ID. |
+| `Type banner` | Indicates the banner type, which can be `HTML` or `IMAGE`. |
+| `HTML` / `Image URL` | HTML code or image to be inserted. |
+| `Area` | Indicates in which area the banner should appear. It is important when there are multiple banners in the same page. |
+| `Terms` | List of terms for this banner. |
+| `Period` | The period that this banner will be active. |
+| `Attributes` | List of selected attributes for this banner. |
 
 ## Usage
 
@@ -45,11 +57,11 @@ Add the `search-banner` block to the `search-result-layout.desktop` or `search-r
 
 ## Props
 
-| Prop name             | Type     | Description                                                             | Default value |
-| --------------------- | -------- | ----------------------------------------------------------------------- | ------------- |
-| `area`                | `String` | Idicates the area. It needs to match the area configured in the banner. | -             |
-| `blockClass`          | `String` | Defines a custom class for the banner div.                              | -             |
-| `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner.                        | `"center"`    |
+| Prop name | Type | Description | Default value |
+| - | - | - | - |
+| `area` | `String` | Idicates the area. It needs to match the area configured in the banner. | - |
+| `blockClass` | `String` | Defines a custom class for the banner div. | - |
+| `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner. | `"center"` |
 
 The possible values for `horizontalAlignment` are:
 | Values |
