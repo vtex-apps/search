@@ -65,7 +65,7 @@ First, declare the `autocomplete-result-list.v2` block as a child block of the [
 | `autocompleteWidth` | `number` | Autocomplete list width (percentage). This value must be between `0` and `100`. | `undefined`   |
 | `productLayout` | `enum` | Determines the layout the suggested products list will have when rendered. Possible values are `HORIZONTAL` and `VERTICAL`. | `undefined` | 
 | `hideTitles` | `boolean` | Determines whether all component titles will be hidden when rendered (`true`) or not (`false`). | `false` |
-| `hideUnavailableItems` | `boolean` | Determines whether autocomplete should hide unavailable items (`true`) or not (`false`). | `false`       |
+| `hideUnavailableItems` | `boolean` | Determines whether autocomplete should hide unavailable items (`true`) or not (`false`). This prop only hides items that are unavailable according to indexed information, without taking into account `simulationBehavior`. | `false` |
 | `historyFirst` | `boolean` | Determines whether the search history list should be prioritized over the other lists (`true`) or not (`false`). | `false` |
 | `customBreakpoints` | `object` | Determines the maximum number of recommended products per breakpoints. Possible values are `md`, `lg`, or `xlg`. | - |
 | `simulationBehavior` | `"skip"` or `"default"` | If you want faster searches and are not so concern about having the most up-to-date prices and promotions, use `"skip"`. | `default` |
