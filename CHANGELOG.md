@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Edited orderBy prop description on Autocomplete.md.
+
 ## [2.16.9] - 2024-02-02
 
 ### Added
