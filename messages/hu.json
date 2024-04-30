@@ -1,12 +1,11 @@
 {
-  "store/topSearches": "Căutări populare",
-  "store/history": "Istoric căutări", 
-  "store/suggestions": "Sugestii",
-  "store/emptySuggestion": "Fără sugestii",
-  "store/seeMore": "Vezi toate cele {count} produse",
-  "store/suggestedProducts": "Produse pentru {term}",
+  "store/topSearches": "Legnépszerűbb keresések",
+  "store/history": "Keresési előzmények",
+  "store/suggestions": "Javaslatok",
+  "store/emptySuggestion": "Nincsenek javaslatok",
+  "store/seeMore": "Az összes {count} termék megtekintése",
+  "store/suggestedProducts": "Termékek a következőhöz: {term}",
   "store/ordinalNumber": ".",
-  "store/didYouMean": "Vrei să spui",
-  "store/searchSuggestions": "Sugestii"
+  "store/didYouMean": "Úgy értetted",
+  "store/searchSuggestions": "Javaslat"
 }
-    
