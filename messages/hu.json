@@ -1,0 +1,11 @@
+{
+  "store/topSearches": "Legnépszerűbb keresések",
+  "store/history": "Keresési előzmények",
+  "store/suggestions": "Javaslatok",
+  "store/emptySuggestion": "Nincsenek javaslatok",
+  "store/seeMore": "Az összes {count} termék megtekintése",
+  "store/suggestedProducts": "Termékek a következőhöz: {term}",
+  "store/ordinalNumber": ".",
+  "store/didYouMean": "Úgy értetted",
+  "store/searchSuggestions": "Javaslat"
+}
