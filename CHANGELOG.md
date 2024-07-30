@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Passes advertisement options on products suggestion query.
+
 ## [2.17.0] - 2024-05-06
 
 ### Added

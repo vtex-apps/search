@@ -100,6 +100,13 @@ declare global {
     TotalValuePlusInterestRate: number
     Value: number
   }
+
+  interface AdvertisementOptions {
+    showSponsored?: boolean
+    sponsoredCount?: number
+    repeatSponsoredProducts?: boolean
+    advertisementPlacement?: string
+  }
 }
 
 export {}
