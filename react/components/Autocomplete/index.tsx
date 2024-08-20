@@ -75,6 +75,7 @@ interface AutoCompleteProps {
   push: (data: any) => void
   HorizontalProductSummary?: React.ComponentType<{
     product: Product
+    placement: string
     actionOnClick: () => void
   }>
   customPage?: string
@@ -309,6 +310,12 @@ class AutoComplete extends React.Component<
     const session = await getSession(this.props.runtime.rootPath)
     const shippingOptions =
       session?.map((item: Record<string, string>) => item.value) ?? []
+    const advertisementOptions: AdvertisementOptions = {
+      showSponsored: true,
+      sponsoredCount: 2,
+      repeatSponsoredProducts: false,
+      advertisementPlacement: 'autocomplete',
+    }
 
     const result = await this.client.suggestionProducts(
       term,
@@ -319,7 +326,8 @@ class AutoComplete extends React.Component<
       hideUnavailableItems,
       orderBy,
       this.props.maxSuggestedProducts || MAX_SUGGESTED_PRODUCTS_DEFAULT,
-      shippingOptions
+      shippingOptions,
+      advertisementOptions
     )
 
     if (!queryFromHover) {
