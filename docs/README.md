@@ -149,6 +149,14 @@ Once added, the blocks can be declared using their respective props for configur
 | `blockClass` | `string` | Unique block ID to be used in [CSS customizations](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-css-handles-for-store-customization). | `undefined` |
 | `horizontalAlignment` | `string` | Defines the horizontal alignment of the banner. Possible values are `left`, `center`, or `right`. | `center` |
 
+### Catalog integration
+
+After installing the app, you need to integrate it with your store's catalog. Go to **Store Settings > Intelligent Search > Integrations** in the VTEX Admin and click **Start integration** to set up the initial indexing of the catalog with Intelligent Search. Learn more about this process at [Setting up Intelligent Search integration with the Catalog](https://help.vtex.com/en/tutorial/setting-up-intelligent-search-integration-with-the-catalog--3Nt5cIdwISSlzVtnYfLeIH).
+
+![integrations](https://github.com/user-attachments/assets/c8aa4dc6-19dd-4487-be21-9124e7113ba1)
+
+Afterwards, you can follow the indexing status of products on the [Indexing History](https://help.vtex.com/en/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/4flMwTaQL8FRKl1YT58ezH) page.
+
 ## App behavior: Improving search experience
 
 To improve the user's search experience in stores where the Intelligent Search engine is supported, the app have the following options:
