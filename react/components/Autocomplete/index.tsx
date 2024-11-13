@@ -23,7 +23,6 @@ import { withRuntime } from '../../utils/withRuntime'
 import { decodeUrlString, encodeUrlString } from '../../utils/string-utils'
 import {
   EventType,
-  handleAutocompleteSearch,
   handleItemClick,
   handleProductClick,
   handleSeeAllClick,
@@ -310,6 +309,7 @@ class AutoComplete extends React.Component<
     const session = await getSession(this.props.runtime.rootPath)
     const shippingOptions =
       session?.map((item: Record<string, string>) => item.value) ?? []
+
     const advertisementOptions: AdvertisementOptions = {
       showSponsored: true,
       sponsoredCount: 2,
@@ -329,18 +329,6 @@ class AutoComplete extends React.Component<
       shippingOptions,
       advertisementOptions
     )
-
-    if (!queryFromHover) {
-      const { count, operator, misspelled } = result.data.productSuggestions
-
-      handleAutocompleteSearch(
-        this.props.push,
-        operator,
-        misspelled,
-        count,
-        term
-      )
-    }
 
     this.setState({
       isProductsLoading: false,
@@ -529,8 +517,12 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={(id, position, term) => {
-            handleProductClick(push, runtime.page)(id, position, term)
+          onProductClick={(position, term, productSummary) => {
+            handleProductClick(push, runtime.page)(
+              position,
+              term,
+              productSummary
+            )
             this.closeModal()
           }}
           onSeeAllClick={term => {
