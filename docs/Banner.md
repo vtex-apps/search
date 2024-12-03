@@ -4,7 +4,7 @@ Banners is the Intelligent Search feature that displays banners on the search re
 
 ## Before you begin
 
-Make sure you have added the `search` app to your theme dependencies in the `manifest.json` as shown below:
+Make sure you have added the `search` app to your theme dependencies within the `manifest.json`, as shown below:
 
 ```json
   "dependencies": {
@@ -16,15 +16,15 @@ Check the [Search](https://developers.vtex.com/docs/apps/vtex.search) app docume
 
 ## Configuration
 
-The banner entity is composed by the following fields:
+The banner entity is composed of the following fields:
 
 | Field | Description |
 | - | - |
-| `Active` | Indicates if the banner is active or not. |
-| `Banner name` | Field used as an ID. |
-| `Type banner` | Indicates the banner type, which can be `HTML` or `IMAGE`. |
+| `Active` | Indicates if the banner is active or not. |se
+| `Banner name` | Unique identifier for the banner. |
+| `Type banner` | Specifies the type of banner, which can be either `HTML` or `IMAGE`. |
 | `HTML` / `Image URL` | HTML code or image to be inserted. |
-| `Area` | Indicates in which area the banner should appear. It is important when there are multiple banners in the same page. |
+| `Area` | Indicates the section of the page where the banner will be displayed. It's important when multiple banners are present on the same page. |
 | `Terms` | List of terms for this banner. |
 | `Period` | The period that this banner will be active. |
 | `Attributes` | List of selected attributes for this banner. |
@@ -59,11 +59,12 @@ Add the `search-banner` block to the `search-result-layout.desktop` or `search-r
 
 | Prop name | Type | Description | Default value |
 | - | - | - | - |
-| `area` | `String` | Idicates the area. It needs to match the area configured in the banner. | - |
+| `area` | `String` | Indicates the area. It needs to match the area configured in the banner. | - |
 | `blockClass` | `String` | Defines a custom class for the banner div. | - |
 | `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner. | `"center"` |
 
 The possible values for `horizontalAlignment` are:
+
 | Values |
 | --------- |
 | `"left"` |
@@ -72,7 +73,7 @@ The possible values for `horizontalAlignment` are:
 
 ## Customization
 
-In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
+To apply CSS customizations in this and other blocks, follow the instructions in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
 | CSS Handles    |
 | -------------- |
