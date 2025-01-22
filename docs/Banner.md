@@ -1,6 +1,6 @@
 # Banner
 
-Banners is the Intelligent Search feature that displays banners on the search results page of the customer, depending on the context of the search.
+Banner is the Intelligent Search feature that displays banners on the customer search results page, depending on the search context.
 
 ## Before you begin
 
@@ -20,7 +20,7 @@ The banner entity is composed of the following fields:
 
 | Field | Description |
 | - | - |
-| `Active` | Indicates if the banner is active or not. |se
+| `Active` | Indicates if the banner is active or not. |
 | `Banner name` | Unique identifier for the banner. |
 | `Type banner` | Specifies the type of banner, which can be either `HTML` or `IMAGE`. |
 | `HTML` / `Image URL` | HTML code or image to be inserted. |
@@ -31,7 +31,7 @@ The banner entity is composed of the following fields:
 
 ## Usage
 
-Add the `search-banner` block to the `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
+Add the `search-banner` block to `search-result-layout.desktop` or `search-result-layout.mobile`. For example:
 
 ```json
 {
@@ -59,8 +59,8 @@ Add the `search-banner` block to the `search-result-layout.desktop` or `search-r
 
 | Prop name | Type | Description | Default value |
 | - | - | - | - |
-| `area` | `String` | Indicates the area. It needs to match the area configured in the banner. | - |
-| `blockClass` | `String` | Defines a custom class for the banner div. | - |
+| `area` | `String` | Indicates the area. It must match the area configured in the banner. | - |
+| `blockClass` | `String` | Defines a custom class to the banner div. | - |
 | `horizontalAlignment` | `String` | Defines the horizontal alignment for the banner. | `"center"` |
 
 The possible values for `horizontalAlignment` are:
@@ -73,7 +73,7 @@ The possible values for `horizontalAlignment` are:
 
 ## Customization
 
-To apply CSS customizations in this and other blocks, follow the instructions in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
+To apply CSS customizations to this and other blocks, follow the instructions in the guide [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
 | CSS Handles    |
 | -------------- |
