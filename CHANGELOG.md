@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.18.3] - 2025-03-25
+
 ### Changed
 - Only showing list for `ItemList` if it has items available
 
