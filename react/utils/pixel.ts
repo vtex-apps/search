@@ -6,21 +6,36 @@ export enum EventType {
   TopSearchClick = 'top_search_click',
   HistoryClick = 'history_click',
   Search = 'search',
-  SeeAllClick = 'see_all_click',
+  SeeAllClick = 'see_all_products_click',
 }
 
 export function handleProductClick(push: (data: any) => void, page: string) {
-  return (productId: string, position: number, term: string) =>
+  return (position: number, term: string, productSummary: Product) => {
+    const {
+      productName,
+      brand,
+      categories,
+      sku,
+      productId,
+      productReference,
+    } = productSummary
+
     push({
       page,
-      event: EVENT_NAME,
+      event: 'productClick',
       eventType: EventType.ProductClick,
       product: {
+        productName,
+        brand,
+        categories,
+        sku,
         productId,
-        position,
+        productReference,
       },
+      position,
       term,
     })
+  }
 }
 
 export function handleItemClick(
@@ -51,36 +66,4 @@ export function handleSeeAllClick(push: (data: any) => void, page: string) {
         term,
       },
     })
-}
-
-export function handleAutocompleteSearch(
-  push: (data: any) => void,
-  operator: string,
-  misspelled: boolean,
-  count: number,
-  term: string
-) {
-  try {
-    push({
-      event: EVENT_NAME,
-      eventType: EventType.Search,
-      search: {
-        operator,
-        misspelled,
-        text: decodeURI(term),
-        match: count,
-      },
-    })
-  } catch (e) {
-    push({
-      event: EVENT_NAME,
-      eventType: EventType.Search,
-      search: {
-        operator,
-        misspelled,
-        text: term,
-        match: count,
-      },
-    })
-  }
 }
