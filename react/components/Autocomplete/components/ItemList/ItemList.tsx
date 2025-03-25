@@ -67,51 +67,54 @@ export class ItemList extends React.Component<ItemListProps> {
             {this.props.title}
           </p>
         ) : null}
-        <ol className={stylesCss.itemListList}>
-          {this.props.items.map((item, index) => {
-            return (
-              <li
-                key={item.value}
-                className={`${stylesCss.itemListItem}`}
-                onMouseOver={e => this.handleMouseOver(e, item)}
-                onFocus={e => this.handleMouseOver(e, item)}
-                onMouseOut={() => this.handleMouseOut()}
-                onBlur={() => this.handleMouseOut()}
-              >
-                <Link
-                  page={this.props.customPage ?? 'store.search'}
-                  params={{
-                    term: item.value,
-                  }}
-                  query={`map=ft&_q=${item.value}`}
-                  onClick={() => this.props.onItemClick(item.value, index)}
-                  className={stylesCss.itemListLink}
+        {this.props.items.length > 0 && (
+          <ol className={stylesCss.itemListList}>
+            {this.props.items.map((item, index) => {
+              return (
+                <li
+                  key={item.value}
+                  className={`${stylesCss.itemListItem}`}
+                  onMouseOver={e => this.handleMouseOver(e, item)}
+                  onFocus={e => this.handleMouseOver(e, item)}
+                  onMouseOut={() => this.handleMouseOut()}
+                  onBlur={() => this.handleMouseOut()}
                 >
-                  {item.icon ? (
-                    <span className={stylesCss.itemListIcon}>{item.icon}</span>
-                  ) : null}
+                  <Link
+                    page={this.props.customPage ?? 'store.search'}
+                    params={{
+                      term: item.value,
+                    }}
+                    query={`map=ft&_q=${item.value}`}
+                    onClick={() => this.props.onItemClick(item.value, index)}
+                    className={stylesCss.itemListLink}
+                  >
+                    {item.icon ? (
+                      <span className={stylesCss.itemListIcon}>{item.icon}</span>
+                    ) : null}
 
-                  {item.prefix ? (
-                    <span className={stylesCss.itemListPrefix}>
-                      {item.prefix}
+                    {item.prefix ? (
+                      <span className={stylesCss.itemListPrefix}>
+                        {item.prefix}
+                      </span>
+                    ) : null}
+
+                    <span className={`${stylesCss.itemListLinkTitle} c-on-base`}>
+                      {item.label}
                     </span>
-                  ) : null}
+                  </Link>
+                  <Attribute
+                    item={item}
+                    onMouseOver={this.handleMouseOver}
+                    onMouseOut={this.handleMouseOut}
+                    closeModal={this.props.closeModal}
+                    onItemClick={this.props.onItemClick}
+                  />
+                </li>
+              )
+            })}
+          </ol>
+        )}
 
-                  <span className={`${stylesCss.itemListLinkTitle} c-on-base`}>
-                    {item.label}
-                  </span>
-                </Link>
-                <Attribute
-                  item={item}
-                  onMouseOver={this.handleMouseOver}
-                  onMouseOut={this.handleMouseOut}
-                  closeModal={this.props.closeModal}
-                  onItemClick={this.props.onItemClick}
-                />
-              </li>
-            )
-          })}
-        </ol>
       </article>
     )
   }
