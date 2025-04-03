@@ -22,9 +22,12 @@ interface TileListProps {
   onSeeAllClick: (term: string) => void
   HorizontalProductSummary?: React.ComponentType<{
     product: Product
+    placement: string
     actionOnClick: () => void
   }>
 }
+
+const AUTOCOMPLETE_PLACEMENT = 'autocomplete'
 
 const TileList: FC<TileListProps> = ({
   term,
@@ -72,6 +75,7 @@ const TileList: FC<TileListProps> = ({
                     HorizontalProductSummary ? (
                       <HorizontalProductSummary
                         product={productSummary}
+                        placement={AUTOCOMPLETE_PLACEMENT}
                         actionOnClick={() => {
                           onProductClick(productSummary.productId, index, term)
                         }}
@@ -88,6 +92,7 @@ const TileList: FC<TileListProps> = ({
                     <ExtensionPoint
                       id="product-summary"
                       product={productSummary}
+                      placement={AUTOCOMPLETE_PLACEMENT}
                       actionOnClick={() => {
                         onProductClick(productSummary.productId, index, term)
                       }}

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.18.3] - 2025-03-25
+
+### Changed
+- Only showing list for `ItemList` if it has items available
+
+## [2.18.2] - 2025-01-22
+
+## [2.18.1] - 2024-09-02
+
+## [2.18.0] - 2024-08-20
+
+### Added
+
+- Passes advertisement options on products suggestion query.
+
 ## [2.17.0] - 2024-05-06
 
 ### Added
