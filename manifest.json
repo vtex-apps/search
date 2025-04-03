@@ -1,7 +1,7 @@
 {
   "name": "search",
-  "vendor": "vtex",
-  "version": "2.18.3",
+  "vendor": "topsortpartnercl",
+  "version": "0.1.0",
   "title": "Search",
   "description": "Search components and functionality for VTEX IO.",
   "scripts": {
@@ -30,13 +30,15 @@
     "vtex.store": "2.x",
     "vtex.product-summary": "2.x",
     "vtex.product-list-context": "0.x",
-    "vtex.search-resolver": "1.x",
     "vtex.device-detector": "0.x",
     "vtex.search-page-context": "0.x",
     "vtex.css-handles": "0.x",
     "vtex.product-price": "1.x",
     "vtex.pixel-manager": "1.x",
     "vtex.tester-hub": "0.x"
+  },
+  "peerDependencies": {
+    "topsortpartnercl.auctions": "2.x"
   },
   "policies": [],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
