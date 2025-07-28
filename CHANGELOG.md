@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Removed
+
+- `__unstableProductOriginVtex` was removed from the documentation on Autocomplete.md.
+
 ## [2.18.3] - 2025-03-25
 
 ### Changed
