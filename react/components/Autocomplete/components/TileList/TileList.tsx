@@ -18,7 +18,11 @@ interface TileListProps {
   totalProducts: number
   layout: ProductLayout
   isLoading: boolean
-  onProductClick: (product: string, position: number, term: string) => void
+  onProductClick: (
+    position: number,
+    term: string,
+    productSummary: Product
+  ) => void
   onSeeAllClick: (term: string) => void
   HorizontalProductSummary?: React.ComponentType<{
     product: Product
@@ -77,14 +81,14 @@ const TileList: FC<TileListProps> = ({
                         product={productSummary}
                         placement={AUTOCOMPLETE_PLACEMENT}
                         actionOnClick={() => {
-                          onProductClick(productSummary.productId, index, term)
+                          onProductClick(index, term, productSummary)
                         }}
                       />
                     ) : (
                       <CustomListItem
                         product={productSummary}
                         onClick={() => {
-                          onProductClick(productSummary.productId, index, term)
+                          onProductClick(index, term, productSummary)
                         }}
                       />
                     )
@@ -94,7 +98,7 @@ const TileList: FC<TileListProps> = ({
                       product={productSummary}
                       placement={AUTOCOMPLETE_PLACEMENT}
                       actionOnClick={() => {
-                        onProductClick(productSummary.productId, index, term)
+                        onProductClick(index, term, productSummary)
                       }}
                     />
                   )}
