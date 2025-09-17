@@ -93,6 +93,7 @@ interface AutoCompleteState {
   dynamicTerm: string
   isProductsLoading: boolean
   currentHeightWhenOpen: number
+  searchId: string
 }
 
 const { ProductListProvider } = ProductListContext
@@ -115,6 +116,7 @@ class AutoComplete extends React.Component<
     dynamicTerm: '',
     isProductsLoading: false,
     currentHeightWhenOpen: 0,
+    searchId: ''
   }
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -356,6 +358,7 @@ class AutoComplete extends React.Component<
     this.setState({
       products,
       totalProducts: productSuggestions.count,
+      searchId: productSuggestions.searchId || ''
     })
   }
 
@@ -507,7 +510,7 @@ class AutoComplete extends React.Component<
   }
 
   contentWhenQueryIsNotEmpty() {
-    const { products, totalProducts, isProductsLoading } = this.state
+    const { products, totalProducts, isProductsLoading, searchId } = this.state
     const { hideTitles, push, runtime, inputValue } = this.props
     const inputValueEncoded = encodeUrlString(inputValue)
 
@@ -538,6 +541,7 @@ class AutoComplete extends React.Component<
             this.closeModal()
           }}
           HorizontalProductSummary={this.props.HorizontalProductSummary}
+          searchId={searchId}
         />
       </>
     )

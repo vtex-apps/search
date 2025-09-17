@@ -25,6 +25,7 @@ interface TileListProps {
     placement: string
     actionOnClick: () => void
   }>
+  searchId: string
 }
 
 const AUTOCOMPLETE_PLACEMENT = 'autocomplete'
@@ -41,13 +42,18 @@ const TileList: FC<TileListProps> = ({
   onSeeAllClick,
   HorizontalProductSummary,
   customPage,
+  searchId
 }) => {
   if (products.length === 0 && !isLoading) {
     return null
   }
 
   return (
-    <section className={styles.tileList}>
+    <section
+      className={styles.tileList}
+      data-af-onimpression={searchId ? true : undefined}
+      data-af-search-id={searchId}
+    >
       {showTitle ? (
         <p className={`${styles.tileListTitle} c-on-base`}>{title}</p>
       ) : null}
@@ -70,7 +76,14 @@ const TileList: FC<TileListProps> = ({
               )
 
               return (
-                <li key={product.productId} className={styles.tileListItem}>
+                <li
+                  key={product.productId}
+                  className={styles.tileListItem}
+                  data-af-onclick={searchId && product.productId ? true : undefined}
+                  data-af-search-id={searchId}
+                  data-af-product-position={index + 1}
+                  data-af-product-id={product.productId}
+                >
                   {layout === ProductLayout.Horizontal ? (
                     HorizontalProductSummary ? (
                       <HorizontalProductSummary
