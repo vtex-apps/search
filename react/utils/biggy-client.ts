@@ -95,6 +95,7 @@ interface IProductsOutput {
   count: number
   misspelled: boolean
   operator: string
+  searchId: string
 }
 
 interface ISuggestionQueryResponseSearch {
