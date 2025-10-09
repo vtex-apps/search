@@ -89,7 +89,9 @@ export class ItemList extends React.Component<ItemListProps> {
                     className={stylesCss.itemListLink}
                   >
                     {item.icon ? (
-                      <span className={stylesCss.itemListIcon}>{item.icon}</span>
+                      <span className={stylesCss.itemListIcon}>
+                        {item.icon}
+                      </span>
                     ) : null}
 
                     {item.prefix ? (
@@ -98,7 +100,9 @@ export class ItemList extends React.Component<ItemListProps> {
                       </span>
                     ) : null}
 
-                    <span className={`${stylesCss.itemListLinkTitle} c-on-base`}>
+                    <span
+                      className={`${stylesCss.itemListLinkTitle} c-on-base`}
+                    >
                       {item.label}
                     </span>
                   </Link>
@@ -114,7 +118,6 @@ export class ItemList extends React.Component<ItemListProps> {
             })}
           </ol>
         )}
-
       </article>
     )
   }

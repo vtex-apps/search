@@ -116,7 +116,7 @@ class AutoComplete extends React.Component<
     dynamicTerm: '',
     isProductsLoading: false,
     currentHeightWhenOpen: 0,
-    searchId: ''
+    searchId: '',
   }
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -312,6 +312,7 @@ class AutoComplete extends React.Component<
     const session = await getSession(this.props.runtime.rootPath)
     const shippingOptions =
       session?.map((item: Record<string, string>) => item.value) ?? []
+
     const advertisementOptions: AdvertisementOptions = {
       showSponsored: true,
       sponsoredCount: 2,
@@ -358,7 +359,7 @@ class AutoComplete extends React.Component<
     this.setState({
       products,
       totalProducts: productSuggestions.count,
-      searchId: productSuggestions.searchId || ''
+      searchId: productSuggestions.searchId || '',
     })
   }
 

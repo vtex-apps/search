@@ -59,7 +59,7 @@ export default class BiggyClient {
         count,
         shippingOptions,
         variant: getCookie('sp-variant'),
-        origin: 'autocomplete'
+        origin: 'autocomplete',
       },
       fetchPolicy: 'network-only',
     })
