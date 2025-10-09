@@ -1,6 +1,6 @@
 {
   "store/topSearches": "Căutări populare",
-  "store/history": "Istoric căutări", 
+  "store/history": "Istoric căutări",
   "store/suggestions": "Sugestii",
   "store/emptySuggestion": "Fără sugestii",
   "store/seeMore": "Vezi toate cele {count} produse",
@@ -8,4 +8,4 @@
   "store/ordinalNumber": ".",
   "store/didYouMean": "Vrei să spui",
   "store/searchSuggestions": "Sugestii"
-  }
+}

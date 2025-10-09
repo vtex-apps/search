@@ -42,7 +42,7 @@ const TileList: FC<TileListProps> = ({
   onSeeAllClick,
   HorizontalProductSummary,
   customPage,
-  searchId
+  searchId,
 }) => {
   if (products.length === 0 && !isLoading) {
     return null
@@ -51,6 +51,7 @@ const TileList: FC<TileListProps> = ({
   return (
     <section
       className={styles.tileList}
+      data-af-element={searchId ? 'search-autocomplete' : undefined}
       data-af-onimpression={searchId ? true : undefined}
       data-af-search-id={searchId}
     >
@@ -79,7 +80,10 @@ const TileList: FC<TileListProps> = ({
                 <li
                   key={product.productId}
                   className={styles.tileListItem}
-                  data-af-onclick={searchId && product.productId ? true : undefined}
+                  data-af-element={searchId ? 'search-autocomplete' : undefined}
+                  data-af-onclick={
+                    searchId && product.productId ? true : undefined
+                  }
                   data-af-search-id={searchId}
                   data-af-product-position={index + 1}
                   data-af-product-id={product.productId}
