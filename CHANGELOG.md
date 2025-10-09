@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- New attribute `data-af-element` for all elements with ActivityFlow event trigger
+
 ## [2.18.6] - 2025-10-02
 
 ### Added
