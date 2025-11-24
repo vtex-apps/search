@@ -87,6 +87,7 @@ const TileList: FC<TileListProps> = ({
                   data-af-search-id={searchId}
                   data-af-product-position={index + 1}
                   data-af-product-id={product.productId}
+                  data-af-product-specification={product.specification}
                 >
                   {layout === ProductLayout.Horizontal ? (
                     HorizontalProductSummary ? (
