@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.18.8] - 2025-12-03
+
 ### Added
 
 - New attribute `data-af-product-specification` attribute to TileList component
