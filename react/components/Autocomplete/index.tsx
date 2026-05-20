@@ -21,6 +21,7 @@ import {
 import { ItemList } from './components/ItemList/ItemList'
 import { withRuntime } from '../../utils/withRuntime'
 import { decodeUrlString, encodeUrlString } from '../../utils/string-utils'
+import { buildHistoryItemValue } from '../../utils/history-items'
 import {
   EventType,
   handleAutocompleteSearch,
@@ -387,14 +388,23 @@ class AutoComplete extends React.Component<
   }
 
   updateHistory() {
+    // History entries come from the shopper-typed search bar (via the
+    // biggy-search-history cookie) and may contain `/` characters. The
+    // navigation `value` must be encoded with the same placeholder that the
+    // rest of the autocomplete already uses (see TileList "see all"); without
+    // it, vtex.render-runtime <Link> would interpolate `/` verbatim into the
+    // path slug and break the search route. The visible label stays decoded.
+    // Spec: is-io-specs/specs/fix-autocomplete-history-link-encoding/spec.md
     const history = this.client
       .searchHistory()
       .slice(0, this.props.maxHistory || MAX_HISTORY_DEFAULT)
       .map((item: string) => {
+        const encodedTerm = buildHistoryItemValue(item)
+
         return {
           label: decodeUrlString(item),
-          value: item,
-          link: `/${item}?map=ft`,
+          value: encodedTerm,
+          link: `/${encodedTerm}?map=ft`,
           icon: <IconClock />,
         }
       })

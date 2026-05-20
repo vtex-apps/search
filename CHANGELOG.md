@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.18.8] - 2025-12-03
+### Fixed
+
+- Autocomplete history rows now encode the term in their navigation link the same way the rest of the autocomplete already does (matching the "see all" link in `TileList`). Previously, history entries containing `/` (e.g. `12/3 Romex`) produced a broken URL whose path was split into two segments at click time. The visible label remains decoded for readability, and the `biggy-search-history` cookie format is unchanged.
+
+### Added
+
+- Jest test setup via `@vtex/test-tools` (Decision 3 of the spec). `make test` now runs the suite; `make check` includes it. Initial coverage targets `react/utils/string-utils.ts` and the new `react/utils/history-items.ts` helper.
 
 ### Added
 
