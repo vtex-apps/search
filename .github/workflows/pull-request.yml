@@ -1,10 +1,78 @@
+# managed-by: golden-path v1
 name: PR actions
-on:
+permissions:
+  contents: read
+'on':
   pull_request:
     branches:
       - master
+
 jobs:
+  danger-ci:
+    name: Danger CI
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+        env:
+          RUNNER_TEMP: /tmp
+      - name: Danger CI
+        uses: vtex/danger@master
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          REQUIRE_CHANGELOG_VERSION: false
+
+  io-app-test:
+    name: IO app test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+        env:
+          RUNNER_TEMP: /tmp
+      - name: Run test on every builder directory
+        uses: vtex/action-io-app-test@v1.0.1
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    # Pre-existing lint debt in react/utils, react/components, react/typings.
+    # Surface findings without blocking merges until a dedicated cleanup PR.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # `vtex/action-lint@v1.1.1` is currently broken across this repo's
+          # toolchain (Docker `node:16-slim` resolves a different ESLint
+          # transitive tree than the lockfile, crashing the rule schema
+          # validator before lint runs). Run lint directly with our own
+          # Node + yarn toolchain instead.
+          node-version: '18'
+          cache: 'yarn'
+        env:
+          RUNNER_TEMP: /tmp
+      - name: Install root dependencies
+        run: yarn install --frozen-lockfile
+      - name: Install react builder dependencies
+        working-directory: react
+        run: yarn install --frozen-lockfile
+      - name: Run lint
+        run: yarn lint
+
   Cypress:
+    name: Cypress E2E
     uses: vtex/action-io-app-cypress/.github/workflows/cypress.yml@v1
     with:
       accounts: '["biggy"]'

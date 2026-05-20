@@ -1,1 +1,4 @@
+# managed-by: golden-path v1
+* @vtex-apps/intelligent-search-apps
 messages/ @vtex-apps/localization
+docs/ @vtex-apps/technical-writers
