@@ -178,7 +178,11 @@ class AutoComplete extends React.Component<
       const term = path[1].split('&')[0]
 
       try {
-        return this.client.prependSearchHistory(decodeURI(term))
+        // `decodeURIComponent` (not `decodeURI`) so reserved characters like
+        // `%2F` are also decoded. The history cookie stores canonical, fully
+        // decoded terms — `BiggyClient.prependSearchHistory` re-encodes each
+        // entry per-term before joining, so `,` and other separators are safe.
+        return this.client.prependSearchHistory(decodeURIComponent(term))
       } catch {
         return this.client.prependSearchHistory(term)
       }

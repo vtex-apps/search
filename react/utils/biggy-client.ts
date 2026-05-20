@@ -3,12 +3,11 @@ import suggestionProducts from 'vtex.store-resources/QuerySuggestionProducts'
 import suggestionSearches from 'vtex.store-resources/QueryAutocompleteSearchSuggestions'
 import topSearches from 'vtex.store-resources/QueryTopSearches'
 
-import { getCookie, setCookie } from './dom-utils'
+import { getCookie } from './dom-utils'
 import { ISearchProduct } from '../models/search-product'
+import { prependSearchHistory, readSearchHistory } from './search-history'
 
 export default class BiggyClient {
-  private historyKey = 'biggy-search-history'
-
   constructor(private client: ApolloClient<any>) {}
 
   public async topSearches(): Promise<
@@ -66,24 +65,11 @@ export default class BiggyClient {
   }
 
   public searchHistory(): string[] {
-    const history = getCookie(this.historyKey) || ''
-
-    return history.split(',').filter(x => !!x)
+    return readSearchHistory()
   }
 
   public prependSearchHistory(term: string, limit = 5) {
-    if (term == null || term.trim() === '') {
-      return
-    }
-
-    let history = this.searchHistory()
-
-    if (history.indexOf(term) < 0) {
-      history.unshift(term)
-      history = history.slice(0, limit)
-    }
-
-    setCookie(this.historyKey, history.join(','))
+    prependSearchHistory(term, limit)
   }
 }
 
