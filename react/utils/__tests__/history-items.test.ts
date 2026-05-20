@@ -8,15 +8,12 @@ describe('buildHistoryItemValue', () => {
     expect(buildHistoryItemValue('shoes')).toBe('shoes')
   })
 
-  it('encodes "/" using the codebase-internal "$2F" placeholder', () => {
-    // Mirrors the encoding applied by Autocomplete#contentWhenQueryIsNotEmpty
-    // (see TileList "see-all" link). History rows must use the same encoding
-    // so the path slug survives interpolation by vtex.render-runtime <Link>.
-    expect(buildHistoryItemValue('12/3 Romex')).toBe('12$2F3 Romex')
+  it('encodes "/" using standard percent-encoding ("%2F"), matching the search bar', () => {
+    expect(buildHistoryItemValue('12/3 Romex')).toBe('12%2F3%20Romex')
   })
 
   it('encodes every "/" in a term that contains multiple slashes', () => {
-    expect(buildHistoryItemValue('1/2/3 cable')).toBe('1$2F2$2F3 cable')
+    expect(buildHistoryItemValue('1/2/3 cable')).toBe('1%2F2%2F3%20cable')
   })
 
   it('is idempotent against legacy entries that may already be encoded', () => {
@@ -26,7 +23,17 @@ describe('buildHistoryItemValue', () => {
     expect(encodedTwice).toBe(encodedOnce)
   })
 
-  it('preserves a literal "%2F" instead of double-encoding it', () => {
-    expect(buildHistoryItemValue('12%2F3 Romex')).toBe('12%2F3 Romex')
+  it('preserves an already-encoded "%2F" without double-encoding it as "%252F"', () => {
+    expect(buildHistoryItemValue('12%2F3 Romex')).toBe('12%2F3%20Romex')
+  })
+
+  it('also recognises the lowercase "%2f" form', () => {
+    expect(buildHistoryItemValue('12%2f3 Romex')).toBe('12%2F3%20Romex')
+  })
+
+  it('falls back to verbatim encoding when the input contains a malformed percent-triplet', () => {
+    // "%ZZ" is not a valid triplet; decodeURIComponent throws, so the helper
+    // must fall back to encoding the literal "%" as "%25" instead of crashing.
+    expect(buildHistoryItemValue('foo%ZZ')).toBe('foo%25ZZ')
   })
 })

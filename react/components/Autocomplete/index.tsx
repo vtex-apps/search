@@ -389,11 +389,13 @@ class AutoComplete extends React.Component<
 
   updateHistory() {
     // History entries come from the shopper-typed search bar (via the
-    // biggy-search-history cookie) and may contain `/` characters. The
-    // navigation `value` must be encoded with the same placeholder that the
-    // rest of the autocomplete already uses (see TileList "see all"); without
-    // it, vtex.render-runtime <Link> would interpolate `/` verbatim into the
-    // path slug and break the search route. The visible label stays decoded.
+    // biggy-search-history cookie) and may contain `/` characters.
+    // `vtex.render-runtime` `<Link>` interpolates `params.term` verbatim
+    // into the route slug, so a raw `/` would split the term into multiple
+    // path segments and break the search route. `buildHistoryItemValue`
+    // applies standard percent-encoding (`/` -> `%2F`), matching the URL
+    // emitted when the same term is typed in the search bar. The visible
+    // label stays decoded so rows remain readable.
     // Spec: is-io-specs/specs/fix-autocomplete-history-link-encoding/spec.md
     const history = this.client
       .searchHistory()
