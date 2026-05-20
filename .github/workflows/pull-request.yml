@@ -17,7 +17,7 @@ jobs:
       issues: write
       statuses: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -34,7 +34,7 @@ jobs:
     name: IO app test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -51,7 +51,7 @@ jobs:
     # Surface findings without blocking merges until a dedicated cleanup PR.
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           # `vtex/action-lint@v1.1.1` is currently broken across this repo's
