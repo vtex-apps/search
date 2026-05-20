@@ -24,7 +24,7 @@
     "@vtex/prettier-config": "^0.1.4",
     "eslint": "^7.14.0",
     "eslint-config-vtex": "^12.8.10",
-    "eslint-config-vtex-react": "^6.8.2",
+    "eslint-config-vtex-react": "^9.1.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.1",
     "prettier": "^2.0.2",
