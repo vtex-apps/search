@@ -9,11 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Autocomplete history rows now apply standard percent-encoding (`/` → `%2F`) to the term in their navigation link, matching the URL produced when the same term is typed in the search bar. Previously, history entries containing `/` (e.g. `12/3 Romex`) produced a broken URL whose path was split into two segments at click time. The visible label remains decoded for readability, and the `biggy-search-history` cookie format is unchanged.
+- Autocomplete URLs now match the canonical search bar (`vtex.store-components/SearchBar.tsx`) byte-for-byte. Both entry points that build a `store.search` URL from a shopper-supplied term — history rows and the "see all" link in the product-tile footer — apply standard percent-encoding (`/` → `%2F`, ` ` → `%20`, …) via `encodeURIComponent`. Previously, history entries containing `/` (e.g. `12/3 Romex`) navigated to a broken URL whose path was split into two segments, and the "see all" link emitted a non-standard `$2F` slug that diverged from the search bar. The visible label of history rows remains decoded for readability, and the `biggy-search-history` cookie format is unchanged.
 
 ### Added
 
-- Jest test setup via `@vtex/test-tools` (Decision 3 of the spec). `make test` now runs the suite; `make check` includes it. Initial coverage targets `react/utils/string-utils.ts` and the new `react/utils/history-items.ts` helper.
+- New `react/utils/term-encoding.ts` module exposing `encodeSearchTerm`, a single idempotency-safe helper wrapping `safeEncodeURIComponent` (`encodeURIComponent ∘ decodeURIComponent`, with a fallback for malformed `%XX` triplets). This helper is used for both cookie-sourced history items and live user input, ensuring identical URL output regardless of the call site.
+- Jest test setup via `@vtex/test-tools` (Decision 3 of the spec). `make test` now runs the suite; `make check` includes it. Initial coverage targets `react/utils/string-utils.ts` (still in use to render the history-row label) and the new `react/utils/term-encoding.ts` helpers.
+
+### Deprecated
+
+- `encodeUrlString` from `react/utils/string-utils.ts` — the legacy `$2F` placeholder. After this fix it has no live caller in `react/`. Removal is tracked as a follow-up (alongside upgrading the history-row label decoder to also handle `%2F`).
 
 ### Added
 
