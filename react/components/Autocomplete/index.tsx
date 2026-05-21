@@ -24,7 +24,6 @@ import { decodeUrlString } from '../../utils/string-utils'
 import { encodeSearchTerm } from '../../utils/term-encoding'
 import {
   EventType,
-  handleAutocompleteSearch,
   handleItemClick,
   handleProductClick,
   handleSeeAllClick,
@@ -338,18 +337,6 @@ class AutoComplete extends React.Component<
       advertisementOptions
     )
 
-    if (!queryFromHover) {
-      const { count, operator, misspelled } = result.data.productSuggestions
-
-      handleAutocompleteSearch(
-        this.props.push,
-        operator,
-        misspelled,
-        count,
-        term
-      )
-    }
-
     this.setState({
       isProductsLoading: false,
     })
@@ -556,8 +543,12 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={(id, position, term) => {
-            handleProductClick(push, runtime.page)(id, position, term)
+          onProductClick={(position, term, productSummary) => {
+            handleProductClick(push, runtime.page)(
+              position,
+              term,
+              productSummary
+            )
             this.closeModal()
           }}
           onSeeAllClick={term => {
