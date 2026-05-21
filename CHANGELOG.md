@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.18.9] - 2026-05-21
+
 ### Fixed
 
 - Autocomplete URLs now match the canonical search bar (`vtex.store-components/SearchBar.tsx`) byte-for-byte. Both entry points that build a `store.search` URL from a shopper-supplied term — history rows and the "see all" link in the product-tile footer — apply standard percent-encoding (`/` → `%2F`, ` ` → `%20`, …) via `encodeURIComponent`. Previously, history entries containing `/` (e.g. `12/3 Romex`) navigated to a broken URL whose path was split into two segments, and the "see all" link emitted a non-standard `$2F` slug that diverged from the search bar. The visible label of history rows remains decoded for readability.
