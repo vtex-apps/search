@@ -3,3 +3,8 @@ node_modules/
 .eslintrc
 .gitignore
 README.md
+
+# tests — excluded from the platform build; run locally via `make test`
+**/__tests__
+**/__mocks__
+**/*.test.*

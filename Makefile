@@ -24,13 +24,11 @@ build: ## Validate app build inputs without publishing
 	@echo "VTEX IO builds run on the platform via vtex link/publish."
 	@echo "Run 'make check' for local validations before linking."
 
-test: ## Run test suite (no test runner configured today)
-	@echo "No Jest/Mocha test runner is configured in this repo."
-	@echo "Cypress E2E lives in github.com/vtex/search-tests and runs in CI against the biggy account."
-	@echo "Add a Jest config under react/ before populating this target."
+test: ## Run test suite
+	cd react && $(PKG_MGR) test
 
-coverage: ## Coverage report (no test runner configured)
-	@echo "Coverage is unavailable until a test runner is configured (see 'make test')."
+coverage: ## Coverage report
+	cd react && $(PKG_MGR) test --coverage
 
 lint: ## Run linter without auto-fix
 	npx eslint --ext js,jsx,ts,tsx .
@@ -38,7 +36,7 @@ lint: ## Run linter without auto-fix
 format-check: ## Check formatting without rewriting files
 	npx prettier --check "**/*.{ts,tsx,js,jsx,json}"
 
-check: lint ## Run all quality checks (pre-PR gate)
+check: lint test ## Run all quality checks (pre-PR gate)
 
 link: ## Link app in the active VTEX development workspace
 	@echo "This targets the active VTEX account/workspace. Confirm with 'vtex whoami' before running."

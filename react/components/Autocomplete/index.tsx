@@ -20,7 +20,8 @@ import {
 } from './components/ItemList/types'
 import { ItemList } from './components/ItemList/ItemList'
 import { withRuntime } from '../../utils/withRuntime'
-import { decodeUrlString, encodeUrlString } from '../../utils/string-utils'
+import { decodeUrlString } from '../../utils/string-utils'
+import { encodeSearchTerm } from '../../utils/term-encoding'
 import {
   EventType,
   handleAutocompleteSearch,
@@ -177,7 +178,11 @@ class AutoComplete extends React.Component<
       const term = path[1].split('&')[0]
 
       try {
-        return this.client.prependSearchHistory(decodeURI(term))
+        // `decodeURIComponent` (not `decodeURI`) so reserved characters like
+        // `%2F` are also decoded. The history cookie stores canonical, fully
+        // decoded terms — `BiggyClient.prependSearchHistory` re-encodes each
+        // entry per-term before joining, so `,` and other separators are safe.
+        return this.client.prependSearchHistory(decodeURIComponent(term))
       } catch {
         return this.client.prependSearchHistory(term)
       }
@@ -387,14 +392,27 @@ class AutoComplete extends React.Component<
   }
 
   updateHistory() {
+    // History entries come from the shopper-typed search bar (via the
+    // biggy-search-history cookie) and may contain `/` characters.
+    // `vtex.render-runtime` `<Link>` interpolates `params.term` verbatim into
+    // the route slug, so a raw `/` would split the term into multiple path
+    // segments and break the search route. `encodeSearchTerm` (in
+    // utils/term-encoding) runs the same `encodeURIComponent` primitive the
+    // canonical search bar uses, with an idempotency safety net for legacy
+    // cookie entries — so a clicked history row produces the same URL the
+    // search bar would emit for the same term. The visible label stays
+    // decoded so rows remain readable.
+    // Spec: is-io-specs/specs/fix-autocomplete-history-link-encoding/spec.md
     const history = this.client
       .searchHistory()
       .slice(0, this.props.maxHistory || MAX_HISTORY_DEFAULT)
       .map((item: string) => {
+        const encodedTerm = encodeSearchTerm(item)
+
         return {
           label: decodeUrlString(item),
-          value: item,
-          link: `/${item}?map=ft`,
+          value: encodedTerm,
+          link: `/${encodedTerm}?map=ft`,
           icon: <IconClock />,
         }
       })
@@ -513,7 +531,12 @@ class AutoComplete extends React.Component<
   contentWhenQueryIsNotEmpty() {
     const { products, totalProducts, isProductsLoading, searchId } = this.state
     const { hideTitles, push, runtime, inputValue } = this.props
-    const inputValueEncoded = encodeUrlString(inputValue)
+    // Encode the live search term so the "see all" link below produces the
+    // same URL the search bar would emit if the shopper hit Enter on the same
+    // input. Without this, a `/` in the term would split the path into
+    // multiple route segments and the resulting PLP would 404.
+    // Spec: is-io-specs/specs/fix-autocomplete-history-link-encoding/spec.md
+    const inputValueEncoded = encodeSearchTerm(inputValue)
 
     return (
       <>
