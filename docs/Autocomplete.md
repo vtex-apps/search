@@ -59,6 +59,8 @@ Add `autocomplete-result-list.v2` into the blocks of a `search-bar`. We also rec
 | `simulationBehavior` | `"skip"` or `"default"` | If you want faster searches and do not care about most up to date prices and promotions, use `"skip"` value. | `default` |
 | `customPage` | `string` | Defines a custom page to the autocomplete links. Example: `store.search.custom`. |  `store.search` |
 | `orderBy` | `enum` | Determines which order products must follow when displayed. The possible values are named after the order type: `OrderByTopSaleDESC`, `OrderByReleaseDateDESC`, `OrderByBestDiscountDESC`, `OrderByPriceDESC`, `OrderByPriceASC`, `OrderByNameASC`, or `OrderByNameDESC`. <br/><br/>`ASC` and `DESC` stand for ascending order and descending order, respectively, based on the position of each value's corresponding code in the [ASCII table](http://www.asciitable.com/). <br/><br/>If not set to any of the mentioned values, the fallback behavior is sorting by [relevance settings](https://help.vtex.com/tracks/vtex-intelligent-search--19wrbB7nEQcmwzDPl1l4Cb/1qlObWIib6KqgrfX1FCOXS). <br/><br/>`OrderByScoreDESC` is **not** a valid value for this prop. | `""` |
+| `showSponsored` | `Boolean` | If `true`, sponsored products may be displayed among the suggested products, provided the VTEX account is linked to an ads publisher. Set this per block declaration so each workspace/environment controls ads independently. | `false` |
+| `sponsoredCount` | `Number` | Maximum number of sponsored products shown among the suggested products. Only takes effect when `showSponsored` is `true`. | `2` |
 
 #### ProductLayoutEnum
 

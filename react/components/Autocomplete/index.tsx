@@ -82,6 +82,8 @@ interface AutoCompleteProps {
   customPage?: string
   closeMenu: () => void
   orderBy?: string
+  showSponsored?: boolean
+  sponsoredCount?: number
 }
 
 interface AutoCompleteState {
@@ -291,6 +293,8 @@ class AutoComplete extends React.Component<
       simulationBehavior = 'default',
       hideUnavailableItems = false,
       orderBy,
+      showSponsored = false,
+      sponsoredCount = 2,
     } = this.props
 
     const { queryFromHover } = this.state
@@ -319,8 +323,8 @@ class AutoComplete extends React.Component<
       session?.map((item: Record<string, string>) => item.value) ?? []
 
     const advertisementOptions: AdvertisementOptions = {
-      showSponsored: true,
-      sponsoredCount: 2,
+      showSponsored,
+      sponsoredCount,
       repeatSponsoredProducts: false,
       advertisementPlacement: 'autocomplete',
     }
