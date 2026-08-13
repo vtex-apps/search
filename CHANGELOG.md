@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- `autocomplete-result-list.v2` no longer shows sponsored products by default. `showSponsored` and `sponsoredCount` are now block props (defaulting to `false` and `2`, respectively) instead of being hardcoded to `true`/`2` in `Autocomplete#updateProducts`. Ads are now opt-in per block declaration, so each store theme/workspace controls whether sponsored products are requested, instead of ads turning on implicitly as soon as the VTEX account is linked to an ads publisher.
+
 ## [2.18.9] - 2026-05-21
 
 ### Fixed
