@@ -94,6 +94,7 @@ interface AutoCompleteState {
   isProductsLoading: boolean
   currentHeightWhenOpen: number
   searchId: string
+  lastEmittedSearchId: string
 }
 
 const { ProductListProvider } = ProductListContext
@@ -116,6 +117,7 @@ export class AutoComplete extends React.Component<
     isProductsLoading: false,
     currentHeightWhenOpen: 0,
     searchId: '',
+    lastEmittedSearchId: '',
   }
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -334,9 +336,15 @@ export class AutoComplete extends React.Component<
       advertisementOptions
     )
 
-    if (!hoverFacet) {
-      const { count, operator, misspelled } = result.data.productSuggestions
+    const { productSuggestions } = result.data
+    const { count, operator, misspelled, searchId } = productSuggestions
+    const { lastEmittedSearchId } = this.state
 
+    // Cached IS responses reuse the searchId; Activity Flow only emits when
+    // `data-af-search-id` changes, so the legacy event follows the same rule.
+    const isNewSearch = !!searchId && searchId !== lastEmittedSearchId
+
+    if (isNewSearch) {
       handleAutocompleteSearch(
         this.props.push,
         operator,
@@ -350,8 +358,6 @@ export class AutoComplete extends React.Component<
       isProductsLoading: false,
     })
 
-    const { productSuggestions } = result.data
-
     const products = productSuggestions.products.slice(
       0,
       this.getProductCount()
@@ -359,8 +365,9 @@ export class AutoComplete extends React.Component<
 
     this.setState({
       products,
-      totalProducts: productSuggestions.count,
-      searchId: productSuggestions.searchId || '',
+      totalProducts: count,
+      searchId: searchId || '',
+      lastEmittedSearchId: isNewSearch ? searchId : lastEmittedSearchId,
     })
   }
 

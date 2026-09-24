@@ -124,7 +124,13 @@ const setup = () => {
     await settle()
   }
 
-  return { ...utils, push, rerender, hover }
+  const searchEvents = () =>
+    push.mock.calls
+      .map(([event]) => event)
+      .filter(event => event.eventType === 'search')
+      .map(event => event.search.text)
+
+  return { ...utils, ref, push, rerender, hover, searchEvents }
 }
 
 const attribute = (key: string, value: string, groupValue = 'shampoo') => ({
@@ -185,5 +191,106 @@ describe('Autocomplete hover facet (US-3)', () => {
     await settle()
 
     expect(facetArgs(2)).toEqual(['sabonete', undefined, undefined])
+  })
+})
+
+describe('Autocomplete legacy search event (US-1)', () => {
+  it('emits once when a typed term returns a new searchId', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse('A'))
+    const { rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo'])
+  })
+
+  it('does not emit when reopening returns the same searchId, but still updates products', async () => {
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A', 1))
+    const { ref, rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A', 2))
+    rerender({ inputValue: 'shampoo', isOpen: false })
+    rerender({ inputValue: 'shampoo', isOpen: true })
+    await settle()
+
+    expect(mockSuggestionProducts).toHaveBeenCalledTimes(2)
+    expect(searchEvents()).toEqual(['shampoo'])
+    expect(ref.current.state.products).toHaveLength(2)
+  })
+
+  it('does not emit when an attribute hover returns the same searchId', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse('A'))
+    const { rerender, hover, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+    await hover(attribute('brand', 'dove'))
+
+    expect(searchEvents()).toEqual(['shampoo'])
+  })
+
+  it('emits for every hover that returns a new searchId, like Activity Flow', async () => {
+    const { rerender, hover, searchEvents } = setup()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A'))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('B'))
+    await hover(attribute('brand', 'dove'))
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('C'))
+    await hover(term('condicionador'))
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('C'))
+    await hover(term('condicionador'))
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('B'))
+    await hover(attribute('brand', 'dove'))
+
+    expect(searchEvents()).toEqual([
+      'shampoo',
+      'shampoo',
+      'condicionador',
+      'shampoo',
+    ])
+  })
+
+  it('emits when a new typed term returns a new searchId', async () => {
+    const { rerender, searchEvents } = setup()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A'))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('B'))
+    rerender({ inputValue: 'sabonete' })
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo', 'sabonete'])
+  })
+
+  it('emits for a zero-result search that returns a searchId', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse('Z', 0))
+    const { rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'xyzabc' })
+    await settle()
+
+    expect(searchEvents()).toEqual(['xyzabc'])
+  })
+
+  it('does not emit when the response has no searchId', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse(''))
+    const { rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    expect(searchEvents()).toEqual([])
   })
 })
