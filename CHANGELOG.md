@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Hovering an attribute suggestion in the autocomplete now requests products with that attribute's facet. Before, each hover sent the facet of the previous hover (the first hover sent none), so the panel showed products for the wrong filter.
+- The legacy `search` autocomplete event now fires once per new `searchId` returned by `productSuggestions`, the same rule Activity Flow uses. Reopening the panel or hovering a suggestion that returns the current `searchId` no longer fires it, and every hover that returns a new `searchId` does. Expect the legacy autocomplete query series to drop on reopen-heavy stores and to grow on hover-heavy ones. The event payload is unchanged.
+
+### Added
+
+- Activity Flow impression for autocomplete terms without results. When `productSuggestions` returns zero products and a `searchId`, `TileList` renders an empty `section` with `data-af-onimpression` and `data-af-search-id`. It has no content or layout class.
+
 ## [2.18.9] - 2026-05-21
 
 ### Fixed
