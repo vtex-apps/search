@@ -275,6 +275,23 @@ describe('Autocomplete legacy search event (US-1)', () => {
     expect(searchEvents()).toEqual(['shampoo', 'sabonete'])
   })
 
+  it('emits when the same term is retyped and returns a new searchId', async () => {
+    const { rerender, searchEvents } = setup()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A'))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    rerender({ inputValue: '' })
+    await settle()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('B'))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo', 'shampoo'])
+  })
+
   it('emits for a zero-result search that returns a searchId', async () => {
     mockSuggestionProducts.mockResolvedValue(productsResponse('Z', 0))
     const { rerender, searchEvents } = setup()
@@ -374,5 +391,24 @@ describe('TileList zero-result impression (US-2)', () => {
 
     expect(nodes).toHaveLength(1)
     expect(nodes[0].getAttribute('data-af-search-id')).toBe('Z')
+  })
+
+  it('moves the impression node to the new searchId when a prefix returns products', async () => {
+    const { container, rerender, searchEvents } = setup()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('C', 0))
+    rerender({ inputValue: 'zzzx' })
+    await settle()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('D', 2))
+    rerender({ inputValue: 'sh' })
+    await settle()
+
+    const nodes = impressionNodes(container)
+
+    expect(nodes).toHaveLength(1)
+    expect(nodes[0].getAttribute('data-af-search-id')).toBe('D')
+    expect(nodes[0].querySelectorAll('li')).toHaveLength(2)
+    expect(searchEvents()).toEqual(['zzzx', 'sh'])
   })
 })
