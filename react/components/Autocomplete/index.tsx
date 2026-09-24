@@ -90,7 +90,6 @@ interface AutoCompleteState {
   history: Item[]
   products: any[]
   totalProducts: number
-  queryFromHover: { key?: string; value?: string }
   dynamicTerm: string
   isProductsLoading: boolean
   currentHeightWhenOpen: number
@@ -99,7 +98,7 @@ interface AutoCompleteState {
 
 const { ProductListProvider } = ProductListContext
 
-class AutoComplete extends React.Component<
+export class AutoComplete extends React.Component<
   WithApolloClient<AutoCompleteProps>,
   Partial<AutoCompleteState>
 > {
@@ -113,7 +112,6 @@ class AutoComplete extends React.Component<
     products: [],
     suggestionItems: [],
     totalProducts: 0,
-    queryFromHover: {},
     dynamicTerm: '',
     isProductsLoading: false,
     currentHeightWhenOpen: 0,
@@ -205,10 +203,7 @@ class AutoComplete extends React.Component<
 
     const { inputValue } = this.props
 
-    this.setState({
-      dynamicTerm: inputValue,
-      queryFromHover: undefined,
-    })
+    this.setState({ dynamicTerm: inputValue })
 
     if (inputValue === null || inputValue === '') {
       this.updateTopSearches()
@@ -282,7 +277,10 @@ class AutoComplete extends React.Component<
     this.setState({ suggestionItems })
   }
 
-  async updateProducts(itemTerm: string) {
+  async updateProducts(
+    itemTerm: string,
+    hoverFacet?: { key?: string; value?: string }
+  ) {
     const term = itemTerm
 
     const {
@@ -292,8 +290,6 @@ class AutoComplete extends React.Component<
       hideUnavailableItems = false,
       orderBy,
     } = this.props
-
-    const { queryFromHover } = this.state
 
     if (!term) {
       this.setState({
@@ -327,8 +323,8 @@ class AutoComplete extends React.Component<
 
     const result = await this.client.suggestionProducts(
       term,
-      queryFromHover ? queryFromHover.key : undefined,
-      queryFromHover ? queryFromHover.value : undefined,
+      hoverFacet?.key,
+      hoverFacet?.value,
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
       simulationBehavior,
       hideUnavailableItems,
@@ -338,7 +334,7 @@ class AutoComplete extends React.Component<
       advertisementOptions
     )
 
-    if (!queryFromHover) {
+    if (!hoverFacet) {
       const { count, operator, misspelled } = result.data.productSuggestions
 
       handleAutocompleteSearch(
@@ -424,23 +420,14 @@ class AutoComplete extends React.Component<
 
   handleItemHover = (item: Item | AttributeItem) => {
     if (instanceOfAttributeItem(item)) {
-      this.setState({
-        dynamicTerm: item.groupValue,
-        queryFromHover: {
-          key: item.key,
-          value: item.value,
-        },
+      this.setState({ dynamicTerm: item.groupValue })
+      this.updateProducts(item.groupValue, {
+        key: item.key,
+        value: item.value,
       })
-      this.updateProducts(item.groupValue)
     } else {
-      this.setState({
-        dynamicTerm: item.value,
-        queryFromHover: {
-          key: undefined,
-          value: undefined,
-        },
-      })
-      this.updateProducts(item.value)
+      this.setState({ dynamicTerm: item.value })
+      this.updateProducts(item.value, { key: undefined, value: undefined })
     }
   }
 
