@@ -95,6 +95,7 @@ interface AutoCompleteState {
   currentHeightWhenOpen: number
   searchId: string
   lastEmittedSearchId: string
+  searchTerm: string
 }
 
 const { ProductListProvider } = ProductListContext
@@ -118,6 +119,7 @@ export class AutoComplete extends React.Component<
     currentHeightWhenOpen: 0,
     searchId: '',
     lastEmittedSearchId: '',
+    searchTerm: '',
   }
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -372,6 +374,7 @@ export class AutoComplete extends React.Component<
       totalProducts: count,
       searchId: searchId || '',
       lastEmittedSearchId: isNewSearch ? searchId : lastEmittedSearchId,
+      searchTerm: term,
     })
   }
 
@@ -437,7 +440,7 @@ export class AutoComplete extends React.Component<
    * when the IS cache returns the same searchId.
    */
   clearedSearchState() {
-    return { searchId: '', lastEmittedSearchId: '' }
+    return { searchId: '', lastEmittedSearchId: '', searchTerm: '' }
   }
 
   handleItemHover = (item: Item | AttributeItem) => {
@@ -538,7 +541,14 @@ export class AutoComplete extends React.Component<
   }
 
   contentWhenQueryIsNotEmpty() {
-    const { products, totalProducts, isProductsLoading, searchId } = this.state
+    const {
+      products,
+      totalProducts,
+      isProductsLoading,
+      searchId,
+      searchTerm,
+    } = this.state
+
     const { hideTitles, push, runtime, inputValue } = this.props
     // Encode the live search term so the "see all" link below produces the
     // same URL the search bar would emit if the shopper hit Enter on the same
@@ -565,10 +575,9 @@ export class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={(id, position, term) => {
-            handleProductClick(push, runtime.page)(id, position, term)
-            this.closeModal()
-          }}
+          clickTerm={searchTerm}
+          onProductClick={handleProductClick(push, runtime.page)}
+          onProductNavigate={() => this.closeModal()}
           onSeeAllClick={term => {
             handleSeeAllClick(push, runtime.page)(term)
             this.closeModal()
