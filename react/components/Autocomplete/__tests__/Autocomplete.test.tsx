@@ -292,6 +292,40 @@ describe('Autocomplete legacy search event (US-1)', () => {
     expect(searchEvents()).toEqual(['shampoo', 'shampoo'])
   })
 
+  it('emits when the same term is retyped after clearing and returns the same searchId', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse('A'))
+    const { rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    rerender({ inputValue: '' })
+    await settle()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo', 'shampoo'])
+  })
+
+  it('does not expose the previous searchId while the next term loads', async () => {
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('Z', 0))
+    const { container, rerender } = setup()
+
+    rerender({ inputValue: 'zzzxqwerty' })
+    await settle()
+    expect(container.querySelector('[data-af-search-id="Z"]')).not.toBeNull()
+
+    rerender({ inputValue: '' })
+    await settle()
+
+    mockSuggestionProducts.mockReturnValueOnce(new Promise(() => {}))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    expect(container.querySelector('[data-af-element]')).toBeNull()
+  })
+
   it('emits for a zero-result search that returns a searchId', async () => {
     mockSuggestionProducts.mockResolvedValue(productsResponse('Z', 0))
     const { rerender, searchEvents } = setup()

@@ -214,6 +214,7 @@ export class AutoComplete extends React.Component<
       this.setState({
         suggestionItems: [],
         products: [],
+        ...this.clearedSearchState(),
       })
     } else {
       this.updateSuggestions()
@@ -297,6 +298,7 @@ export class AutoComplete extends React.Component<
       this.setState({
         products: [],
         totalProducts: 0,
+        ...this.clearedSearchState(),
       })
 
       return
@@ -340,8 +342,10 @@ export class AutoComplete extends React.Component<
     const { count, operator, misspelled, searchId } = productSuggestions
     const { lastEmittedSearchId } = this.state
 
-    // Cached IS responses reuse the searchId; Activity Flow only emits when
-    // `data-af-search-id` changes, so the legacy event follows the same rule.
+    // Activity Flow emits once per mounted TileList node and again when its
+    // `data-af-search-id` changes. Cached IS responses reuse the searchId, so
+    // the legacy event only fires for a searchId the current node has not
+    // shown yet (see clearedSearchState for the remount case).
     const isNewSearch = !!searchId && searchId !== lastEmittedSearchId
 
     if (isNewSearch) {
@@ -423,6 +427,17 @@ export class AutoComplete extends React.Component<
     this.setState({
       history,
     })
+  }
+
+  /**
+   * Clearing the query unmounts the TileList. Its next mount must not carry
+   * the previous searchId: Activity Flow would emit an impression for it
+   * before the new response arrives. Resetting the last emitted searchId too
+   * makes the legacy event fire for the response the new node shows, even
+   * when the IS cache returns the same searchId.
+   */
+  clearedSearchState() {
+    return { searchId: '', lastEmittedSearchId: '' }
   }
 
   handleItemHover = (item: Item | AttributeItem) => {
