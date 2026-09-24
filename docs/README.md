@@ -165,7 +165,7 @@ To improve the user's search experience in stores where the Intelligent Search e
   
   The Search app provides blocks that, when rendered as components, will improve the user's search experience in stores where the Intelligent Search engine is supported.
 
-   These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics. To activate this behavior, refer to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation.
+   These components use `_q` as the query-string for the search term, meaning that if you want to track user searches in these components, you will need to add the `_q` query-string to the store's Google Analytics. To activate this behavior, refer to [Set up Site Search](https://support.google.com/analytics/answer/1012264?hl=en#zippy=%2Cin-this-article) Google's documentation and to VTEX's [Setting up Google Analytics search tracking](https://developers.vtex.com/docs/guides/vtex-io-documentation-setting-up-google-analytics-search-tracking) guide, which details the query and category parameters used by this app.
 
         >❗ Please note that although the Search app's blocks enhance the search experience in VTEX stores, this feature is only compatible with VTEX stores using UA. As UA will be discontinued on July 1st, 2023, **we highly recommend that you update your store to GA4**. For more information on the migration, see the [release notes](https://developers.vtex.com/updates/release-notes/2023-05-04-google-tag-manager-new-version) and follow the option below.
 
