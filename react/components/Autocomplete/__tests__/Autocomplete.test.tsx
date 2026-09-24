@@ -1,7 +1,8 @@
 import React from 'react'
 import { render, act, flushPromises } from '@vtex/test-tools/react'
 
-import { AutoComplete } from '../index'
+import { AutoComplete, ProductLayout } from '../index'
+import TileList from '../components/TileList/TileList'
 
 const mockSuggestionProducts = jest.fn()
 
@@ -292,5 +293,86 @@ describe('Autocomplete legacy search event (US-1)', () => {
     await settle()
 
     expect(searchEvents()).toEqual([])
+  })
+})
+
+describe('TileList zero-result impression (US-2)', () => {
+  const tileListProps = {
+    term: 'xyzabc',
+    title: 'Products',
+    products: [],
+    showTitle: false,
+    shelfProductCount: 3,
+    totalProducts: 0,
+    layout: ProductLayout.Vertical,
+    isLoading: false,
+    onProductClick: () => {},
+    onSeeAllClick: () => {},
+    searchId: 'Z',
+  }
+
+  const impressionNodes = (container: HTMLElement) =>
+    container.querySelectorAll('[data-af-onimpression]')
+
+  it('renders an empty instrumented node when there are no products', () => {
+    const { container } = render(<TileList {...tileListProps} />)
+    const nodes = impressionNodes(container)
+
+    expect(nodes).toHaveLength(1)
+    expect(nodes[0].getAttribute('data-af-element')).toBe('search-autocomplete')
+    expect(nodes[0].getAttribute('data-af-search-id')).toBe('Z')
+    expect(nodes[0].childNodes).toHaveLength(0)
+    expect(container.querySelectorAll('li')).toHaveLength(0)
+  })
+
+  it('renders nothing without a searchId', () => {
+    const { container } = render(<TileList {...tileListProps} searchId="" />)
+
+    expect(container.innerHTML).toBe('')
+  })
+
+  it('renders nothing without a term', () => {
+    const { container } = render(<TileList {...tileListProps} term="" />)
+
+    expect(container.innerHTML).toBe('')
+  })
+
+  it('keeps the same node and updates the attribute when the searchId changes', () => {
+    const { container, rerender } = render(<TileList {...tileListProps} />)
+    const [before] = impressionNodes(container)
+
+    rerender(<TileList {...tileListProps} searchId="Y" />)
+    const [after] = impressionNodes(container)
+
+    expect(after).toBe(before)
+    expect(after.getAttribute('data-af-search-id')).toBe('Y')
+  })
+
+  it('keeps the product list instrumentation when there are products', () => {
+    const { container } = render(
+      <TileList
+        {...tileListProps}
+        products={[{ productId: '1', items: [] }]}
+        totalProducts={1}
+      />
+    )
+    const nodes = impressionNodes(container)
+
+    expect(nodes).toHaveLength(1)
+    expect(nodes[0].getAttribute('data-af-search-id')).toBe('Z')
+    expect(container.querySelectorAll('li[data-af-onclick]')).toHaveLength(1)
+  })
+
+  it('shows the zero-result node in the autocomplete for a term without results', async () => {
+    mockSuggestionProducts.mockResolvedValue(productsResponse('Z', 0))
+    const { container, rerender } = setup()
+
+    rerender({ inputValue: 'xyzabc' })
+    await settle()
+
+    const nodes = impressionNodes(container)
+
+    expect(nodes).toHaveLength(1)
+    expect(nodes[0].getAttribute('data-af-search-id')).toBe('Z')
   })
 })

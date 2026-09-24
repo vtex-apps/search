@@ -45,7 +45,17 @@ const TileList: FC<TileListProps> = ({
   searchId,
 }) => {
   if (products.length === 0 && !isLoading) {
-    return null
+    if (!term || !searchId) {
+      return null
+    }
+
+    return (
+      <section
+        data-af-element="search-autocomplete"
+        data-af-onimpression
+        data-af-search-id={searchId}
+      />
+    )
   }
 
   return (
