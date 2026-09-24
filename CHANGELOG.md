@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Restored the link to VTEX's [Setting up Google Analytics search tracking](https://developers.vtex.com/docs/guides/vtex-io-documentation-setting-up-google-analytics-search-tracking) guide in the "Improving search experience" section of `docs/README.md`, alongside Google's own "Set up Site Search" documentation ([EDU-17478](https://vtex-dev.atlassian.net/browse/EDU-17478)).
+
 ## [2.18.9] - 2026-05-21
 
 ### Fixed
