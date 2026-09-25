@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Hovering an attribute suggestion in the autocomplete now requests products with that attribute's facet. Before, each hover sent the facet of the previous hover (the first hover sent none), so the panel showed products for the wrong filter.
 - The legacy `search` autocomplete event now fires once per new `searchId` returned by `productSuggestions`, the same rule Activity Flow uses. Reopening the panel or hovering a suggestion that returns the current `searchId` no longer fires it, and every hover that returns a new `searchId` does. Clearing the input resets the tracked `searchId`, so retyping a term counts once on both sides and the remounted `TileList` no longer sends an Activity Flow impression for the previous search. Expect the legacy autocomplete query series to drop on reopen-heavy stores and to grow on hover-heavy ones. The event payload is unchanged.
+- The legacy autocomplete `product_click` event now describes the same click as Activity Flow:
+  - `term` is the raw term of the search whose products are on screen. Since 2.18.9 it carried the URL-encoded input (`shampoo%20anticaspa`), and the legacy pipeline dropped those clicks. After a hover it now credits the hovered term, not the typed one. The "see all" link keeps the encoded term.
+  - It fires for any click inside the product card `<li>`, in the capture phase, like Activity Flow. Buy and quantity buttons in the card now count. The link still counts once and still closes the panel; other card buttons keep it open.
+  - Expect a step up in the legacy click series on release: mostly multi-word terms and stores with a buy button in the autocomplete card. The event fields are unchanged; `position` stays 0-based.
 
 ### Added
 
