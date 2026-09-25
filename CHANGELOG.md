@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.19.0] - 2026-09-25
+
 ### Fixed
 
 - Hovering an attribute suggestion in the autocomplete now requests products with that attribute's facet. Before, each hover sent the facet of the previous hover (the first hover sent none), so the panel showed products for the wrong filter.
