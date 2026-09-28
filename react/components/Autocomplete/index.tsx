@@ -90,16 +90,17 @@ interface AutoCompleteState {
   history: Item[]
   products: any[]
   totalProducts: number
-  queryFromHover: { key?: string; value?: string }
   dynamicTerm: string
   isProductsLoading: boolean
   currentHeightWhenOpen: number
   searchId: string
+  lastEmittedSearchId: string
+  searchTerm: string
 }
 
 const { ProductListProvider } = ProductListContext
 
-class AutoComplete extends React.Component<
+export class AutoComplete extends React.Component<
   WithApolloClient<AutoCompleteProps>,
   Partial<AutoCompleteState>
 > {
@@ -113,11 +114,12 @@ class AutoComplete extends React.Component<
     products: [],
     suggestionItems: [],
     totalProducts: 0,
-    queryFromHover: {},
     dynamicTerm: '',
     isProductsLoading: false,
     currentHeightWhenOpen: 0,
     searchId: '',
+    lastEmittedSearchId: '',
+    searchTerm: '',
   }
 
   constructor(props: WithApolloClient<AutoCompleteProps>) {
@@ -205,10 +207,7 @@ class AutoComplete extends React.Component<
 
     const { inputValue } = this.props
 
-    this.setState({
-      dynamicTerm: inputValue,
-      queryFromHover: undefined,
-    })
+    this.setState({ dynamicTerm: inputValue })
 
     if (inputValue === null || inputValue === '') {
       this.updateTopSearches()
@@ -217,6 +216,7 @@ class AutoComplete extends React.Component<
       this.setState({
         suggestionItems: [],
         products: [],
+        ...this.clearedSearchState(),
       })
     } else {
       this.updateSuggestions()
@@ -282,7 +282,10 @@ class AutoComplete extends React.Component<
     this.setState({ suggestionItems })
   }
 
-  async updateProducts(itemTerm: string) {
+  async updateProducts(
+    itemTerm: string,
+    hoverFacet?: { key?: string; value?: string }
+  ) {
     const term = itemTerm
 
     const {
@@ -293,12 +296,11 @@ class AutoComplete extends React.Component<
       orderBy,
     } = this.props
 
-    const { queryFromHover } = this.state
-
     if (!term) {
       this.setState({
         products: [],
         totalProducts: 0,
+        ...this.clearedSearchState(),
       })
 
       return
@@ -327,8 +329,8 @@ class AutoComplete extends React.Component<
 
     const result = await this.client.suggestionProducts(
       term,
-      queryFromHover ? queryFromHover.key : undefined,
-      queryFromHover ? queryFromHover.value : undefined,
+      hoverFacet?.key,
+      hoverFacet?.value,
       __unstableProductOrigin === 'VTEX' || __unstableProductOriginVtex,
       simulationBehavior,
       hideUnavailableItems,
@@ -338,9 +340,17 @@ class AutoComplete extends React.Component<
       advertisementOptions
     )
 
-    if (!queryFromHover) {
-      const { count, operator, misspelled } = result.data.productSuggestions
+    const { productSuggestions } = result.data
+    const { count, operator, misspelled, searchId } = productSuggestions
+    const { lastEmittedSearchId } = this.state
 
+    // Activity Flow emits once per mounted TileList node and again when its
+    // `data-af-search-id` changes. Cached IS responses reuse the searchId, so
+    // the legacy event only fires for a searchId the current node has not
+    // shown yet (see clearedSearchState for the remount case).
+    const isNewSearch = !!searchId && searchId !== lastEmittedSearchId
+
+    if (isNewSearch) {
       handleAutocompleteSearch(
         this.props.push,
         operator,
@@ -354,8 +364,6 @@ class AutoComplete extends React.Component<
       isProductsLoading: false,
     })
 
-    const { productSuggestions } = result.data
-
     const products = productSuggestions.products.slice(
       0,
       this.getProductCount()
@@ -363,8 +371,10 @@ class AutoComplete extends React.Component<
 
     this.setState({
       products,
-      totalProducts: productSuggestions.count,
-      searchId: productSuggestions.searchId || '',
+      totalProducts: count,
+      searchId: searchId || '',
+      lastEmittedSearchId: isNewSearch ? searchId : lastEmittedSearchId,
+      searchTerm: term,
     })
   }
 
@@ -422,25 +432,27 @@ class AutoComplete extends React.Component<
     })
   }
 
+  /**
+   * Clearing the query unmounts the TileList. Its next mount must not carry
+   * the previous searchId: Activity Flow would emit an impression for it
+   * before the new response arrives. Resetting the last emitted searchId too
+   * makes the legacy event fire for the response the new node shows, even
+   * when the IS cache returns the same searchId.
+   */
+  clearedSearchState() {
+    return { searchId: '', lastEmittedSearchId: '', searchTerm: '' }
+  }
+
   handleItemHover = (item: Item | AttributeItem) => {
     if (instanceOfAttributeItem(item)) {
-      this.setState({
-        dynamicTerm: item.groupValue,
-        queryFromHover: {
-          key: item.key,
-          value: item.value,
-        },
+      this.setState({ dynamicTerm: item.groupValue })
+      this.updateProducts(item.groupValue, {
+        key: item.key,
+        value: item.value,
       })
-      this.updateProducts(item.groupValue)
     } else {
-      this.setState({
-        dynamicTerm: item.value,
-        queryFromHover: {
-          key: undefined,
-          value: undefined,
-        },
-      })
-      this.updateProducts(item.value)
+      this.setState({ dynamicTerm: item.value })
+      this.updateProducts(item.value, { key: undefined, value: undefined })
     }
   }
 
@@ -529,7 +541,14 @@ class AutoComplete extends React.Component<
   }
 
   contentWhenQueryIsNotEmpty() {
-    const { products, totalProducts, isProductsLoading, searchId } = this.state
+    const {
+      products,
+      totalProducts,
+      isProductsLoading,
+      searchId,
+      searchTerm,
+    } = this.state
+
     const { hideTitles, push, runtime, inputValue } = this.props
     // Encode the live search term so the "see all" link below produces the
     // same URL the search bar would emit if the shopper hit Enter on the same
@@ -556,10 +575,9 @@ class AutoComplete extends React.Component<
           totalProducts={totalProducts || 0}
           layout={this.getProductLayout()}
           isLoading={isProductsLoading}
-          onProductClick={(id, position, term) => {
-            handleProductClick(push, runtime.page)(id, position, term)
-            this.closeModal()
-          }}
+          clickTerm={searchTerm}
+          onProductClick={handleProductClick(push, runtime.page)}
+          onProductNavigate={() => this.closeModal()}
           onSeeAllClick={term => {
             handleSeeAllClick(push, runtime.page)(term)
             this.closeModal()
