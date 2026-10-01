@@ -753,7 +753,7 @@ describe('Autocomplete legacy click after hover (US-3)', () => {
     expect(productClicks()).toEqual([{ id: '1', term: 'shampoo' }])
   })
 
-  it('credits the term of the response on screen when responses arrive out of order', async () => {
+  it('credits the term of the newest request when responses arrive out of order', async () => {
     const { ref, getByTestId, rerender, hover, productClicks } = setup()
 
     mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A'))
@@ -772,8 +772,8 @@ describe('Autocomplete legacy click after hover (US-3)', () => {
     await settle()
     fireEvent.click(getByTestId('product-1'))
 
-    expect(ref.current.state.searchId).toBe('B')
-    expect(productClicks()).toEqual([{ id: '1', term: 'shampoo ketoconazol' }])
+    expect(ref.current.state.searchId).toBe('C')
+    expect(productClicks()).toEqual([{ id: '1', term: 'condicionador' }])
   })
 
   it('clears the clicked term with the searchId when the query is cleared', async () => {
@@ -789,5 +789,82 @@ describe('Autocomplete legacy click after hover (US-3)', () => {
 
     expect(ref.current.state.searchId).toBe('')
     expect(ref.current.state.searchTerm).toBe('')
+  })
+})
+
+describe('Autocomplete stale responses', () => {
+  it('drops a response that arrives after the component unmounted', async () => {
+    const slow = deferred()
+
+    mockSuggestionProducts.mockReturnValueOnce(slow.promise)
+    const { rerender, unmount, searchEvents } = setup()
+
+    rerender({ inputValue: 'calculadora' })
+    await settle()
+    unmount()
+
+    slow.resolve(productsResponse('A'))
+    await settle()
+
+    expect(searchEvents()).toEqual([])
+  })
+
+  it('does not emit for an older response that resolves after a newer one', async () => {
+    const { ref, rerender, hover, searchEvents } = setup()
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('A'))
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+
+    const slow = deferred()
+
+    mockSuggestionProducts.mockReturnValueOnce(slow.promise)
+    await hover(term('shampoo ketoconazol'))
+
+    mockSuggestionProducts.mockResolvedValueOnce(productsResponse('C'))
+    await hover(term('condicionador'))
+
+    slow.resolve(productsResponse('B'))
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo', 'condicionador'])
+    expect(ref.current.state.searchId).toBe('C')
+    expect(ref.current.state.searchTerm).toBe('condicionador')
+  })
+
+  it('drops a response that arrives after the input was cleared and resets loading', async () => {
+    const slow = deferred()
+
+    mockSuggestionProducts.mockReturnValueOnce(slow.promise)
+    const { ref, rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+    expect(ref.current.state.isProductsLoading).toBe(true)
+
+    rerender({ inputValue: '' })
+    await settle()
+    expect(ref.current.state.isProductsLoading).toBe(false)
+
+    slow.resolve(productsResponse('A'))
+    await settle()
+
+    expect(searchEvents()).toEqual([])
+    expect(ref.current.state.searchId).toBe('')
+    expect(ref.current.state.products).toEqual([])
+  })
+
+  it('still emits for a response that is the newest request', async () => {
+    const slow = deferred()
+
+    mockSuggestionProducts.mockReturnValueOnce(slow.promise)
+    const { rerender, searchEvents } = setup()
+
+    rerender({ inputValue: 'shampoo' })
+    await settle()
+    slow.resolve(productsResponse('A'))
+    await settle()
+
+    expect(searchEvents()).toEqual(['shampoo'])
   })
 })
