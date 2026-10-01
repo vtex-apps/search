@@ -107,6 +107,8 @@ export class AutoComplete extends React.Component<
   autocompleteRef: React.RefObject<any>
   client: BiggyClient
   isIOS: boolean
+  productsRequestId = 0
+  isUnmounted = false
 
   public readonly state: AutoCompleteState = {
     topSearchedItems: [],
@@ -166,6 +168,10 @@ export class AutoComplete extends React.Component<
     this.addEvents()
   }
 
+  componentWillUnmount() {
+    this.isUnmounted = true
+  }
+
   shouldUpdate(prevProps: AutoCompleteProps) {
     return (
       prevProps.inputValue !== this.props.inputValue ||
@@ -210,12 +216,14 @@ export class AutoComplete extends React.Component<
     this.setState({ dynamicTerm: inputValue })
 
     if (inputValue === null || inputValue === '') {
+      this.productsRequestId += 1
       this.updateTopSearches()
       this.updateHistory()
 
       this.setState({
         suggestionItems: [],
         products: [],
+        isProductsLoading: false,
         ...this.clearedSearchState(),
       })
     } else {
@@ -288,6 +296,9 @@ export class AutoComplete extends React.Component<
   ) {
     const term = itemTerm
 
+    this.productsRequestId += 1
+    const requestId = this.productsRequestId
+
     const {
       __unstableProductOrigin,
       __unstableProductOriginVtex = false,
@@ -339,6 +350,14 @@ export class AutoComplete extends React.Component<
       shippingOptions,
       advertisementOptions
     )
+
+    // A response that arrives after a newer request, a cleared input, or an
+    // unmount (pressing Enter navigates and remounts the header) never reaches
+    // TileList, so Activity Flow cannot see it. Drop it before the legacy
+    // event fires.
+    if (this.isUnmounted || requestId !== this.productsRequestId) {
+      return
+    }
 
     const { productSuggestions } = result.data
     const { count, operator, misspelled, searchId } = productSuggestions
