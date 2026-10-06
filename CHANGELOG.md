@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.19.2] - 2026-10-06
+
 ### Fixed
 
 - The legacy `search` autocomplete event no longer fires for a `productSuggestions` response that the panel never shows. Before, a shopper who pressed Enter before the response arrived sent the legacy event, because the response resolved after navigation unmounted the autocomplete. Activity Flow sent nothing for the same response. Responses that a newer term, a newer hover, or a cleared input made obsolete are also dropped, so they no longer fire the event or replace the products on screen.
