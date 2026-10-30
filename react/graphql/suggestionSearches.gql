@@ -1,5 +1,5 @@
 query suggestionSearches($term: String!) {
-  suggestionSearches(term: $term) {
+  suggestionSearches(term: $term) @context(provider: "vtex.search") {
     searches {
       term
       attributes {
