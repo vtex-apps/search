@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Removed
+- The unused `@toVtexAssets` annotation on three image fields. No version of `@vtex/api` implements it, and the 7.x runtime rejects undeclared directives at startup. Output is unchanged.
+
+### Changed
+- Upgrade the node builder from 4.x to 7.x (`@vtex/api` 7, TypeScript 5), since VTEX IO no longer links or publishes apps on `node-4.x`.
+
 ## [1.5.1] - 2021-12-08
 ### Fixed
 - Safely decoding URI components to prevent errors when the search query contains breaking characters such as "%"

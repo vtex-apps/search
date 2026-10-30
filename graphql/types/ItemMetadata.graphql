@@ -21,7 +21,7 @@ type ItemMetadataUnit {
   productId: String
   refId: String
   ean: String
-  imageUrl: String @toVtexAssets
+  imageUrl: String
   detailUrl: String
   seller: String
   assemblyOptions: [AssemblyOption]
