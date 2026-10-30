@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Upgrade the node builder from 4.x to 7.x (`@vtex/api` 7, TypeScript 5), since VTEX IO no longer links or publishes apps on `node-4.x`.
 - Upgrade the GraphQL builder from 1.x (deprecated) to 2.x. All queries are marked `@auth(scope: PUBLIC)`, so they stay public as before.
+- Front-end GraphQL queries no longer name `vtex.search` as their `@context` provider. They query the app's own schema, as apps without an explicit provider do, so the build no longer looks for the app among its own dependencies.
 
 ## [1.5.1] - 2021-12-08
 ### Fixed

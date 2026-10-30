@@ -1,5 +1,5 @@
 query topSearches {
-  topSearches @context(provider: "vtex.search") {
+  topSearches {
     searches {
       term
     }

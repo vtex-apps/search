@@ -1,4 +1,4 @@
-fragment Product on Product @context(provider: "vtex.search") {
+fragment Product on Product {
   cacheId
   productId
   description
@@ -112,7 +112,7 @@ query suggestionProducts(
     attributeKey: $attributeKey
     attributeValue: $attributeValue
     indexingType: $indexingType
-  ) @context(provider: "vtex.search") {
+  ) {
     count
     products(origin: $productOrigin, indexingType: $indexingType) {
       ...Product
