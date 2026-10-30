@@ -311,7 +311,7 @@ type Image {
   imageId: ID
   imageLabel: String
   imageTag: String
-  imageUrl: String @toVtexAssets
+  imageUrl: String
   imageText: String
 }
 

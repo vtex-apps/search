@@ -10,7 +10,7 @@ type Brand {
   """
    Brand logo
   """
-  imageUrl: String @toVtexAssets
+  imageUrl: String
   """
    Text link
   """

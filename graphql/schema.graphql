@@ -2,13 +2,13 @@ type Query {
   """
   Get top searches for a given store.
   """
-  topSearches: TopSearchesOutput @cacheControl(scope: PUBLIC, maxAge: SHORT)
+  topSearches: TopSearchesOutput @auth(scope: PUBLIC) @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get suggestion searches for a given search term.
   """
   suggestionSearches(term: String!): SuggestionSearchesOutput
-    @cacheControl(scope: PUBLIC, maxAge: SHORT)
+    @auth(scope: PUBLIC) @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get suggestion products for a given search term.
@@ -19,14 +19,14 @@ type Query {
     attributeValue: String
     indexingType: IndexingType
   ): SuggestionProductsOutput
-    @cacheControl(scope: SEGMENT, maxAge: SHORT)
+    @auth(scope: PUBLIC) @cacheControl(scope: SEGMENT, maxAge: SHORT)
     @withSegment
 
   """
   Get attribute keys for a store.
   """
   attributeKeys: [AttributeResponseKey]!
-    @cacheControl(scope: PUBLIC, maxAge: SHORT)
+    @auth(scope: PUBLIC) @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   """
   Get attribute values for a given attribute.
@@ -34,7 +34,7 @@ type Query {
   attributeValues(
     attribute: String!
     filters: [ResultRequestAttributeText]
-  ): [AttributeResponseValue]! @cacheControl(scope: PUBLIC, maxAge: SHORT)
+  ): [AttributeResponseValue]! @auth(scope: PUBLIC) @cacheControl(scope: PUBLIC, maxAge: SHORT)
 
   searchResult(
     attributePath: String
@@ -46,7 +46,7 @@ type Query {
     fuzzy: Int
     leap: Boolean,
     indexingType: IndexingType = "API"
-  ): ResultResponse @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
+  ): ResultResponse @auth(scope: PUBLIC) @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
 }
 
 enum Origin {
