@@ -18,9 +18,12 @@ type Query {
     attributeKey: String
     attributeValue: String
     indexingType: IndexingType
+    """
+    Maximum number of products to return. When omitted, the search engine default (5) is used.
+    """
+    count: Int
   ): SuggestionProductsOutput
     @auth(scope: PUBLIC) @cacheControl(scope: SEGMENT, maxAge: SHORT)
-    @withSegment
 
   """
   Get attribute keys for a store.
@@ -46,7 +49,12 @@ type Query {
     fuzzy: Int
     leap: Boolean,
     indexingType: IndexingType = "API"
-  ): ResultResponse @auth(scope: PUBLIC) @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
+  ): ResultResponse
+    @auth(scope: PUBLIC)
+    @cacheControl(scope: SEGMENT, maxAge: SHORT)
+    @deprecated(
+      reason: "Basic support only: attributes and options are empty. Use vtex.search-graphql productSearch and facets."
+    )
 }
 
 enum Origin {
