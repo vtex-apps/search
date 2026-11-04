@@ -106,12 +106,14 @@ query suggestionProducts(
   $attributeValue: String
   $productOrigin: Origin
   $indexingType: IndexingType
+  $count: Int
 ) {
   suggestionProducts(
     term: $term
     attributeKey: $attributeKey
     attributeValue: $attributeValue
     indexingType: $indexingType
+    count: $count
   ) @context(provider: "vtex.search") {
     count
     products(origin: $productOrigin, indexingType: $indexingType) {

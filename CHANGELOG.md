@@ -8,9 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Removed
+- The `@withSegment` directive on `suggestionProducts` and `searchResult`, and its `atob` dependency. Its result is no longer used: the sales channel reaches vtex.search-resolver through the request's segment header.
+- The biggy-search client and the biggy product conversion, now unused.
+- The unused front-end error logger that pointed to biggy-search.
+- The `outbound-access` policy for `search.biggylabs.com.br`, which the app no longer needs.
 - The unused `@toVtexAssets` annotation on three image fields. No version of `@vtex/api` implements it, and the 7.x runtime rejects undeclared directives at startup. Output is unchanged.
 
+### Deprecated
+- `searchResult` keeps basic support through vtex.search-resolver `productSearch`: `attributes` and `options` are always empty, and sorts outside the supported list fall back to relevance. The field is marked `@deprecated` and responses carry a `Deprecation: true` header. Use vtex.search-graphql `productSearch` and `facets` instead.
+
 ### Changed
+- Product suggestions return as many products as the autocomplete shows (`maxSuggestedProducts`, including breakpoint settings), through a new optional `count` argument on `suggestionProducts`, as in 2.x. Without it, the search engine default (5) applies.
+- Rename the front-end `BiggyClient` to `SearchClient`. `BiggyClient` is still exported as a deprecated alias.
+- Top searches, term suggestions, product suggestions and `searchResult` now use vtex.search-resolver (Intelligent Search) instead of calling biggy-search directly.
 - Upgrade the node builder from 4.x to 7.x (`@vtex/api` 7, TypeScript 5), since VTEX IO no longer links or publishes apps on `node-4.x`.
 - Upgrade the GraphQL builder from 1.x (deprecated) to 2.x. All queries are marked `@auth(scope: PUBLIC)`, so they stay public as before.
 

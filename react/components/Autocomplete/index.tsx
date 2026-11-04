@@ -8,7 +8,7 @@ import {
 } from "./components/ItemList/types";
 import { TileList } from "./components/TileList/TileList";
 import stylesCss from "./styles.css";
-import BiggyClient from "../../utils/biggy-client";
+import SearchClient from "../../utils/search-client";
 import { FormattedMessage } from "react-intl";
 import { IconClose, IconClock } from "vtex.styleguide";
 import { ProductListContext } from "vtex.product-list-context";
@@ -76,7 +76,7 @@ class AutoComplete extends React.Component<
   Partial<AutoCompleteState>
 > {
   autocompleteRef: React.RefObject<any>;
-  client: BiggyClient;
+  client: SearchClient;
   isIOS: boolean;
 
   public readonly state: AutoCompleteState = {
@@ -94,7 +94,7 @@ class AutoComplete extends React.Component<
   constructor(props: WithApolloClient<AutoCompleteProps>) {
     super(props);
 
-    this.client = new BiggyClient(this.props.client);
+    this.client = new SearchClient(this.props.client);
     this.autocompleteRef = React.createRef();
     this.isIOS = navigator && !!navigator.userAgent.match(/(iPod|iPhone|iPad)/);
   }
@@ -270,6 +270,7 @@ class AutoComplete extends React.Component<
         ? "VTEX"
         : "BIGGY",
       __unstableIndexingType,
+      this.getProductCount(),
     );
 
     this.setState({

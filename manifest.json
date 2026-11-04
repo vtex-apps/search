@@ -44,13 +44,6 @@
     },
     {
       "name": "vtex.search-resolver:resolve-graphql"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "search.biggylabs.com.br",
-        "path": "/*"
-      }
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
